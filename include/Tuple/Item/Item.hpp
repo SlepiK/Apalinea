@@ -11,32 +11,32 @@
 
 namespace Stream::V1::Tuple {
 
-    template<typename Tdata>
-    class TupleData {
+    template<typename TData>
+    class Item {
     public:
 
-        TupleData(std::string&& name, Tdata&& data)
-            : vName(std::move(name)), vData(std::forward<Tdata>(data)) {
+        Item(std::string&& name, TData&& data)
+            : vName(std::move(name)), vData(std::forward<TData>(data)) {
         }
 
-        TupleData(TupleData&& other)
+        Item(Item&& other)
             : vName(std::move(other.vName)), vData(std::move(other.vData)) {
         }
 
-        TupleData(TupleData&& other, Tdata&& data)
+        Item(Item&& other, TData&& data)
             : vName(std::move(other.vName)), vData(std::forward<Tdata>(data)) {
         }
 
-        virtual ~TupleData() = default;
+        virtual ~Item() = default;
 
-        Tdata getData() const;
+        TData getData() const;
 
         std::string_view getName() const;
 
         void updateName(std::string&& name);
 
     private:
-        const Tdata vData;
+        const TData vData;
         std::string vName;
     };
 
