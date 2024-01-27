@@ -8,7 +8,8 @@
 namespace Stream::V1::Operator {
 
     class IOperator {
-
+    public:
+        virtual ~IOperator() = default;
     };
 
 } // Stream::V1::Operator
