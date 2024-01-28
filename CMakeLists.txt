@@ -18,11 +18,8 @@ set(PROJECT_HEADERS
         include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
         include/Link/ILink.hpp
         include/Link/AbstractLink.hpp
-        src/Link/PipeLink/PipeLink.cpp
         include/Link/PipeLink/PipeLink.hpp
-        src/Link/SinkLink/SinkLink.cpp
         include/Link/SinkLink/SinkLink.hpp
-        src/Link/SourceLink/SourceLink.cpp
         include/Link/SourceLink/SourceLink.hpp
 )
 
@@ -38,11 +35,8 @@ set(PROJECT_SOURCES
         src/Link/ILink.cpp
         src/Link/AbstractLink.cpp
         src/Link/PipeLink/PipeLink.cpp
-        include/Link/PipeLink/PipeLink.hpp
         src/Link/SinkLink/SinkLink.cpp
-        include/Link/SinkLink/SinkLink.hpp
         src/Link/SourceLink/SourceLink.cpp
-        include/Link/SourceLink/SourceLink.hpp
 )
 
 add_executable(stream ${PROJECT_SOURCES} ${PROJECT_HEADERS})
