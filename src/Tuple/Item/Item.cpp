@@ -15,8 +15,16 @@ namespace Stream::V1::Tuple {
         return this->vName;
     }
 
+    std::string_view Item<void>::getName() const {
+        return this->vName;
+    }
+
     template <typename TData>
     void Item<TData>::updateName(std::string&& name) {
+        this->vName = std::move(name);
+    }
+
+    void Item<void>::updateName(std::string&& name) {
         this->vName = std::move(name);
     }
 } // Stream::V1::Tuple

@@ -40,6 +40,27 @@ namespace Stream::V1::Tuple {
         std::string vName;
     };
 
+    template <>
+    class Item<void> {
+    public:
+        Item(std::string&& name)
+                : vName(std::move(name)) {
+        }
+
+        Item(Item&& other)
+                : vName(std::move(other.vName)) {
+        }
+
+        virtual ~Item() = default;
+
+        std::string_view getName() const;
+
+        void updateName(std::string&& name);
+
+    private:
+        std::string vName;
+    };
+
 } // Stream::V1::Tuple
 
 #endif //STREAM_V1_TUPLE_TUPLEDATA_HPP
