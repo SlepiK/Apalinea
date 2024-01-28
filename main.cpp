@@ -3,7 +3,7 @@
 //
 
 #include "Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp"
-#include "include/Operator/SinkOperator/SinkOperator.hpp"
+#include "include/Operator/SinkOperator/AbstractSinkOperator.hpp"
 #include "include/Tuple/Tuple.hpp"
 
 int main(int argc, char *argv[])

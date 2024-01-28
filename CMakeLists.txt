@@ -8,25 +8,41 @@ set(INCLUDE_DIRECTORYS
 
 set(PROJECT_HEADERS
         include/Operator/Type/OperatorType.hpp
-        include/Operator/PipeOperator/PipeOperator.hpp
-        include/Operator/SinkOperator/SinkOperator.hpp
-        include/Operator/SourceOperator/SourceOperator.hpp
+        include/Operator/PipeOperator/AbstractPipeOperator.hpp
+        include/Operator/SinkOperator/AbstractSinkOperator.hpp
+        include/Operator/SourceOperator/AbstractSourceOperator.hpp
         include/Operator/AbstractOperator.hpp
         include/Operator/IOperator.hpp
         include/Tuple/Item/Item.hpp
         include/Tuple/Tuple.hpp
         include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
-        )
+        include/Link/ILink.hpp
+        include/Link/AbstractLink.hpp
+        src/Link/PipeLink/PipeLink.cpp
+        include/Link/PipeLink/PipeLink.hpp
+        src/Link/SinkLink/SinkLink.cpp
+        include/Link/SinkLink/SinkLink.hpp
+        src/Link/SourceLink/SourceLink.cpp
+        include/Link/SourceLink/SourceLink.hpp
+)
 
 set(PROJECT_SOURCES
         main.cpp
-        src/Operator/PipeOperator/PipeOperator.cpp
-        src/Operator/SinkOperator/SinkOperator.cpp
-        src/Operator/SourceOperator/SourceOperator.cpp
+        src/Operator/PipeOperator/AbstractPipeOperator.cpp
+        src/Operator/SinkOperator/AbstractSinkOperator.cpp
+        src/Operator/SourceOperator/AbstractSourceOperator.cpp
         src/Operator/AbstractOperator.cpp
         src/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.cpp
         src/Tuple/Item/Item.cpp
         src/Tuple/Tuple.cpp
+        src/Link/ILink.cpp
+        src/Link/AbstractLink.cpp
+        src/Link/PipeLink/PipeLink.cpp
+        include/Link/PipeLink/PipeLink.hpp
+        src/Link/SinkLink/SinkLink.cpp
+        include/Link/SinkLink/SinkLink.hpp
+        src/Link/SourceLink/SourceLink.cpp
+        include/Link/SourceLink/SourceLink.hpp
 )
 
 add_executable(stream ${PROJECT_SOURCES} ${PROJECT_HEADERS})

@@ -10,11 +10,11 @@
 namespace Stream::V1::Operator {
 
     template <typename InputTuple>
-    class SinkOperator : public AbstractOperator {
+    class AbstractSinkOperator : public AbstractOperator {
     public:
-        SinkOperator() = default;
+        AbstractSinkOperator() = default;
 
-        ~SinkOperator() override = default;
+        ~AbstractSinkOperator() override = default;
 
         [[nodiscard]] OperatorType getOperatorType() const override {
             return OperatorType::SINK;

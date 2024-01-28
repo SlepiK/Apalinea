@@ -5,4 +5,4 @@
 #include "../../../../../include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp"
 
 namespace Stream::V1::Core::Operator::SinkOperator {
-} // Stream::V1::Core::Operator::SinkOperator
+} // Stream::V1::Core::Operator::AbstractSinkOperator

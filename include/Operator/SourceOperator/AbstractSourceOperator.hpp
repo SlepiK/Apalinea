@@ -10,11 +10,11 @@
 namespace Stream::V1::Operator {
 
     template<typename OutputTuple>
-    class SourceOperator : public AbstractOperator {
+    class AbstractSourceOperator : public AbstractOperator {
     public:
-        SourceOperator() = default;
+        AbstractSourceOperator() = default;
 
-        ~SourceOperator() override = default;
+        ~AbstractSourceOperator() override = default;
 
         [[nodiscard]] OperatorType getOperatorType() const override {
             return OperatorType::SOURCE;
