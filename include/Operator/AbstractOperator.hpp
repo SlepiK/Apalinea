@@ -5,10 +5,25 @@
 #ifndef STREAM_V1_OPERATOR_ABSTRACTOPERATOR_HPP
 #define STREAM_V1_OPERATOR_ABSTRACTOPERATOR_HPP
 
+#include "IOperator.hpp"
+#include <stdexcept>
+
 namespace Stream::V1::Operator {
 
-    class AbstractOperator {
+    class AbstractOperator : public IOperator {
+    public:
+        AbstractOperator() : vProcessed(false), vProcessing(false) {
+        }
 
+        ~AbstractOperator() override = default;
+
+        [[nodiscard]] bool isProcessing() const;
+
+        [[nodiscard]] bool isProcessed() const;
+
+    protected:
+        bool vProcessing;
+        bool vProcessed;
     };
 
 } // Stream::V1::Operator

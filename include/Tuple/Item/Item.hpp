@@ -11,36 +11,42 @@
 
 namespace Stream::V1::Tuple {
 
-    template<typename TData>
+    template<typename ItemData>
     class Item {
     public:
 
-        Item(std::string&& name, TData&& data)
-            : vName(std::move(name)), vData(std::forward<TData>(data)) {
+        Item(std::string &&name, ItemData &&data)
+                : vName(std::move(name)), vData(std::forward<ItemData>(data)) {
         }
 
-        Item(Item&& other)
-            : vName(std::move(other.vName)), vData(std::move(other.vData)) {
+        Item(Item &&other)
+        noexcept: vName(std::move(other.vName)), vData(std::move(other.vData)) {
         }
 
-        Item(Item&& other, TData&& data)
-            : vName(std::move(other.vName)), vData(std::forward<Tdata>(data)) {
+        Item(Item &&other, ItemData &&data)
+                : vName(std::move(other.vName)), vData(std::forward<ItemData>(data)) {
         }
 
         virtual ~Item() = default;
 
-        TData getData() const;
+        ItemData getData() const {
+            return this->vData;
+        }
 
-        std::string_view getName() const;
+        [[nodiscard]] std::string_view getName() const {
+            return this->vName;
+        }
 
-        void updateName(std::string&& name);
+        void updateName(std::string&& name) {
+            this->vName = std::move(name);
+        }
 
     private:
-        const TData vData;
+        const ItemData vData;
         std::string vName;
     };
 
-    template <>
+    /*template <>
     class Item<void> {
     public:
         Item(std::string&& name)
@@ -59,7 +65,7 @@ namespace Stream::V1::Tuple {
 
     private:
         std::string vName;
-    };
+    };*/
 
 } // Stream::V1::Tuple
 

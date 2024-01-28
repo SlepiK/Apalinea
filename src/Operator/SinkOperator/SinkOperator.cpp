@@ -2,7 +2,7 @@
 // Created by simon on 27.01.2024.
 //
 
-#include "../../../include/Operator/SinkOperator/SinkOperator.hpp"
+#include "Operator/SinkOperator/SinkOperator.hpp"
 
 namespace Stream::V1::Operator {
 } // Stream::V1::Operator

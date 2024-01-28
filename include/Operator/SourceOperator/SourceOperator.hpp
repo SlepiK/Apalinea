@@ -5,10 +5,35 @@
 #ifndef STREAM_V1_OPERATOR_SOURCEOPERATOR_HPP
 #define STREAM_V1_OPERATOR_SOURCEOPERATOR_HPP
 
+#include "Operator/AbstractOperator.hpp"
+
 namespace Stream::V1::Operator {
 
-    class SourceOperator {
+    template<typename OutputTuple>
+    class SourceOperator : public AbstractOperator {
+    public:
+        SourceOperator() = default;
 
+        ~SourceOperator() override = default;
+
+        [[nodiscard]] OperatorType getOperatorType() const override {
+            return OperatorType::SOURCE;
+        }
+
+        virtual void process(OutputTuple& outputTuple) final {
+            if (this->vProcessing) throw std::runtime_error("Operator is already processing!");
+            if (this->vProcessed) this->vProcessed = false;
+            if (!this->vProcessing) this->vProcessing = true;
+
+            this->work(outputTuple);
+
+            this->vProcessing = false;
+            this->vProcessed = true;
+        }
+
+    private:
+    protected:
+        virtual void work(OutputTuple& outputTuple) = 0;
     };
 
 } // Stream::V1::Operator
