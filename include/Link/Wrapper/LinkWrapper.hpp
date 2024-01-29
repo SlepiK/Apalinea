@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_LINK_LINKWRAPPER_HPP
 #define STREAM_V1_LINK_LINKWRAPPER_HPP
 
-namespace Stream::V1::Link {
+namespace Energyleaf::Stream::V1::Link {
     template<typename InputTuple>
     class LinkWrapper {
     public:

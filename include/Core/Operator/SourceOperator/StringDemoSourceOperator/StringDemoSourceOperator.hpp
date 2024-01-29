@@ -8,13 +8,13 @@
 #include "Operator/SourceOperator/AbstractSourceOperator.hpp"
 #include "Tuple/Tuple.hpp"
 
-namespace Stream::V1::Core::Operator::SourceOperator {
+namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     class StringDemoSourceOperator
-            : public Stream::V1::Operator::AbstractSourceOperator<Stream::V1::Tuple::Tuple<std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractSourceOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::string>> {
     public:
     private:
     protected:
-        void work(Stream::V1::Tuple::Tuple<std::string> &outputTuple) override {
+        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::string> &outputTuple) override {
             outputTuple.clear();
             outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
         }

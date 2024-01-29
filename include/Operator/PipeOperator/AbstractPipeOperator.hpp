@@ -7,7 +7,7 @@
 
 #include "Operator/AbstractOperator.hpp"
 
-namespace Stream::V1::Operator {
+namespace Energyleaf::Stream::V1::Operator {
 
     template <typename InputTuple,typename OutputTuple>
     class AbstractPipeOperator : public AbstractOperator {

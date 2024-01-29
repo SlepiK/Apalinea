@@ -10,7 +10,7 @@
 #include "Link/AbstractLink.hpp"
 #include "Link/Wrapper/LinkWrapper.hpp"
 
-namespace Stream::V1::Link {
+namespace Energyleaf::Stream::V1::Link {
 
     template<typename SinkOperator>
     class SinkLink : public AbstractLink, public LinkWrapper<typename IsBasedOnAbstractSinkOperator<SinkOperator>::InputTuple> {

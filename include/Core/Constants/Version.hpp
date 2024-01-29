@@ -5,7 +5,7 @@
 #ifndef STREAM_VERSION_HPP
 #define STREAM_VERSION_HPP
 
-namespace Stream::Constants::Version {
+namespace Energyleaf::Stream::Constants::Version {
     constexpr char VERSION[] = "V1.0";
     constexpr char VERSIONNAME[] = "Claudi";
 }

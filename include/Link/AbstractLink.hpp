@@ -8,7 +8,7 @@
 #include "ILink.hpp"
 #include "Trait/LinkTrait.hpp"
 
-namespace Stream::V1::Link {
+namespace Energyleaf::Stream::V1::Link {
 
     class AbstractLink : public ILink {
     public:

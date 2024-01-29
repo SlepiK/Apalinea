@@ -9,13 +9,13 @@
 #include "Tuple/Tuple.hpp"
 #include <iostream>
 
-namespace Stream::V1::Core::Operator::SinkOperator {
+namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
 
-    class CoutSinkOperator : public Stream::V1::Operator::AbstractSinkOperator<Stream::V1::Tuple::Tuple<std::string>> {
+    class CoutSinkOperator : public Energyleaf::Stream::V1::Operator::AbstractSinkOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::string>> {
     public:
     private:
     protected:
-        void work(Stream::V1::Tuple::Tuple<std::string> &inputTuple) override {
+        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::string> &inputTuple) override {
             std::cout << "New Tuple: " << inputTuple.getItem<std::string>(0).getData() << std::endl;
         }
     };

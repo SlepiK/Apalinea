@@ -12,7 +12,7 @@
 #include "Link/SinkLink/SinkLink.hpp"
 #include "Link/SourceLink/SourceLink.hpp"
 
-namespace Stream::V1::Core::Plan {
+namespace Energyleaf::Stream::V1::Core::Plan {
 
     class Plan {
     public:
@@ -75,7 +75,7 @@ namespace Stream::V1::Core::Plan {
         }
     private:
         std::vector<std::shared_ptr<Link::ILink>> vLinks;
-        using LinkIterator = std::vector<std::shared_ptr<Link::ILink>>::iterator;
+        using LinkIterator = typename std::vector<std::shared_ptr<Link::ILink>>::iterator;
     protected:
     };
 

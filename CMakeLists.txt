@@ -29,21 +29,15 @@ set(PROJECT_HEADERS
 )
 
 set(PROJECT_SOURCES
-        main.cpp
-        src/Operator/PipeOperator/AbstractPipeOperator.cpp
-        src/Operator/SinkOperator/AbstractSinkOperator.cpp
-        src/Operator/SourceOperator/AbstractSourceOperator.cpp
         src/Operator/AbstractOperator.cpp
-        src/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.cpp
-        src/Tuple/Item/Item.cpp
-        src/Tuple/Tuple.cpp
-        src/Link/ILink.cpp
         src/Link/AbstractLink.cpp
-        src/Link/PipeLink/PipeLink.cpp
-        src/Link/SinkLink/SinkLink.cpp
-        src/Link/SourceLink/SourceLink.cpp
-        src/Core/Plan/Plan.cpp
 )
 
-add_executable(stream ${PROJECT_SOURCES} ${PROJECT_HEADERS})
+set(DEMO_SOURCES
+        example/example.cpp
+)
+
+add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_include_directories(stream PRIVATE ${INCLUDE_DIRECTORYS})
+add_executable(example ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${DEMO_SOURCES})
+target_include_directories(example PRIVATE ${INCLUDE_DIRECTORYS})

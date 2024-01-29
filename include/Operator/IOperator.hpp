@@ -7,7 +7,7 @@
 
 #include "Type/OperatorType.hpp"
 
-namespace Stream::V1::Operator {
+namespace Energyleaf::Stream::V1::Operator {
 
     class IOperator {
     public:

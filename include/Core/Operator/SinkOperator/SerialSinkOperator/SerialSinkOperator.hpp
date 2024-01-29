@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_CORE_OPERATOR_SINKOPERATOR_SERIALSINKOPERATOR_HPP
 #define STREAM_V1_CORE_OPERATOR_SINKOPERATOR_SERIALSINKOPERATOR_HPP
 
-namespace Stream::V1::Core::Operator::SinkOperator {
+namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
 
     class SerialSinkOperator {
     public:

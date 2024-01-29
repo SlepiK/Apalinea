@@ -10,7 +10,7 @@
 
 #include "Item/Item.hpp"
 
-namespace Stream::V1::Tuple {
+namespace Energyleaf::Stream::V1::Tuple {
 
     template<typename... ItemData>
     class Tuple {

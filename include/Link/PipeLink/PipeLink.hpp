@@ -12,7 +12,7 @@
 #include "Link/SinkLink/SinkLink.hpp"
 #include "Link/Wrapper/LinkWrapper.hpp"
 
-namespace Stream::V1::Link {
+namespace Energyleaf::Stream::V1::Link {
 
     template<typename PipeOperator>
     class PipeLink
@@ -94,7 +94,7 @@ namespace Stream::V1::Link {
         InputTuple inputTuple;
         OutputTuple outputTuple;
         std::vector<std::unique_ptr<LinkWrapper<OutputTuple>>> vLinks;
-        using LinkIterator = std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>>::iterator;
+        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>>::iterator;
     protected:
     };
 

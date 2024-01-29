@@ -8,7 +8,7 @@
 #include "IOperator.hpp"
 #include <stdexcept>
 
-namespace Stream::V1::Operator {
+namespace Energyleaf::Stream::V1::Operator {
 
     class AbstractOperator : public IOperator {
     public:

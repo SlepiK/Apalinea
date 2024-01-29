@@ -4,7 +4,7 @@
 
 #include "Link/AbstractLink.hpp"
 
-namespace Stream::V1::Link {
+namespace Energyleaf::Stream::V1::Link {
     bool AbstractLink::isProcessing() const {
         return this->vProcessing;
     }

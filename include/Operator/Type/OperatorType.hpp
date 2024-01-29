@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_OPERATOR_OPERATORTYPE_HPP
 #define STREAM_V1_OPERATOR_OPERATORTYPE_HPP
 
-namespace Stream::V1::Operator {
+namespace Energyleaf::Stream::V1::Operator {
 
     enum class OperatorType : int {
         SOURCE = 0,
