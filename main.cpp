@@ -4,6 +4,7 @@
 
 #include "Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp"
 #include "include/Operator/SinkOperator/AbstractSinkOperator.hpp"
+#include "Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "include/Tuple/Tuple.hpp"
 
 #include "Core/Plan/Plan.hpp"
@@ -17,7 +18,12 @@ int main(int argc, char *argv[])
     coutSinkOperator.process(text);
     coutSinkOperator.process(text);
     coutSinkOperator.process(text);
-
-   Stream::V1::Core::Plan::Plan plan;
-    //auto sinklink = plan.createLink(Stream::V1::Link::SinkLinkUPtr<Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
+    Stream::V1::Core::Plan::Plan plan;
+    auto sourcelink = plan.createLink(Stream::V1::Link::make_SourceLinkUPtr<Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>());
+    auto sinklink = plan.createLink(Stream::V1::Link::make_SinkLinkUPtr<Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
+    plan.connect(sourcelink,sinklink);
+    plan.process();
+    plan.process();
+    plan.process();
+    plan.process();
 }

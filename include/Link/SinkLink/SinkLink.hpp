@@ -8,24 +8,23 @@
 #include <utility>
 #include <memory>
 #include "Link/AbstractLink.hpp"
+#include "Link/Wrapper/LinkWrapper.hpp"
 
 namespace Stream::V1::Link {
 
     template<typename SinkOperator>
-    class SinkLink : public AbstractLink {
+    class SinkLink : public AbstractLink, public LinkWrapper<typename IsBasedOnAbstractSinkOperator<SinkOperator>::InputTuple> {
         static_assert(IsBasedOnAbstractSinkOperator<SinkOperator>::value,"SinkOperator must be based on AbstractSinkOperator!");
     public:
 
         using InputTuple = typename IsBasedOnAbstractSinkOperator<SinkOperator>::InputTuple;
 
-        explicit SinkLink() = default;
-
         explicit SinkLink(SinkOperator&& sinkOperator)
-            : vOperator(std::forward<SinkOperator>(sinkOperator)) {
+            : vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
         }
 
         explicit SinkLink(SinkOperator& sinkOperator)
-                : vOperator(std::move(sinkOperator)) {
+                : vOperator(std::move(sinkOperator)), inputTuple() {
         }
 
         SinkLink(SinkLink&& other) noexcept
@@ -38,7 +37,7 @@ namespace Stream::V1::Link {
             return this->vOperator;
         }
 
-        void setInputTupleR(InputTuple& tuple) {
+        void setInputTupleR(InputTuple& tuple) override {
             if(!this->vProcessing) {
                 this->inputTuple = tuple;
             } else {
@@ -46,7 +45,7 @@ namespace Stream::V1::Link {
             }
         }
 
-        void setInputTuple(InputTuple tuple) {
+        void setInputTuple(InputTuple tuple) override {
             if(!this->vProcessing) {
                 this->inputTuple = tuple;
             } else {
@@ -76,8 +75,8 @@ namespace Stream::V1::Link {
     template<typename SinkOperator>
     using SinkLinkUPtr = std::unique_ptr<SinkLink<SinkOperator>>;
     template <typename SinkOperator>
-    SinkLinkUPtr<SinkOperator> make_SinkLinkUPtr(SinkOperator op) {
-        return std::make_unique<SinkLink<SinkOperator>>(op);
+    SinkLinkUPtr<SinkOperator> make_SinkLinkUPtr() {
+        return std::make_unique<SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()));
     }
 
 } // Stream::V1::Link

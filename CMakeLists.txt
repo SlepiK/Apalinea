@@ -24,6 +24,7 @@ set(PROJECT_HEADERS
         include/Link/Trait/LinkTrait.hpp
         include/Link/Wrapper/LinkWrapper.hpp
         include/Core/Plan/Plan.hpp
+        include/Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
 )
 
 set(PROJECT_SOURCES

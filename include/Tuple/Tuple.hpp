@@ -21,7 +21,21 @@ namespace Stream::V1::Tuple {
         noexcept: vItems(std::move(other.vItems)) {
         }
 
+        Tuple(const Tuple<ItemData...>& other) {
+            vItems = other.vItems;
+        }
+
         virtual ~Tuple() = default;
+
+        Tuple& operator=(Tuple<ItemData...>&& other) noexcept {
+            vItems = std::move(other.vItems);
+            return *this;
+        }
+
+        Tuple& operator=(const Tuple<ItemData...>& other) {
+            vItems = other.vItems;
+            return *this;
+        }
 
         void addItem(const Tuple<ItemData...> &other) {
             this->vItems.insert(this->vItems.end(), other.vItems.begin(), other.vItems.end());
@@ -137,6 +151,9 @@ namespace Stream::V1::Tuple {
             return this->vItems;
         }
 
+        void clear() {
+            this->vItems.clear();
+        }
 
     private:
         std::vector<std::variant<Item<ItemData>...>> vItems;

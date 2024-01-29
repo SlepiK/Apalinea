@@ -27,7 +27,24 @@ namespace Stream::V1::Tuple {
                 : vName(std::move(other.vName)), vData(std::forward<ItemData>(data)) {
         }
 
+        Item(const Item& other) {
+            vData = other.vData;
+            vName = other.vName;
+        }
+
         virtual ~Item() = default;
+
+        Item& operator=(Item&& other) noexcept {
+            vData = std::move(other.vData);
+            vName = std::move(other.vName);
+            return *this;
+        }
+
+        Item& operator=(const Item& other) {
+            vData = other.vData;
+            vName = other.vName;
+            return *this;
+        }
 
         ItemData getData() const {
             return this->vData;
@@ -42,30 +59,9 @@ namespace Stream::V1::Tuple {
         }
 
     private:
-        const ItemData vData;
+        ItemData vData;
         std::string vName;
     };
-
-    /*template <>
-    class Item<void> {
-    public:
-        Item(std::string&& name)
-                : vName(std::move(name)) {
-        }
-
-        Item(Item&& other)
-                : vName(std::move(other.vName)) {
-        }
-
-        virtual ~Item() = default;
-
-        std::string_view getName() const;
-
-        void updateName(std::string&& name);
-
-    private:
-        std::string vName;
-    };*/
 
 } // Stream::V1::Tuple
 

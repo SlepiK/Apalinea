@@ -26,11 +26,11 @@ namespace Stream::V1::Link {
         using OutputTuple = typename IsBasedOnAbstractPipeOperator<PipeOperator>::OutputTuple;
 
         explicit PipeLink(PipeOperator &&pipeOperator)
-                : vOperator(std::forward<PipeOperator>(pipeOperator)) {
+                : vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple(), outputTuple() {
         }
 
         explicit PipeLink(PipeOperator &pipeOperator)
-                : vOperator(std::move(pipeOperator)) {
+                : vOperator(std::move(pipeOperator)) , inputTuple(), outputTuple()  {
         }
 
         PipeLink(PipeLink &&other) noexcept
@@ -104,7 +104,7 @@ namespace Stream::V1::Link {
     using PipeLinkUPtr = std::unique_ptr<PipeLink<PipeOperator>>;
     template <typename PipeOperator>
     PipeLinkUPtr<PipeOperator> make_PipeLinkUPtr() {
-        return std::make_unique<PipeLink<PipeOperator>>();
+        return std::make_unique<PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()));
     }
 
 } // Stream::V1::Link

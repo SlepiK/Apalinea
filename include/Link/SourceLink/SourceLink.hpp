@@ -18,18 +18,18 @@ namespace Stream::V1::Link {
     class SourceLink : public AbstractLink {
         static_assert(IsBasedOnAbstractSourceOperator<SourceOperator>::value,"SourceOperator must be based on AbstractSourceOperator!");
     public:
-        using OutputTuple = typename IsBasedOnAbstractPipeOperator<SourceOperator>::OutputTuple;
+        using OutputTuple = typename IsBasedOnAbstractSourceOperator<SourceOperator>::OutputTuple;
 
         explicit SourceLink(SourceOperator&& sourceOperator)
-            : vOperator(std::forward<SourceOperator>(sourceOperator)) {
+            : vOperator(std::forward<SourceOperator>(sourceOperator)), outputTuple() {
         }
 
         explicit SourceLink(SourceOperator& sourceOperator)
-                : vOperator(std::move(sourceOperator)) {
+                : vOperator(std::move(sourceOperator)), outputTuple() {
         }
 
         SourceLink(SourceLink &&other) noexcept
-                : vOperator(std::move(other.vOperator)) {
+                : vOperator(std::move(other.vOperator)), outputTuple(std::move(other.outputTuple)) {
         }
 
         ~SourceLink() override = default;
@@ -81,7 +81,7 @@ namespace Stream::V1::Link {
     using SourceLinkUPtr = std::unique_ptr<SourceLink<SourceOperator>>;
     template <typename SourceOperator>
     SourceLinkUPtr<SourceOperator> make_SourceLinkUPtr() {
-        return std::make_unique<SourceLink<SourceOperator>>();
+        return std::make_unique<SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()));
     }
 
 } // Stream::V1::Link
