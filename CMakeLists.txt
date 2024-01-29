@@ -21,6 +21,9 @@ set(PROJECT_HEADERS
         include/Link/PipeLink/PipeLink.hpp
         include/Link/SinkLink/SinkLink.hpp
         include/Link/SourceLink/SourceLink.hpp
+        include/Link/Trait/LinkTrait.hpp
+        include/Link/Wrapper/LinkWrapper.hpp
+        include/Core/Plan/Plan.hpp
 )
 
 set(PROJECT_SOURCES
@@ -37,6 +40,7 @@ set(PROJECT_SOURCES
         src/Link/PipeLink/PipeLink.cpp
         src/Link/SinkLink/SinkLink.cpp
         src/Link/SourceLink/SourceLink.cpp
+        src/Core/Plan/Plan.cpp
 )
 
 add_executable(stream ${PROJECT_SOURCES} ${PROJECT_HEADERS})

@@ -7,7 +7,14 @@
 
 namespace Stream::V1::Link {
     class ILink {
+    public:
+        virtual ~ILink() = default;
 
+        virtual void process() = 0;
+
+        [[nodiscard]] virtual bool isProcessing() const = 0;
+
+        [[nodiscard]] virtual bool isProcessed() const = 0;
     };
 } // Stream::V1::Link
 

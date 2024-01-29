@@ -30,6 +30,8 @@ namespace Stream::V1::Operator {
             this->vProcessing = false;
             this->vProcessed = true;
         }
+
+        using SinkInputTuple = InputTuple;
     private:
     protected:
         virtual void work(InputTuple& inputTuple) = 0;

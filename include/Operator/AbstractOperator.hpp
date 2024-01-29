@@ -17,9 +17,9 @@ namespace Stream::V1::Operator {
 
         ~AbstractOperator() override = default;
 
-        [[nodiscard]] bool isProcessing() const;
+        [[nodiscard]] bool isProcessing() const override;
 
-        [[nodiscard]] bool isProcessed() const;
+        [[nodiscard]] bool isProcessed() const override;
 
     protected:
         bool vProcessing;

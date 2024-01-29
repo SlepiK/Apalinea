@@ -30,6 +30,9 @@ namespace Stream::V1::Operator {
             this->vProcessing = false;
             this->vProcessed = true;
         }
+
+        using PipeInputTuple = InputTuple;
+        using PipeOutputTuple = OutputTuple;
     private:
     protected:
         virtual void work(InputTuple& inputTuple, OutputTuple& outputTuple) = 0;

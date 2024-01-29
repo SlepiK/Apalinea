@@ -31,6 +31,7 @@ namespace Stream::V1::Operator {
             this->vProcessed = true;
         }
 
+        using SourceOutputTuple = OutputTuple;
     private:
     protected:
         virtual void work(OutputTuple& outputTuple) = 0;

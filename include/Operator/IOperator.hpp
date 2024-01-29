@@ -12,7 +12,12 @@ namespace Stream::V1::Operator {
     class IOperator {
     public:
         virtual ~IOperator() = default;
+
         [[nodiscard]] virtual OperatorType getOperatorType() const = 0;
+
+        [[nodiscard]] virtual bool isProcessing() const = 0;
+
+        [[nodiscard]] virtual bool isProcessed() const = 0;
     };
 
 } // Stream::V1::Operator

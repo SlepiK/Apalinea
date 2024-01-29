@@ -6,6 +6,8 @@
 #include "include/Operator/SinkOperator/AbstractSinkOperator.hpp"
 #include "include/Tuple/Tuple.hpp"
 
+#include "Core/Plan/Plan.hpp"
+
 int main(int argc, char *argv[])
 {
     Stream::V1::Tuple::Tuple<std::string> text;
@@ -15,4 +17,7 @@ int main(int argc, char *argv[])
     coutSinkOperator.process(text);
     coutSinkOperator.process(text);
     coutSinkOperator.process(text);
+
+   Stream::V1::Core::Plan::Plan plan;
+    //auto sinklink = plan.createLink(Stream::V1::Link::SinkLinkUPtr<Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
 }
