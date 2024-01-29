@@ -14,7 +14,4 @@ int main(int argc, char *argv[])
     auto sinklink = plan.createLink(Stream::V1::Link::make_SinkLinkUPtr<Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
     plan.connect(sourcelink,sinklink);
     plan.process();
-    plan.process();
-    plan.process();
-    plan.process();
 }
