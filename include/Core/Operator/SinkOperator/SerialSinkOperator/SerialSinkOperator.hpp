@@ -27,6 +27,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
         }
     };
 
-} // Stream::V1::Core::Operator::SinkOperator
+} // Energyleaf::Stream::V1::Core::Operator::SinkOperator
 
 #endif //STREAM_V1_CORE_OPERATOR_SINKOPERATOR_SERIALSINKOPERATOR_HPP

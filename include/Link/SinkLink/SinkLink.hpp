@@ -33,7 +33,7 @@ namespace Energyleaf::Stream::V1::Link {
 
         ~SinkLink() override = default;
 
-        const SinkOperator& getOperator() {
+        SinkOperator& getOperator() {
             return this->vOperator;
         }
 

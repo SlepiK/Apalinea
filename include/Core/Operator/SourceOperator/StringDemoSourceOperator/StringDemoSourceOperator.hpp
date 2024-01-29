@@ -19,6 +19,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
             outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
         }
     };
-}
+} // Energyleaf::Stream::V1::Core::Operator::SourceOperator
 
 #endif //STREAM_V1_CORE_OPERATOR_SOURCEOPERATOR_STRINGDEMOSOURCEOPERATOR_HPP

@@ -40,7 +40,7 @@ namespace Energyleaf::Stream::V1::Link {
 
         ~PipeLink() override = default;
 
-        const PipeOperator &getOperator() {
+        PipeOperator &getOperator() {
             return this->vOperator;
         }
 
@@ -93,7 +93,7 @@ namespace Energyleaf::Stream::V1::Link {
         PipeOperator vOperator;
         InputTuple inputTuple;
         OutputTuple outputTuple;
-        std::vector<std::unique_ptr<LinkWrapper<OutputTuple>>> vLinks;
+        std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>> vLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>>::iterator;
     protected:
     };

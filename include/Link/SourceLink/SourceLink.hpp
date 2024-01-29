@@ -34,7 +34,7 @@ namespace Energyleaf::Stream::V1::Link {
 
         ~SourceLink() override = default;
 
-        const SourceOperator& getOperator() {
+        SourceOperator& getOperator() {
             return this->vOperator;
         }
 

@@ -26,6 +26,10 @@ set(PROJECT_HEADERS
         include/Core/Plan/Plan.hpp
         include/Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
         include/Core/Constants/Version.hpp
+        include/Core/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
+        include/Types/Empty/EmptyType.hpp
+        include/Core/Operator/SinkOperator/SerialSinkOperator/SerialSinkOperator.hpp
+        include/Types/Power/PowerType.hpp
 )
 
 set(PROJECT_SOURCES
