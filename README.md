@@ -6,11 +6,11 @@ With that header you can use the following commands:
 <ol>
 	<li><code>plan.createLink(Energyleaf::Stream::V1::Link::make_SourceLinkUPtr&lt;YOUR_SOURCE_OPERATOR()>);</code> - Creation of an SourceLink</li>
 	<li><code>plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr&lt;YOUR_SINK_OPERATOR>());</code> - Creation of an SinkLink</li>
-	<li><code>plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<&lt;YOUR_PIPE_OPERATOR>());</code> - Creation of an PipeLink</li>
-	<li><code>plan.connect(SOURCELINK,PIPELINK);</code> - Connect two Links</li>
-	<li><code>plan.connect(PIPELINK,PIPELINK);</code> - Connect two Links</li>
-	<li><code>plan.connect(SOURCELINK,SINKLINK);</code> - Connect two Links</li>
-	<li><code>plan.connect(PIPELINK,SINKLINK);</code> - Connect two Links</li>
+	<li><code>plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr&lt;YOUR_PIPE_OPERATOR>());</code> - Creation of an PipeLink</li>
+	<li><code>plan.connect(SOURCELINK_OBJECT,PIPELINK_OBJECT);</code> - Connect two Links</li>
+	<li><code>plan.connect(PIPELINK_OBJECT,PIPELINK_OBJECT);</code> - Connect two Links</li>
+	<li><code>plan.connect(SOURCELINK_OBJECT,SINKLINK_OBJECT);</code> - Connect two Links</li>
+	<li><code>plan.connect(PIPELINK_OBJECT,SINKLINK_OBJECT);</code> - Connect two Links</li>
 	<li><code>plan.process();</code> - Process one iteration trough the stream</li>
 </ol>
 
