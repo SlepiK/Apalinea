@@ -11,6 +11,7 @@
 #include "Tuple/Tuple.hpp"
 #include "Types/Power/Power.hpp"
 #include "Extras/Network/ESP/WebSender/WebSender.hpp"
+#include "Types/Buffer/ELData.pb.h"
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     class WebSenderSinkOperator : public Energyleaf::Stream::V1::Operator::AbstractSinkOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power>>, public Energyleaf::Stream::V1::Extras::Network::ESP::WebSender<Energyleaf::Stream::V1::Types::Power> {
@@ -39,16 +40,16 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
             if (vSensorId[0] == '\0' && this->vHost.empty() && this->vEndpoint.empty() && !this->vPortSet) {
                 throw std::runtime_error("Endpointdata not set!");
             }
-            /*ELData message = ELData_init_default;
+            ELData message = ELData_init_default;
             std::copy(std::begin(this->vSensorId), std::end(this->vSensorId), message.sensorId);
-            message.sensorValue = this->vData;*/
+            message.sensorValue = data.getPower();
 
-           /* pb_ostream_t stream = pb_ostream_from_buffer(vBuffer, sizeof(vBuffer));
+#ifdef ENERGYLEAF_ESP
+            pb_ostream_t stream = pb_ostream_from_buffer(vBuffer, sizeof(vBuffer));
             if (!pb_encode(&stream, ELData_fields, &message)) {
                 Serial.println("Encoding failed!");
                 return;
-            }*/
-#ifdef ENERGYLEAF_ESP
+            }
             log_d("Connecting to %s:%d",vHost.c_str(),vPort);
             vWifiClientSecure.connect(vHost.c_str(), vPort);
             if (vWifiClientSecure.connected()) {
