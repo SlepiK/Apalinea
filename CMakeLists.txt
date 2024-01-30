@@ -50,6 +50,7 @@ set(PROJECT_HEADERS
 set(PROJECT_SOURCES
         src/Operator/AbstractOperator.cpp
         src/Link/AbstractLink.cpp
+        src/Types/Buffer/ELData.pb.c
 )
 
 set(DEMO_SOURCES
