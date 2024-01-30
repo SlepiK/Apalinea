@@ -18,7 +18,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             this->vState = state;
         }
 
-        const bool& getState() {
+        [[nodiscard]] const bool& getState() const {
             return this->vState;
         }
     private:

@@ -7,6 +7,7 @@
 #include "Core/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp"
 #include "Core/Operator/PipeOperator/CropPipeOperator/CropPipeOperator.hpp"
 #include "Core/Operator/SinkOperator/WebSenderSinkOperator/WebSenderSinkOperator.hpp"
+#include "Core/Operator/PipeOperator/StateOperator/StateOperator.hpp"
 
 #include "Core/Plan/Plan.hpp"
 
