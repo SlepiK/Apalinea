@@ -41,6 +41,7 @@ set(PROJECT_HEADERS
         include/Core/Operator/PipeOperator/StatePipeOperator/StatePipeOperator.hpp
         include/Core/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp
         include/Core/Operator/PipeOperator/SelectPipeOperator/SelectPipeOperator.hpp
+        include/Core/Operator/PipeOperator/DetectorPipeOperator/DetectorPipeOperator.hpp
 )
 
 set(PROJECT_SOURCES

@@ -9,6 +9,7 @@
 #include "Core/Operator/SinkOperator/WebSenderSinkOperator/WebSenderSinkOperator.hpp"
 #include "Core/Operator/PipeOperator/StatePipeOperator/StatePipeOperator.hpp"
 #include "Core/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp"
+#include "Core/Operator/PipeOperator/DetectorPipeOperator/DetectorPipeOperator.hpp"
 
 #include "Core/Plan/Plan.hpp"
 
