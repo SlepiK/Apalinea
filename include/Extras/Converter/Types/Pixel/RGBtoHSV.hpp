@@ -1,16 +1,16 @@
 //
-// Created by Simon Stahmer on 30.01.24.
+// Created by SlepiK on 30.01.24.
 //
 
-#ifndef ENERGYLEAF_STREAM_V1_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
-#define ENERGYLEAF_STREAM_V1_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
+#ifndef ENERGYLEAF_STREAM_V1_EXTRAS_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
+#define ENERGYLEAF_STREAM_V1_EXTRAS_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
 
 #include "Types/Pixel/RGB.hpp"
 #include "Types/Pixel/HSV.hpp"
 
 #include <algorithm>
 
-namespace Energyleaf::Stream::V1::Converter::Types::Pixel {
+namespace Energyleaf::Stream::V1::Extras::Converter::Types::Pixel {
     class RGBtoHSV {
     public:
         static void convert(const Energyleaf::Stream::V1::Types::Pixel::RGB& rgb, Energyleaf::Stream::V1::Types::Pixel::HSV& hsv) {
@@ -43,4 +43,4 @@ namespace Energyleaf::Stream::V1::Converter::Types::Pixel {
     };
 }
 
-#endif //ENERGYLEAF_STREAM_V1_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
+#endif //ENERGYLEAF_STREAM_V1_EXTRAS_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP

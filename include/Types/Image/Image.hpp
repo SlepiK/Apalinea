@@ -17,7 +17,7 @@ namespace Energyleaf::Stream::V1::Types {
             : vWidth(0), vHeight(0), vBytesPerPixel(0), vFormat(ImageFormat::FB_RGB888), vData(nullptr){
         };
 
-        Image(int width, int height, int bytesPerPixel, ImageFormat format, uint8_t* data)
+        Image(int width, int height, int bytesPerPixel, ImageFormat format, std::uint8_t* data)
             : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format), vData(data) {
         }
 
@@ -86,7 +86,7 @@ namespace Energyleaf::Stream::V1::Types {
             return this->vFormat;
         }
 
-        uint8_t* getData() {
+        std::uint8_t* getData() {
             return this->vData;
         }
 
@@ -111,7 +111,7 @@ namespace Energyleaf::Stream::V1::Types {
         int vHeight;
         int vBytesPerPixel;
         ImageFormat vFormat;
-        uint8_t* vData;
+        std::uint8_t* vData;
     };
 }
 #endif //ENERGYLEAF_STREAM_V1_TYPES_IMAGE_HPP
