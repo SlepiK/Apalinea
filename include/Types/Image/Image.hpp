@@ -22,7 +22,10 @@ namespace Energyleaf::Stream::V1::Types {
         }
 
         Image(Image &&other)
-        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(other.vData) {
+        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat){
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = new std::uint8_t[arraySize];
+            std::copy(other.vData, other.vData + arraySize, vData);
         }
 
         Image(const Image& other) {
@@ -30,7 +33,9 @@ namespace Energyleaf::Stream::V1::Types {
             this->vHeight = other.vHeight;
             this->vBytesPerPixel = other.vBytesPerPixel;
             this->vFormat = other.vFormat;
-            this->vData = other.vData;
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = new std::uint8_t[arraySize];
+            std::copy(other.vData, other.vData + arraySize, vData);
         }
 
 #ifdef ENERGYLEAF_ESP
@@ -50,7 +55,9 @@ namespace Energyleaf::Stream::V1::Types {
             this->vHeight = other.vHeight;
             this->vBytesPerPixel = other.vBytesPerPixel;
             this->vFormat = other.vFormat;
-            this->vData = other.vData;
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = new std::uint8_t[arraySize];
+            std::copy(other.vData, other.vData + arraySize, vData);
             return *this;
         }
 
@@ -59,7 +66,9 @@ namespace Energyleaf::Stream::V1::Types {
             this->vHeight = other.vHeight;
             this->vBytesPerPixel = other.vBytesPerPixel;
             this->vFormat = other.vFormat;
-            this->vData = other.vData;
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = new std::uint8_t[arraySize];
+            std::copy(other.vData, other.vData + arraySize, vData);
             return *this;
         }
 

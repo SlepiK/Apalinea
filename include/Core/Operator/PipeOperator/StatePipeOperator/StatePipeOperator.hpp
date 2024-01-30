@@ -2,15 +2,15 @@
 // Created by SlepiK on 30.01.24.
 //
 
-#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEOPERATOR_HPP
+#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEPIPEOPERATOR_HPP
+#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEPIPEOPERATOR_HPP
 
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Tuple/Tuple.hpp"
 #include <utility>
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
-    class StateOperator
+    class StatePipeOperator
             : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<bool>,
             Energyleaf::Stream::V1::Tuple::Tuple<bool>>{
     public:
@@ -40,4 +40,4 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     };
 }
 
-#endif //STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEOPERATOR_HPP
+#endif //STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEPIPEOPERATOR_HPP

@@ -38,7 +38,8 @@ set(PROJECT_HEADERS
         include/Extras/Converter/Types/Pixel/RGBtoHSV.hpp
         include/Extras/Network/ESP/WebSender/WebSender.hpp
         include/Core/Operator/SinkOperator/WebSenderSinkOperator/WebSenderSinkOperator.hpp
-        include/Core/Operator/PipeOperator/StateOperator/StateOperator.hpp
+        include/Core/Operator/PipeOperator/StatePipeOperator/StatePipeOperator.hpp
+        include/Core/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp
 )
 
 set(PROJECT_SOURCES
