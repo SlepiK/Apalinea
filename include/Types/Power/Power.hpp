@@ -11,47 +11,47 @@ namespace Energyleaf::Stream::V1::Types {
     /**
      * This class represents a empty object or empty type, because void as type is not direct allowed in this library!
      */
-    class PowerType {
+    class Power {
     public:
 
-        explicit PowerType()
+        explicit Power()
             : watt(0) {
         }
 
-        explicit PowerType(float watt)
+        explicit Power(float watt)
             : watt(watt) {
         }
 
-        explicit PowerType(float&& watt)
+        explicit Power(float&& watt)
             : watt(watt){
         }
 
-        PowerType(PowerType &&other)
+        Power(Power &&other)
         noexcept: watt(other.watt) {
         }
 
-        PowerType(const PowerType& other) {
+        Power(const Power& other) {
             this->watt = other.watt;
         }
 
-        virtual ~PowerType() = default;
+        virtual ~Power() = default;
 
-        PowerType& operator=(PowerType&& other) noexcept {
-            this->watt = other.watt;
-            return *this;
-        }
-
-        PowerType& operator=(const PowerType& other) {
+        Power& operator=(Power&& other) noexcept {
             this->watt = other.watt;
             return *this;
         }
 
-        PowerType& operator=(float&& other) noexcept {
+        Power& operator=(const Power& other) {
+            this->watt = other.watt;
+            return *this;
+        }
+
+        Power& operator=(float&& other) noexcept {
             this->watt = other;
             return *this;
         }
 
-        PowerType& operator=(const float& other) {
+        Power& operator=(const float& other) {
             this->watt = other;
             return *this;
         }

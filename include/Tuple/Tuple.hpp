@@ -47,6 +47,10 @@ namespace Energyleaf::Stream::V1::Tuple {
             other.vItems.clear();
         }
 
+        template<typename ItemDataT, typename = std::enable_if_t<std::disjunction_v<std::is_same<ItemDataT, ItemData>...>>>
+        void addItem(const std::string &name, ItemDataT &&itemData) {
+            this->vItems.push_back(Item<ItemDataT>(name, std::forward<ItemDataT>(itemData)));
+        }
 
         template<typename ItemDataT, typename = std::enable_if_t<std::disjunction_v<std::is_same<ItemDataT, ItemData>...>>>
         void addItem(const std::string &name, const ItemDataT &itemData) {
@@ -58,6 +62,10 @@ namespace Energyleaf::Stream::V1::Tuple {
             this->vItems.push_back(Item<ItemDataT>(std::move(name),std::forward<ItemDataT>(itemData)));
         }
 
+        template<typename ItemDataT, typename = std::enable_if_t<std::disjunction_v<std::is_same<ItemDataT, ItemData>...>>>
+        void addItem(std::string &&name, ItemDataT &itemData) {
+            this->vItems.push_back(Item<ItemDataT>(std::move(name),std::forward<ItemDataT>(itemData)));
+        }
 
         template<typename ItemDataT, typename = std::enable_if_t<std::disjunction_v<std::is_same<ItemDataT, ItemData>...>>>
         void addItem(const Item<ItemDataT> &item) {

@@ -29,7 +29,14 @@ set(PROJECT_HEADERS
         include/Core/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
         include/Types/Empty/EmptyType.hpp
         include/Core/Operator/SinkOperator/SerialSinkOperator/SerialSinkOperator.hpp
-        include/Types/Power/PowerType.hpp
+        include/Types/Power/Power.hpp
+        include/Types/Image/Image.hpp
+        include/Types/Image/ImageFormat.hpp
+        include/Core/Operator/PipeOperator/CropPipeOperator/CropPipeOperator.hpp
+        include/Core/Operator/PipeOperator/HSVPipeOperator/HSVPipeOperator.hpp
+        include/Types/Pixel/HSV.hpp
+        include/Types/Pixel/RGB.hpp
+        include/Converter/Types/Pixel/RGBtoHSV.hpp
 )
 
 set(PROJECT_SOURCES

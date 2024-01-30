@@ -19,6 +19,14 @@ namespace Energyleaf::Stream::V1::Tuple {
                 : vName(std::move(name)), vData(std::forward<ItemData>(data)) {
         }
 
+        Item(std::string &name, ItemData &data)
+                : vName(std::move(name)), vData(std::move(data)) {
+        }
+
+        Item(std::string &&name,const ItemData &data)
+                : vName(std::move(name)), vData(std::move(data)) {
+        }
+
         Item(Item &&other)
         noexcept: vName(std::move(other.vName)), vData(std::move(other.vData)) {
         }

@@ -5,6 +5,7 @@
 #include "Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp"
 #include "Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "Core/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp"
+#include "Core/Operator/PipeOperator/CropPipeOperator/CropPipeOperator.hpp"
 
 #include "Core/Plan/Plan.hpp"
 
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
     auto pipelink = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::CalculatorPipeOperator>());
     pipelink->getOperator().setCalculationFormat(Energyleaf::Stream::V1::Core::Operator::PipeOperator::CalculatorPipeOperator::CalculationFormat::SECOND);
     pipelink->getOperator().setRotationPerKWh(375);
+    auto pipelink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::CropPipeOperator>());
     auto sinklink = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
     plan.connect(sourcelink,sinklink);
     plan.process();

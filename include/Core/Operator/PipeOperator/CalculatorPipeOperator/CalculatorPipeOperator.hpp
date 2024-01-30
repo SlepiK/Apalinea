@@ -7,12 +7,12 @@
 
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Types/Empty/EmptyType.hpp"
-#include "Types/Power/PowerType.hpp"
+#include "Types/Power/Power.hpp"
 #include "Tuple/Tuple.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class CalculatorPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::EmptyType>, Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::PowerType>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Empty>, Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power>> {
     public:
         static constexpr float WATT_PER_MILLISECOND = 3600000.0f;
         static constexpr float WATT_PER_SECOND = 3600.0f;
@@ -59,7 +59,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
         float wattPer = WATT_PER_MINUTE;
-        Energyleaf::Stream::V1::Types::PowerType power;
+        Energyleaf::Stream::V1::Types::Power power;
         bool vRun = false;
 
         static unsigned long getCurrentTime() {
@@ -70,8 +70,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
 #endif
          }
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::EmptyType> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::PowerType> &outputTuple) override {
+        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Empty> &inputTuple,
+                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power> &outputTuple) override {
             if(!this->vRotationPerKWhSet) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
