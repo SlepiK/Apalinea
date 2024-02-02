@@ -22,7 +22,9 @@ int main(int argc, char *argv[])
     pipelink->getOperator().setRotationPerKWh(375);
     //auto pipelink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::CropPipeOperator>());
     auto sinklink = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
+    auto sinklink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
     //auto sinklink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::WebSenderSinkOperator>());
     plan.connect(sourcelink,sinklink);
+    plan.connect(sourcelink,sinklink2);
     plan.process();
 }

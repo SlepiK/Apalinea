@@ -46,7 +46,7 @@ namespace Energyleaf::Stream::V1::Link {
             this->vOperator.process(this->outputTuple);
 
             for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                (*iterator)->setInputTuple(this->outputTuple);
+                (*iterator)->setInputTuple(OutputTuple(this->outputTuple));
             }
 
             this->vProcessing = false;
