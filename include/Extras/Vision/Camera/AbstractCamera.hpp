@@ -17,7 +17,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
 
         virtual ~AbstractCamera() = default;
 
-        void start() {
+        virtual void start() final {
             if (this->vStarted) {
                 throw std::runtime_error("AbstractCamera is already started!");
             }
@@ -27,7 +27,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
             this->vStarted = true;
         };
 
-        void stop() {
+        virtual void stop() final {
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }
@@ -37,11 +37,11 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
             this->vStarted = false;
         }
 
-        [[nodiscard]] bool isStarted() const {
+        [[nodiscard]] virtual bool isStarted() const final{
             return this->vStarted;
         }
 
-        Energyleaf::Stream::V1::Types::Image getImage() {
+        [[nodiscard]] virtual Energyleaf::Stream::V1::Types::Image getImage() const final{
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }

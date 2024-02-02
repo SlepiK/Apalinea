@@ -8,18 +8,42 @@
 #include "Operator/SourceOperator/AbstractSourceOperator.hpp"
 #include "Tuple/Tuple.hpp"
 #include "Types/Image/Image.hpp"
-#include "Extras/Vision/Camera/AbstractCamera.hpp"
+#include "CameraSourceOperatorTrait.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
-    class StringDemoSourceOperator
+    template<typename Camera>
+    class CameraSourceOperator
             : public Energyleaf::Stream::V1::Operator::AbstractSourceOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image>> {
+        static_assert(Trait::IsBasedOnAbstractCamera<Camera>::value,"Camera needs to be derived from AbstractCamera!");
     public:
+        using CameraConfig = typename Trait::IsBasedOnAbstractCamera<Camera>::CameraConfig;
+
+        CameraSourceOperator() : vCamera() {
+        }
+
+        const Camera& getCamera() const{
+            return this->vCamera;
+        }
+
+        void setCameraConfig(CameraConfig& config) {
+            this->vCamera.setConfig(config);
+        }
+
+        void setCameraConfig(CameraConfig&& config) {
+            this->vCamera.setConfig(config);
+        }
+
+        const CameraConfig& getCameraConfig() const {
+            this->vCamera.getConfig();
+        }
+
+
     private:
-        Energyleaf::Stream::V1::Extras::Vision::AbstractCamera camera;
+        Camera vCamera;
     protected:
         void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image> &outputTuple) override {
             outputTuple.clear();
-            //outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
+            outputTuple.addItem(std::string("Image"),this->vCamera.getImage());
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::SourceOperator
