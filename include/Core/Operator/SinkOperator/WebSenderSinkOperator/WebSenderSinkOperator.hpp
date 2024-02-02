@@ -6,6 +6,8 @@
 #define STREAM_V1_CORE_OPERATOR_SINKOPERATOR_WEBSENDERSINKOPERATOR_HPP
 
 #include <utility>
+#include <cstddef>
+#include <cstring>
 
 #include "Operator/SinkOperator/AbstractSinkOperator.hpp"
 #include "Tuple/Tuple.hpp"

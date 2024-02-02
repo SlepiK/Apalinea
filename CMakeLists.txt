@@ -46,6 +46,7 @@ set(PROJECT_HEADERS
         include/Extras/Device/ESP/LED/StatusLED.hpp
         include/Extras/Device/ESP/LED/CameraLED.hpp
         include/Extras/Vision/ESP/Camera/Camera.hpp
+        include/Types/Window/WindowId.hpp
 )
 
 set(PROJECT_SOURCES
