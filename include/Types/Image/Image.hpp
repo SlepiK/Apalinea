@@ -22,10 +22,12 @@ namespace Energyleaf::Stream::V1::Types {
         }
 
         Image(Image &&other)
-        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat){
-            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
-            std::copy(other.vData, other.vData + arraySize, vData);
+        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(other.vData){
+            other.vWidth = 0;
+            other.vHeight = 0;
+            other.vBytesPerPixel = 0;
+            other.vFormat = ImageFormat::FB_RGB888;
+            other.vData = nullptr;
         }
 
         Image(const Image& other) {
@@ -51,13 +53,19 @@ namespace Energyleaf::Stream::V1::Types {
 #endif
 
         Image& operator=(Image&& other) noexcept {
-            this->vWidth = other.vWidth;
-            this->vHeight = other.vHeight;
-            this->vBytesPerPixel = other.vBytesPerPixel;
-            this->vFormat = other.vFormat;
-            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
-            std::copy(other.vData, other.vData + arraySize, vData);
+            if (this != &other) {
+                delete[] this->vData;
+                this->vWidth = other.vWidth;
+                this->vHeight = other.vHeight;
+                this->vBytesPerPixel = other.vBytesPerPixel;
+                this->vFormat = other.vFormat;
+                this->vData = other.vData;
+                other.vWidth = 0;
+                other.vHeight = 0;
+                other.vBytesPerPixel = 0;
+                other.vFormat = ImageFormat::FB_RGB888;
+                other.vData = nullptr;
+            }
             return *this;
         }
 
@@ -74,7 +82,7 @@ namespace Energyleaf::Stream::V1::Types {
 
         virtual ~Image() {
             if(this->vData) {
-                delete this->vData;
+                delete[] this->vData;
                 this->vData = nullptr;
             }
         }
