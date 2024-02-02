@@ -18,7 +18,10 @@ namespace Energyleaf::Stream::V1::Types {
         };
 
         Image(int width, int height, int bytesPerPixel, ImageFormat format, std::uint8_t* data)
-            : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format), vData(data) {
+            : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format) {
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = new std::uint8_t[arraySize];
+            std::copy(data, data + arraySize, vData);
         }
 
         Image(Image &&other)
