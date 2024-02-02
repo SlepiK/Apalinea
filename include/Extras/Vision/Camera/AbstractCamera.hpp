@@ -8,7 +8,7 @@
 #include <stdexcept>
 #include "Types/Image/Image.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Vision::ESP {
+namespace Energyleaf::Stream::V1::Extras::Vision {
     template<typename Config>
     class AbstractCamera {
     public:
