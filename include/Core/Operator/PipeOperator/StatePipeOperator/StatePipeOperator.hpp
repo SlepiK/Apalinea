@@ -35,7 +35,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 output = false;
             }
             outputTuple.clear();
-            outputTuple.addItem(std::string("State"),output);
+            outputTuple.addItem(std::string("ProcessState"),output);
         }
     };
 }

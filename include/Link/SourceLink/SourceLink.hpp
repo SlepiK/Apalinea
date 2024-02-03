@@ -43,10 +43,17 @@ namespace Energyleaf::Stream::V1::Link {
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
-            this->vOperator.process(this->outputTuple);
+            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
+                this->vOperator.process(this->outputTuple);
+                this->vState = this->vOperator.getOperatorProcessState();
 
-            for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                (*iterator)->setInputTuple(OutputTuple(this->outputTuple));
+                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                    if (this->vState == Operator::OperatorProcessState::CONTINUE) {
+                        (*iterator)->setInputTuple(OutputTuple(this->outputTuple));
+                    } else {
+                        (*iterator)->setOperatorProcessState(this->vState);
+                    }
+                }
             }
 
             this->vProcessing = false;

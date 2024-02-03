@@ -65,10 +65,19 @@ namespace Energyleaf::Stream::V1::Link {
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
-            this->vOperator.process(this->inputTuple, this->outputTuple);
+            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
+                this->vOperator.process(this->inputTuple, this->outputTuple);
+                this->vState = this->vOperator.getOperatorProcessState();
 
-            for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                (*iterator)->setInputTuple(OutputTuple(this->outputTuple));
+                if(this->vOperator.getOperatorProcessState() == Operator::OperatorProcessState::CONTINUE) {
+                    for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                        if (this->vState == Operator::OperatorProcessState::CONTINUE) {
+                            (*iterator)->setInputTuple(OutputTuple(this->outputTuple));
+                        } else {
+                           (*iterator)->setOperatorProcessState(this->vState);
+                        }
+                    }
+                }
             }
 
             this->vProcessing = false;
@@ -87,6 +96,10 @@ namespace Energyleaf::Stream::V1::Link {
             static_assert(std::is_same_v<OutputTuple, typename SinkLink<SinkOperator>::InputTuple>,
                           "InputTuple types must be the same for connection.");
             this->vLinks.push_back(nextLink);
+        }
+
+        void setOperatorProcessState(Operator::OperatorProcessState state) override {
+            this->vState = state;
         }
 
     private:

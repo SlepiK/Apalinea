@@ -49,6 +49,7 @@ set(PROJECT_HEADERS
         include/Types/Window/WindowId.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
+        include/Operator/ProcessState/OperatorProcessState.hpp
 )
 
 set(PROJECT_SOURCES
