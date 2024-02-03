@@ -43,18 +43,6 @@ namespace Energyleaf::Stream::V1::Types {
             std::copy(other.vData, other.vData + arraySize, vData);
         }
 
-#ifdef ENERGYLEAF_ESP
-        explicit Image(fb_data_t watt)
-                : vWidth(watt.width), vHeight(watt.height), vBytesPerPixel(watt.bytes_per_pixel), vFormat(
-                static_cast<ImageFormat>(watt.format)), vData(watt.data) {
-        }
-
-        explicit Image(fb_data_t&& watt)
-                : vWidth(watt.width), vHeight(watt.height), vBytesPerPixel(watt.bytes_per_pixel), vFormat(
-                static_cast<ImageFormat>(watt.format)), vData(watt.data){
-        }
-#endif
-
         Image& operator=(Image&& other) noexcept {
             if (this != &other) {
                 delete[] this->vData;
@@ -124,6 +112,13 @@ namespace Energyleaf::Stream::V1::Types {
 
         void setFormat(ImageFormat format) {
             this->vFormat = format;
+        }
+
+        void initData() {
+            if(this->vData != nullptr) {
+                delete[] this->vData;
+            }
+            this->vData = new std::uint8_t[this->vWidth * this->vHeight * this->vBytesPerPixel];
         }
 
     private:

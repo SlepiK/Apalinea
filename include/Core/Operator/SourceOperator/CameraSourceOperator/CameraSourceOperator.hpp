@@ -36,7 +36,9 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
         const CameraConfig& getCameraConfig() const {
             this->vCamera.getConfig();
         }
-
+        void start() {
+            this->vCamera.start();
+        }
 
     private:
         Camera vCamera;

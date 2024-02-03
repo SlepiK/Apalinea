@@ -22,8 +22,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             return this->vState;
         }
     private:
-    protected:
         bool vState;
+    protected:
         void work(Energyleaf::Stream::V1::Tuple::Tuple<bool> &inputTuple,
                   Energyleaf::Stream::V1::Tuple::Tuple<bool> &outputTuple) override {
             bool input = inputTuple.getItem<bool>(0).getData();

@@ -75,9 +75,9 @@ namespace Energyleaf::Stream::V1::Link {
             this->vProcessed = true;
         }
 
-
-        void connect(const std::shared_ptr<PipeLink<PipeOperator>>& nextLink) {
-            static_assert(std::is_same_v<OutputTuple, typename PipeLink::InputTuple>,
+        template<typename PipeOperatorNext>
+        void connect(const std::shared_ptr<PipeLink<PipeOperatorNext>> &nextLink) {
+            static_assert(std::is_same_v<OutputTuple, typename PipeLink<PipeOperatorNext>::InputTuple>,
                           "InputTuple types must be the same for connection.");
             this->vLinks.push_back(nextLink);
         }

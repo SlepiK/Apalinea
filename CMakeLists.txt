@@ -59,6 +59,7 @@ set(PROJECT_SOURCES
 
 set(DEMO_SOURCES
         example/example.cpp
+        example/CameraEL.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
