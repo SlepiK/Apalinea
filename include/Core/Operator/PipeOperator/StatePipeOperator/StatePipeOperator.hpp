@@ -12,10 +12,13 @@
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class StatePipeOperator
             : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<bool>,
-            Energyleaf::Stream::V1::Tuple::Tuple<bool>>{
+            Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Empty>>{
     public:
         void setState(bool&& state) {
-            this->vState = state;
+            if(!this->vReady) {
+                this->vState = state;
+                this->vReady = true;
+            }
         }
 
         [[nodiscard]] const bool& getState() const {
@@ -23,19 +26,26 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         }
     private:
         bool vState;
+        bool vReady = false;
     protected:
         void work(Energyleaf::Stream::V1::Tuple::Tuple<bool> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<bool> &outputTuple) override {
+                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Empty> &outputTuple) override {
             bool input = inputTuple.getItem<bool>(0).getData();
             bool output;
-            if (this->vState != input) {
-                this->vState = input;
-                output = true;
+            if(this->vReady) {
+                output = (this->vState != input) && input;
+                if(output) this->vState = input;
             } else {
-                output = false;
+                this->vState = input;
+                output = input;
+                this->vReady = true;
             }
+            if(output){
             outputTuple.clear();
-            outputTuple.addItem(std::string("ProcessState"),output);
+            outputTuple.addItem(std::string("State"),Energyleaf::Stream::V1::Types::Empty());
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
+            }
         }
     };
 }

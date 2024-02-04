@@ -23,9 +23,6 @@ int main(int argc, char *argv[])
     testr.get()->getOperator().start();
 
     auto sourcelink = plan.createLink(Energyleaf::Stream::V1::Link::make_SourceLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>());
-    auto pipelink = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::CalculatorPipeOperator>());
-    pipelink->getOperator().setCalculationFormat(Energyleaf::Stream::V1::Core::Operator::PipeOperator::CalculatorPipeOperator::CalculationFormat::SECOND);
-    pipelink->getOperator().setRotationPerKWh(375);
     auto pipelink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::CropPipeOperator>());
     pipelink2->getOperator().setSize(0,30,0,30);
     auto pipelink3 = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::DetectorPipeOperator>());
@@ -35,6 +32,9 @@ int main(int argc, char *argv[])
     pipelink4->getOperator().setThreshold(300);
     auto pipelink5 = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::StatePipeOperator>());
     pipelink5->getOperator().setState(false);
+    auto pipelink = plan.createLink(Energyleaf::Stream::V1::Link::make_PipeLinkUPtr<Energyleaf::Stream::V1::Core::Operator::PipeOperator::CalculatorPipeOperator>());
+    pipelink->getOperator().setCalculationFormat(Energyleaf::Stream::V1::Core::Operator::PipeOperator::CalculatorPipeOperator::CalculationFormat::SECOND);
+    pipelink->getOperator().setRotationPerKWh(375);
     auto sinklink = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
     auto sinklink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
     //auto sinklink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::WebSenderSinkOperator>());
@@ -44,5 +44,6 @@ int main(int argc, char *argv[])
     plan.connect(pipelink2,pipelink3);
     plan.connect(pipelink3,pipelink4);
     plan.connect(pipelink4,pipelink5);
+    plan.connect(pipelink5,pipelink);
     plan.process();
 }

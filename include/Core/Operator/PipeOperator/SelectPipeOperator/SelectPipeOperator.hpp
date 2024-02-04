@@ -26,8 +26,13 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         void work(Energyleaf::Stream::V1::Tuple::Tuple<std::size_t> &inputTuple,
                   Energyleaf::Stream::V1::Tuple::Tuple<bool> &outputTuple) override {
             std::size_t input = inputTuple.getItem<std::size_t>(0).getData();
-            outputTuple.clear();
-            outputTuple.addItem(std::string("SELECT"), input > this->vThreshold);
+            bool select = input > this->vThreshold;
+            if(select) {
+                outputTuple.clear();
+                outputTuple.addItem(std::string("SELECT"), select);
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
+            }
         }
     };
 }

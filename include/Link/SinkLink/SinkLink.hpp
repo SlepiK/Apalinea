@@ -61,6 +61,7 @@ namespace Energyleaf::Stream::V1::Link {
             if(this->vState == Operator::OperatorProcessState::CONTINUE) {
                 this->vOperator.process(this->inputTuple);
             }
+            this->inputTuple.clear();
 
             this->vProcessing = false;
             this->vProcessed = true;
