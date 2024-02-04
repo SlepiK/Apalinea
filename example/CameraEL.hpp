@@ -11,18 +11,16 @@ public:
         p = 3;
     }
 
-    virtual ~CameraEL() {
-        //internalStop();
-    };
+    ~CameraEL() override = default;
 
-    virtual const int& getConfig() const {
+    [[nodiscard]] const int& getConfig() const override {
        return p;
     }
 
-    virtual void setConfig(int&& config) {
+    void setConfig(int&& config) override {
     }
 
-    virtual void setConfig(int& config) {
+    void setConfig(int& config) override {
     }
 private:
     int p;

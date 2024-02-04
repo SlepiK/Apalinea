@@ -55,7 +55,7 @@ namespace Energyleaf::Stream::V1::Extras::Network::ESP {
 
         virtual ~WebSender() = default;
 
-        void setHost(std::string host) { this->vHost = host; }
+        void setHost(const std::string& host) { this->vHost = host; }
 
         void setPort(int port) {
             this->vPort = port;
