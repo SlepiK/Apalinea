@@ -9,6 +9,11 @@
 #include <utility>
 #include "ImageFormat.hpp"
 
+
+#ifdef ENERGYLEAF_ESP
+#include "esp_specific_header.h"
+#endif
+
 namespace Energyleaf::Stream::V1::Types {
 
     class Image {
@@ -42,6 +47,18 @@ namespace Energyleaf::Stream::V1::Types {
             this->vData = new std::uint8_t[arraySize];
             std::copy(other.vData, other.vData + arraySize, vData);
         }
+
+
+#ifdef ENERGYLEAF_ESP
+        void* operator new(std::size_t size) {
+            return ps_malloc(size);
+        }
+
+        // Overloaded delete operator
+        void operator delete(void* p) {
+            free(p);
+        }
+#endif
 
         Image& operator=(Image&& other) noexcept {
             if (this != &other) {
