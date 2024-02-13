@@ -38,9 +38,6 @@ set(PROJECT_HEADERS
         include/Core/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp
         include/Core/Operator/PipeOperator/SelectPipeOperator/SelectPipeOperator.hpp
         include/Core/Operator/PipeOperator/DetectorPipeOperator/DetectorPipeOperator.hpp
-        include/Extras/Device/ESP/LED/AbstractLED.hpp
-        include/Extras/Device/ESP/LED/StatusLED.hpp
-        include/Extras/Device/ESP/LED/CameraLED.hpp
         include/Extras/Vision/Camera/AbstractCamera.hpp
         include/Types/Window/WindowId.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
