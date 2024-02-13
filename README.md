@@ -1,5 +1,7 @@
 # Stream-Library
 
+[![Build](https://github.com/SlepiK/stream/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/SlepiK/stream/actions/workflows/cmake-multi-platform.yml)
+
 ## Usage
 To use the library you need to include only <code>Core/Plan/Plan.hpp</code> in your file.
 With that header you can use the following commands:
