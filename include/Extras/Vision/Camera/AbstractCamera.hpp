@@ -49,7 +49,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
             return this->getInternalImage();
         }
 
-        virtual const Config& getConfig() = 0;
+        virtual const Config& getConfig() const = 0;
 
         virtual void setConfig(Config&& config) = 0;
 
@@ -60,7 +60,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
         bool vStarted;
         virtual void internalStart() = 0;
         virtual void internalStop() = 0;
-        virtual Energyleaf::Stream::V1::Types::Image getInternalImage() = 0;
+        [[nodiscard]] virtual Energyleaf::Stream::V1::Types::Image getInternalImage() const = 0;
     };
 }
 

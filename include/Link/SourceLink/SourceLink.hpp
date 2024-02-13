@@ -21,15 +21,15 @@ namespace Energyleaf::Stream::V1::Link {
         using OutputTuple = typename IsBasedOnAbstractSourceOperator<SourceOperator>::OutputTuple;
 
         explicit SourceLink(SourceOperator&& sourceOperator)
-            : vOperator(std::forward<SourceOperator>(sourceOperator)), outputTuple() {
+                : vOperator(std::forward<SourceOperator>(sourceOperator)) {
         }
 
         explicit SourceLink(SourceOperator& sourceOperator)
-                : vOperator(std::move(sourceOperator)), outputTuple() {
+                : vOperator(std::move(sourceOperator)) {
         }
 
         SourceLink(SourceLink &&other) noexcept
-                : vOperator(std::move(other.vOperator)), outputTuple(std::move(other.outputTuple)) {
+                : vOperator(std::move(other.vOperator)) {
         }
 
         ~SourceLink() override = default;
@@ -43,10 +43,20 @@ namespace Energyleaf::Stream::V1::Link {
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
-            this->vOperator.process(this->outputTuple);
+            if(this->vState == Operator::OperatorProcessState::CONTINUE || this->vState == Operator::OperatorProcessState::BREAK) {
+                OutputTuple outputTuple;
+                this->vOperator.process(outputTuple);
+                this->vState = this->vOperator.getOperatorProcessState();
 
-            for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                (*iterator)->setInputTuple(OutputTuple(this->outputTuple));
+                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                    if (this->vState == Operator::OperatorProcessState::CONTINUE) {
+                        (*iterator)->setInputTuple(outputTuple);
+                        (*iterator)->setOperatorProcessState(this->vState);
+                    } else {
+                        (*iterator)->setOperatorProcessState(this->vState);
+                    }
+                }
+                outputTuple.clear();
             }
 
             this->vProcessing = false;
@@ -69,7 +79,6 @@ namespace Energyleaf::Stream::V1::Link {
 
     private:
         SourceOperator vOperator;
-        OutputTuple outputTuple;
         std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>> vLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>>::iterator;
     protected:
