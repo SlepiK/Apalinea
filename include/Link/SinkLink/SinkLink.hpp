@@ -58,10 +58,17 @@ namespace Energyleaf::Stream::V1::Link {
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
-            this->vOperator.process(this->inputTuple);
+            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
+                this->vOperator.process(this->inputTuple);
+            }
+            this->inputTuple.clear();
 
             this->vProcessing = false;
             this->vProcessed = true;
+        }
+
+        void setOperatorProcessState(Operator::OperatorProcessState state) override {
+            this->vState = state;
         }
 
     private:

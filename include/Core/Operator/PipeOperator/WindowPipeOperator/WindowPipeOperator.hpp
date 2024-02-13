@@ -5,6 +5,7 @@
 #ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
 #define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
 
+#include <cstddef>
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Tuple/Tuple.hpp"
 
@@ -25,12 +26,12 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             return this->vWindowCurrent;
         }
     private:
-        size_t vWindowCurrent = 0;
-        size_t vWindowSize = 1;
-        size_t vWindowSizeActual = 0;
+        std::size_t vWindowCurrent = 0;
+        std::size_t vWindowSize = 1;
+        std::size_t vWindowSizeActual = 0;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<bool> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<bool> &outputTuple) override {
+        void work(Energyleaf::Stream::V1::Tuple::Tuple<Input> &inputTuple,
+                  Energyleaf::Stream::V1::Tuple::Tuple<Output,std::size_t> &outputTuple) override {
             outputTuple.clear();
             outputTuple.addItem(inputTuple);
             outputTuple.addItem(std::string("INTERNAL_WINDOW"),this->vWindowCurrent);

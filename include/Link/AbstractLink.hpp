@@ -12,7 +12,7 @@ namespace Energyleaf::Stream::V1::Link {
 
     class AbstractLink : public ILink {
     public:
-        AbstractLink() : vProcessed(false), vProcessing(false) {
+        AbstractLink() : vProcessed(false), vProcessing(false) , vState(Operator::OperatorProcessState::CONTINUE){
         }
 
         ~AbstractLink() override = default;
@@ -25,6 +25,7 @@ namespace Energyleaf::Stream::V1::Link {
     protected:
         bool vProcessing;
         bool vProcessed;
+        Operator::OperatorProcessState vState;
     };
 
 } // Stream::V1::Link

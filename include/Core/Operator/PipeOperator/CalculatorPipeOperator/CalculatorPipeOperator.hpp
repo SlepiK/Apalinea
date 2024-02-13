@@ -90,6 +90,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 //initial process, no red mark was detected before this event.
                 this->vLast = getCurrentTime();
             }
+            outputTuple.clear();
+            outputTuple.addItem(std::string("POWER"),power);
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::PipeOperator

@@ -9,6 +9,11 @@
 #include <utility>
 #include "ImageFormat.hpp"
 
+
+#ifdef ENERGYLEAF_ESP
+#include "esp_specific_header.h"
+#endif
+
 namespace Energyleaf::Stream::V1::Types {
 
     class Image {
@@ -18,14 +23,19 @@ namespace Energyleaf::Stream::V1::Types {
         };
 
         Image(int width, int height, int bytesPerPixel, ImageFormat format, std::uint8_t* data)
-            : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format), vData(data) {
+            : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format) {
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = new std::uint8_t[arraySize];
+            std::copy(data, data + arraySize, vData);
         }
 
         Image(Image &&other)
-        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat){
-            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
-            std::copy(other.vData, other.vData + arraySize, vData);
+        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(other.vData){
+            other.vWidth = 0;
+            other.vHeight = 0;
+            other.vBytesPerPixel = 0;
+            other.vFormat = ImageFormat::FB_RGB888;
+            other.vData = nullptr;
         }
 
         Image(const Image& other) {
@@ -38,26 +48,32 @@ namespace Energyleaf::Stream::V1::Types {
             std::copy(other.vData, other.vData + arraySize, vData);
         }
 
+
 #ifdef ENERGYLEAF_ESP
-        explicit Image(fb_data_t watt)
-                : vWidth(watt.width), vHeight(watt.height), vBytesPerPixel(watt.bytes_per_pixel), vFormat(
-                static_cast<ImageFormat>(watt.format)), vData(watt.data) {
+        void* operator new(std::size_t size) {
+            return ps_malloc(size);
         }
 
-        explicit Image(fb_data_t&& watt)
-                : vWidth(watt.width), vHeight(watt.height), vBytesPerPixel(watt.bytes_per_pixel), vFormat(
-                static_cast<ImageFormat>(watt.format)), vData(watt.data){
+        // Overloaded delete operator
+        void operator delete(void* p) {
+            free(p);
         }
 #endif
 
         Image& operator=(Image&& other) noexcept {
-            this->vWidth = other.vWidth;
-            this->vHeight = other.vHeight;
-            this->vBytesPerPixel = other.vBytesPerPixel;
-            this->vFormat = other.vFormat;
-            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
-            std::copy(other.vData, other.vData + arraySize, vData);
+            if (this != &other) {
+                delete[] this->vData;
+                this->vWidth = other.vWidth;
+                this->vHeight = other.vHeight;
+                this->vBytesPerPixel = other.vBytesPerPixel;
+                this->vFormat = other.vFormat;
+                this->vData = other.vData;
+                other.vWidth = 0;
+                other.vHeight = 0;
+                other.vBytesPerPixel = 0;
+                other.vFormat = ImageFormat::FB_RGB888;
+                other.vData = nullptr;
+            }
             return *this;
         }
 
@@ -74,7 +90,7 @@ namespace Energyleaf::Stream::V1::Types {
 
         virtual ~Image() {
             if(this->vData) {
-                delete this->vData;
+                delete[] this->vData;
                 this->vData = nullptr;
             }
         }
@@ -113,6 +129,13 @@ namespace Energyleaf::Stream::V1::Types {
 
         void setFormat(ImageFormat format) {
             this->vFormat = format;
+        }
+
+        void initData() {
+            if(this->vData != nullptr) {
+                delete[] this->vData;
+            }
+            this->vData = new std::uint8_t[this->vWidth * this->vHeight * this->vBytesPerPixel];
         }
 
     private:

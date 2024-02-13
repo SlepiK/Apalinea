@@ -8,9 +8,6 @@
 #include <utility>
 
 namespace Energyleaf::Stream::V1::Types {
-    /**
-     * This class represents a empty object or empty type, because void as type is not direct allowed in this library!
-     */
     class Power {
     public:
 

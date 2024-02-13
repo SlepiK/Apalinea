@@ -45,7 +45,11 @@ set(PROJECT_HEADERS
         include/Extras/Device/ESP/LED/AbstractLED.hpp
         include/Extras/Device/ESP/LED/StatusLED.hpp
         include/Extras/Device/ESP/LED/CameraLED.hpp
-        include/Extras/Vision/ESP/Camera/Camera.hpp
+        include/Extras/Vision/Camera/AbstractCamera.hpp
+        include/Types/Window/WindowId.hpp
+        include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
+        include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
+        include/Operator/ProcessState/OperatorProcessState.hpp
 )
 
 set(PROJECT_SOURCES
@@ -56,6 +60,7 @@ set(PROJECT_SOURCES
 
 set(DEMO_SOURCES
         example/example.cpp
+        example/CameraEL.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
