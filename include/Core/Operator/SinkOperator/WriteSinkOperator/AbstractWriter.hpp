@@ -8,7 +8,7 @@
 #include <sstream>
 #include <string>
 #include <utility>
-#include <Operator/SinkOperator/AbstractSinkOperator.hpp>
+#include <tuple>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     class AbstractWriter {
