@@ -6,7 +6,6 @@
 #define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_STATEPIPEOPERATOR_HPP
 
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
-#include "Types/Empty/EmptyType.hpp"
 #include "Tuple/Tuple.hpp"
 #include <utility>
 
