@@ -17,12 +17,16 @@ namespace Energyleaf::Stream::V1::Operator {
 
         ~AbstractOperator() override = default;
 
-        [[nodiscard]] bool isProcessing() const override;
-
-        [[nodiscard]] bool isProcessed() const override;
-
         [[nodiscard]] OperatorProcessState getOperatorProcessState() const final {
             return vProcessState;
+        }
+
+        [[nodiscard]] bool isProcessing() const override {
+            return this->vProcessing;
+        }
+
+        [[nodiscard]] bool isProcessed() const override {
+            return this->vProcessed;
         }
 
     protected:

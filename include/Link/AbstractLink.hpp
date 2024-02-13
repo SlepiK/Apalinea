@@ -17,9 +17,13 @@ namespace Energyleaf::Stream::V1::Link {
 
         ~AbstractLink() override = default;
 
-        [[nodiscard]] bool isProcessing() const override;
+        [[nodiscard]] bool isProcessing() const override {
+            return this->vProcessing;
+        }
 
-        [[nodiscard]] bool isProcessed() const override;
+        [[nodiscard]] bool isProcessed() const override {
+            return this->vProcessed;
+        }
 
     private:
     protected:

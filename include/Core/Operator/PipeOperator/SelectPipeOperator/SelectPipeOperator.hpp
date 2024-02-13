@@ -10,8 +10,8 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class SelectPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::size_t>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<bool>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::size_t,std::string>,
+                    Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>> {
     public:
         void setThreshold(int&& threshold) {
             this->vThreshold = threshold;
@@ -23,16 +23,13 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     private:
         int vThreshold = 0;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::size_t> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<bool> &outputTuple) override {
-            std::size_t input = inputTuple.getItem<std::size_t>(0).getData();
+        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::size_t,std::string> &inputTuple,
+                  Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &outputTuple) override {
+            std::size_t input = inputTuple.getItem<std::size_t>(1).getData();
             bool select = input > this->vThreshold;
-            if(select) {
-                outputTuple.clear();
-                outputTuple.addItem(std::string("SELECT"), select);
-            } else {
-                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
-            }
+            outputTuple.clear();
+            outputTuple.addItem(inputTuple.getItem<std::string>(0));
+            outputTuple.addItem(std::string("SELECT"), select);
         }
     };
 }

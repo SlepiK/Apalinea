@@ -15,7 +15,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     private:
     protected:
         void work(Energyleaf::Stream::V1::Tuple::Tuple<std::string> &outputTuple) override {
-            //vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             outputTuple.clear();
             outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
         }

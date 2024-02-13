@@ -8,29 +8,37 @@
 #include <cstdint>
 #include <utility>
 #include "ImageFormat.hpp"
-
-
-#ifdef ENERGYLEAF_ESP
-#include "esp_specific_header.h"
-#endif
+#include <Core/Constants/Settings.hpp>
 
 namespace Energyleaf::Stream::V1::Types {
 
     class Image {
     public:
         Image()
-            : vWidth(0), vHeight(0), vBytesPerPixel(0), vFormat(ImageFormat::FB_RGB888), vData(nullptr){
+                : vWidth(0), vHeight(0), vBytesPerPixel(0), vFormat(ImageFormat::FB_RGB888), vData(nullptr){
         };
 
         Image(int width, int height, int bytesPerPixel, ImageFormat format, std::uint8_t* data)
-            : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format) {
+                : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format) {
             size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
+            this->vData = Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().create(arraySize);
+            if (!vData) {
+                throw std::bad_alloc();
+            }
             std::copy(data, data + arraySize, vData);
         }
 
+        Image(int width, int height, int bytesPerPixel, ImageFormat format)
+                : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format) {
+            size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
+            this->vData = Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().create(arraySize);
+            if (!vData) {
+                throw std::bad_alloc();
+            }
+        }
+
         Image(Image &&other)
-        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(other.vData){
+        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(std::move(other.vData)){
             other.vWidth = 0;
             other.vHeight = 0;
             other.vBytesPerPixel = 0;
@@ -44,25 +52,16 @@ namespace Energyleaf::Stream::V1::Types {
             this->vBytesPerPixel = other.vBytesPerPixel;
             this->vFormat = other.vFormat;
             size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
+            this->vData = Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().create(arraySize);
+            if (!vData) {
+                throw std::bad_alloc();
+            }
             std::copy(other.vData, other.vData + arraySize, vData);
         }
 
-
-#ifdef ENERGYLEAF_ESP
-        void* operator new(std::size_t size) {
-            return ps_malloc(size);
-        }
-
-        // Overloaded delete operator
-        void operator delete(void* p) {
-            free(p);
-        }
-#endif
-
         Image& operator=(Image&& other) noexcept {
             if (this != &other) {
-                delete[] this->vData;
+                Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().destroy(vData,Energyleaf::Stream::V1::Extras::Memory::CreatorArgument::MULTI);
                 this->vWidth = other.vWidth;
                 this->vHeight = other.vHeight;
                 this->vBytesPerPixel = other.vBytesPerPixel;
@@ -83,14 +82,17 @@ namespace Energyleaf::Stream::V1::Types {
             this->vBytesPerPixel = other.vBytesPerPixel;
             this->vFormat = other.vFormat;
             size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
-            this->vData = new std::uint8_t[arraySize];
+            this->vData = Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().create(arraySize);
+            if (!vData) {
+                throw std::bad_alloc();
+            }
             std::copy(other.vData, other.vData + arraySize, vData);
             return *this;
         }
 
         virtual ~Image() {
             if(this->vData) {
-                delete[] this->vData;
+                Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().destroy(vData,Energyleaf::Stream::V1::Extras::Memory::CreatorArgument::MULTI);
                 this->vData = nullptr;
             }
         }
@@ -133,9 +135,12 @@ namespace Energyleaf::Stream::V1::Types {
 
         void initData() {
             if(this->vData != nullptr) {
-                delete[] this->vData;
+                Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().destroy(vData,Energyleaf::Stream::V1::Extras::Memory::CreatorArgument::MULTI);
             }
-            this->vData = new std::uint8_t[this->vWidth * this->vHeight * this->vBytesPerPixel];
+            this->vData = Energyleaf::Stream::Constants::Settings::uint8_tCreator.getCreator().create(this->vWidth * this->vHeight * this->vBytesPerPixel);
+            if (!vData) {
+                throw std::bad_alloc();
+            }
         }
 
     private:

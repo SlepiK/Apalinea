@@ -72,7 +72,7 @@ namespace Energyleaf::Stream::V1::Link {
 
                 for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                     if (this->vState == Operator::OperatorProcessState::CONTINUE) {
-                        (*iterator)->setInputTuple(OutputTuple(outputTuple));
+                        (*iterator)->setInputTuple(outputTuple);
                     } else {
                         (*iterator)->setOperatorProcessState(this->vState);
                     }
@@ -85,6 +85,7 @@ namespace Energyleaf::Stream::V1::Link {
             this->vProcessing = false;
             this->vProcessed = true;
         }
+
 
         template<typename PipeOperatorNext>
         void connect(const std::shared_ptr<PipeLink<PipeOperatorNext>> &nextLink) {
@@ -127,3 +128,4 @@ namespace Energyleaf::Stream::V1::Link {
 } // Stream::V1::Link
 
 #endif //STREAM_V1_LINK_PIPELINK_HPP
+

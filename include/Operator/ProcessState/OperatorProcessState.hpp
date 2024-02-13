@@ -9,7 +9,8 @@ namespace Energyleaf::Stream::V1::Operator {
 
     enum class OperatorProcessState : int {
         CONTINUE = 0,
-        STOP = 1
+        STOP = 1,
+        BREAK = 2
     };
 
 } // Stream::V1::Operator

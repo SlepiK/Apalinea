@@ -20,7 +20,7 @@ namespace Energyleaf::Stream::V1::Link {
         using InputTuple = typename IsBasedOnAbstractSinkOperator<SinkOperator>::InputTuple;
 
         explicit SinkLink(SinkOperator&& sinkOperator)
-            : vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
+                : vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
         }
 
         explicit SinkLink(SinkOperator& sinkOperator)
@@ -28,7 +28,7 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         SinkLink(SinkLink&& other) noexcept
-            : vOperator(std::move(other.vOperator)), inputTuple(std::move(other.inputTuple)) {
+                : vOperator(std::move(other.vOperator)), inputTuple(std::move(other.inputTuple)) {
         }
 
         ~SinkLink() override = default;

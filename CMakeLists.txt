@@ -27,8 +27,6 @@ set(PROJECT_HEADERS
         include/Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
         include/Core/Constants/Version.hpp
         include/Core/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
-        include/Types/Empty/EmptyType.hpp
-        include/Core/Operator/SinkOperator/SerialSinkOperator/SerialSinkOperator.hpp
         include/Types/Power/Power.hpp
         include/Types/Image/Image.hpp
         include/Types/Image/ImageFormat.hpp
@@ -36,8 +34,6 @@ set(PROJECT_HEADERS
         include/Types/Pixel/HSV.hpp
         include/Types/Pixel/RGB.hpp
         include/Extras/Converter/Types/Pixel/RGBtoHSV.hpp
-        include/Extras/Network/ESP/WebSender/WebSender.hpp
-        include/Core/Operator/SinkOperator/WebSenderSinkOperator/WebSenderSinkOperator.hpp
         include/Core/Operator/PipeOperator/StatePipeOperator/StatePipeOperator.hpp
         include/Core/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp
         include/Core/Operator/PipeOperator/SelectPipeOperator/SelectPipeOperator.hpp
@@ -53,14 +49,23 @@ set(PROJECT_HEADERS
 )
 
 set(PROJECT_SOURCES
-        src/Operator/AbstractOperator.cpp
-        src/Link/AbstractLink.cpp
-        src/Types/Buffer/ELData.pb.c
 )
 
 set(DEMO_SOURCES
         example/example.cpp
-        example/CameraEL.hpp
+        include/Core/Constants/Settings.hpp
+        include/Core/Operator/PipeOperator/EnrichPipeOperator/AbstractEnricher.hpp
+        include/Core/Operator/PipeOperator/EnrichPipeOperator/EnrichPipeOperator.hpp
+        include/Core/Operator/SinkOperator/SenderSinkOperator/AbstractSender.hpp
+        include/Core/Operator/SinkOperator/SenderSinkOperator/SenderSinkOperator.hpp
+        include/Core/Operator/SinkOperator/WriteSinkOperator/AbstractWriter.hpp
+        include/Core/Operator/SinkOperator/WriteSinkOperator/WriteSinkOperator.hpp
+        include/Extras/Memory/CreatorArgument.hpp
+        include/Extras/Memory/CreatorContainer.hpp
+        include/Extras/Memory/DefaultCreator.hpp
+        include/Extras/Memory/ICreator.hpp
+        include/Extras/Network/WebSender/AbstractWebSender.hpp
+        include/Core/Operator/SinkOperator/CoutSinkOperator/ConsoleWriter.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})

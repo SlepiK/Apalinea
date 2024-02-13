@@ -21,7 +21,7 @@ namespace Energyleaf::Stream::V1::Link {
         using OutputTuple = typename IsBasedOnAbstractSourceOperator<SourceOperator>::OutputTuple;
 
         explicit SourceLink(SourceOperator&& sourceOperator)
-            : vOperator(std::forward<SourceOperator>(sourceOperator)) {
+                : vOperator(std::forward<SourceOperator>(sourceOperator)) {
         }
 
         explicit SourceLink(SourceOperator& sourceOperator)
@@ -43,14 +43,15 @@ namespace Energyleaf::Stream::V1::Link {
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
-            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
+            if(this->vState == Operator::OperatorProcessState::CONTINUE || this->vState == Operator::OperatorProcessState::BREAK) {
                 OutputTuple outputTuple;
                 this->vOperator.process(outputTuple);
                 this->vState = this->vOperator.getOperatorProcessState();
 
                 for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                     if (this->vState == Operator::OperatorProcessState::CONTINUE) {
-                        (*iterator)->setInputTuple(OutputTuple(outputTuple));
+                        (*iterator)->setInputTuple(outputTuple);
+                        (*iterator)->setOperatorProcessState(this->vState);
                     } else {
                         (*iterator)->setOperatorProcessState(this->vState);
                     }

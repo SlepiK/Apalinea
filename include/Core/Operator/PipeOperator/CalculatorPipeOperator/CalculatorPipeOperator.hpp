@@ -5,14 +5,15 @@
 #ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
 #define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
 
+#include <chrono>
+#include <optional>
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
-#include "Types/Empty/EmptyType.hpp"
 #include "Types/Power/Power.hpp"
 #include "Tuple/Tuple.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class CalculatorPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Empty>, Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>, Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power,std::string>> {
     public:
         static constexpr float WATT_PER_MILLISECOND = 3600000.0f;
         static constexpr float WATT_PER_SECOND = 3600.0f;
@@ -55,43 +56,40 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         }
 
     private:
-        unsigned long vLast;
+        std::optional<std::chrono::steady_clock::time_point> vLast;
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
-        float wattPer = WATT_PER_MINUTE;
+        float wattPer = WATT_PER_SECOND;
         Energyleaf::Stream::V1::Types::Power power;
         bool vRun = false;
 
-        static unsigned long getCurrentTime() {
-#ifdef ENERGYLEAF_ESP
-             return millis();
-#else
-            return 0u;
-#endif
-         }
+        std::chrono::steady_clock::time_point getCurrentTimePoint() {
+            return std::chrono::steady_clock::now();
+        }
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Empty> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power> &outputTuple) override {
+        void work(Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &inputTuple,
+                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power,std::string> &outputTuple) override {
             if(!this->vRotationPerKWhSet) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
             this->vRun = true;
 
-            if(this->vLast > 0) {
-                unsigned long current = getCurrentTime();
-                unsigned long rotationTime = current - this->vLast;
-                if(rotationTime > 30) {
-                    power = (this->wattPer / rotationTime / this->vRotationPerKWh) * 1000.0f;
+            if(this->vLast.has_value()) {
+                std::chrono::steady_clock::time_point current = getCurrentTimePoint();
+                std::chrono::milliseconds  rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
+                if(rotationTime.count() > 30) {
+                    power = (this->wattPer / rotationTime.count() / this->vRotationPerKWh) * 1000.0f;
                     this->vLast = current;
                 } else {
                     power = 0.0f;
                 }
             } else {
                 //initial process, no red mark was detected before this event.
-                this->vLast = getCurrentTime();
+                this->vLast = getCurrentTimePoint();
             }
             outputTuple.clear();
-            outputTuple.addItem(std::string("POWER"),power);
+            outputTuple.addItem(inputTuple.getItem<std::string>(0));
+            outputTuple.addItem(std::string("Power"),power);
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::PipeOperator

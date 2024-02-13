@@ -15,6 +15,7 @@ namespace Energyleaf::Stream::V1::Tuple {
     template<typename... ItemData>
     class Tuple {
     public:
+
         Tuple() = default;
 
         Tuple(Tuple<ItemData...> &&other)

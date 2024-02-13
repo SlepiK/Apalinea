@@ -21,6 +21,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
         CameraSourceOperator() : vCamera() {
         }
 
+        ~CameraSourceOperator() = default;
+
         const Camera& getCamera() const{
             return this->vCamera;
         }
@@ -36,16 +38,24 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
         const CameraConfig& getCameraConfig() const {
             this->vCamera.getConfig();
         }
+
         void start() {
             this->vCamera.start();
         }
+
 
     private:
         Camera vCamera;
     protected:
         void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image> &outputTuple) override {
-            outputTuple.clear();
-            outputTuple.addItem(std::string("Image"),this->vCamera.getImage());
+            Energyleaf::Stream::V1::Types::Image img = this->vCamera.getImage();
+            if(img.getData() != nullptr) {
+                outputTuple.clear();
+                outputTuple.addItem(std::string("Image"),img);
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
+            }
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::SourceOperator
