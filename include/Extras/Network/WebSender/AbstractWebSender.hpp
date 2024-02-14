@@ -21,6 +21,8 @@ namespace Energyleaf::Stream::V1::Extras::Network {
         }
 
         ~AbstractWebSender() = default;
+
+        virtual void setSecure(bool secure) = 0;
     private:
         Sender vSender;
     protected:
