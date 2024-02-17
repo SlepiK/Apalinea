@@ -13,18 +13,17 @@ namespace Energyleaf::Stream::V1::Tuple {
 
     class Entry {
     public:
-        //ToDo: Find a better name for x
         template <typename T>
-        Entry(T x) : vItem(std::make_unique<T>(std::move(x))) {
+        Entry(T item) : vItem(std::make_unique<T>(std::move(item))) {
         }
 
-        Entry(const Entry& item) : vItem(item.vItem->copy()) {
+        Entry(const Entry& entry) : vItem(entry.vItem->copy()) {
         }
 
         Entry(Entry&&) noexcept = default;
 
-        Entry& operator=(const Entry& item) {
-            return *this = Entry(item);
+        Entry& operator=(const Entry& entry) {
+            return *this = Entry(entry);
         }
 
         Entry& operator=(Entry&&) noexcept = default;
