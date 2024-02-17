@@ -14,6 +14,7 @@ namespace Energyleaf::Stream::V1::Tuple {
         virtual ~Item() = default;
         [[nodiscard]] virtual std::unique_ptr<Item> copy() const = 0;
         [[nodiscard]] virtual const std::string& getName() const = 0;
+        [[nodiscard]] virtual std::string toString() const = 0;
     };
 }
 

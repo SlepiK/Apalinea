@@ -5,16 +5,17 @@
 #ifndef STREAM_V1_TYPES_STRINGITEM_HPP
 #define STREAM_V1_TYPES_STRINGITEM_HPP
 
+#include <Types/Base/TBaseItem.hpp>
 #include <Tuple/Item/Item.hpp>
 #include <memory>
 
 namespace Energyleaf::Stream::V1::Types::Base {
-    class StringItem final : public Energyleaf::Stream::V1::Tuple::Item {
+class StringItem final : public Energyleaf::Stream::V1::Types::Base::TBaseItem<std::string> {
     public:
 
         constexpr static const std::string NAME = "StringItem";
 
-        StringItem(std::string&& data) : vData(std::move(data)) {
+        StringItem(std::string&& data) : Energyleaf::Stream::V1::Types::Base::TBaseItem<std::string>(std::move(data)) {
         }
 
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Tuple::Item> copy() const override {
@@ -27,12 +28,6 @@ namespace Energyleaf::Stream::V1::Types::Base {
 
         void evaluate() override {
         }
-
-        const std::string& getData() const {
-            return vData;
-        }
-    private:
-        std::string vData;
     };
 }
 
