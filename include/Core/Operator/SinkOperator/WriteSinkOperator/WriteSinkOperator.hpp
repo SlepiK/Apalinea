@@ -18,15 +18,15 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
         explicit WriteSinkOperator() : vWriter() {
         }
 
-        explicit WriteSinkOperator(WriteSinkOperator&& other) noexcept
+        WriteSinkOperator(WriteSinkOperator&& other) noexcept
                 : vWriter(std::move(other.vWriter)) {
         }
 
-        explicit WriteSinkOperator(WriteSinkOperator& other) noexcept
+        WriteSinkOperator(WriteSinkOperator& other) noexcept
                 : vWriter(other.vWriter) {
         }
 
-        ~WriteSinkOperator() = default;
+        ~WriteSinkOperator() override = default;
 
         Writer& getWriter() {
             return this->vWriter;
