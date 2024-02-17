@@ -13,7 +13,7 @@ namespace Energyleaf::Stream::V1::Types::Base {
 class StringItem final : public Energyleaf::Stream::V1::Types::Base::TBaseItem<std::string> {
     public:
 
-        constexpr static const std::string NAME = "StringItem";
+        inline static const std::string NAME = "StringItem";
 
         StringItem(std::string&& data) : Energyleaf::Stream::V1::Types::Base::TBaseItem<std::string>(std::move(data)) {
         }
