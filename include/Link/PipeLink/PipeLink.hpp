@@ -17,13 +17,10 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename PipeOperator>
     class PipeLink
             : public AbstractLink,
-              public LinkWrapper<typename IsBasedOnAbstractPipeOperator<PipeOperator>::InputTuple> {
+              public LinkWrapper {
         static_assert(IsBasedOnAbstractPipeOperator<PipeOperator>::value,
                       "PipeOperator must be based on AbstractPipeOperator!");
     public:
-
-        using InputTuple = typename IsBasedOnAbstractPipeOperator<PipeOperator>::InputTuple;
-        using OutputTuple = typename IsBasedOnAbstractPipeOperator<PipeOperator>::OutputTuple;
 
         explicit PipeLink(PipeOperator &&pipeOperator)
                 : vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple() {
@@ -43,7 +40,7 @@ namespace Energyleaf::Stream::V1::Link {
             return this->vOperator;
         }
 
-        void setInputTupleR(InputTuple &tuple) override {
+        void setInputTupleR(Tuple::Tuple &tuple) override {
             if (!this->vProcessing) {
                 this->inputTuple = tuple;
             } else {
@@ -51,7 +48,7 @@ namespace Energyleaf::Stream::V1::Link {
             }
         }
 
-        void setInputTuple(InputTuple tuple) override {
+        void setInputTuple(Tuple::Tuple tuple) override {
             if (!this->vProcessing) {
                 this->inputTuple = tuple;
             } else {
@@ -65,7 +62,7 @@ namespace Energyleaf::Stream::V1::Link {
             if (!this->vProcessing) this->vProcessing = true;
 
             if(this->vState == Operator::OperatorProcessState::CONTINUE) {
-                OutputTuple outputTuple;
+                Tuple::Tuple outputTuple;
                 this->vOperator.process(this->inputTuple, outputTuple);
                 this->inputTuple.clear();
                 this->vState = this->vOperator.getOperatorProcessState();
@@ -89,15 +86,11 @@ namespace Energyleaf::Stream::V1::Link {
 
         template<typename PipeOperatorNext>
         void connect(const std::shared_ptr<PipeLink<PipeOperatorNext>> &nextLink) {
-            static_assert(std::is_same_v<OutputTuple, typename PipeLink<PipeOperatorNext>::InputTuple>,
-                          "InputTuple types must be the same for connection.");
             this->vLinks.push_back(nextLink);
         }
 
         template<typename SinkOperator>
         void connect(const SinkLinkPtr<SinkOperator>& nextLink) {
-            static_assert(std::is_same_v<OutputTuple, typename SinkLink<SinkOperator>::InputTuple>,
-                          "InputTuple types must be the same for connection.");
             this->vLinks.push_back(nextLink);
         }
 
@@ -110,9 +103,9 @@ namespace Energyleaf::Stream::V1::Link {
 
     private:
         PipeOperator vOperator;
-        InputTuple inputTuple;
-        std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>> vLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>>::iterator;
+        Tuple::Tuple inputTuple;
+        std::vector<std::shared_ptr<LinkWrapper>> vLinks;
+        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
     protected:
     };
 

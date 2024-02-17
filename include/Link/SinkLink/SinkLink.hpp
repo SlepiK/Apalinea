@@ -13,11 +13,9 @@
 namespace Energyleaf::Stream::V1::Link {
 
     template<typename SinkOperator>
-    class SinkLink : public AbstractLink, public LinkWrapper<typename IsBasedOnAbstractSinkOperator<SinkOperator>::InputTuple> {
+    class SinkLink : public AbstractLink, public LinkWrapper {
         static_assert(IsBasedOnAbstractSinkOperator<SinkOperator>::value,"SinkOperator must be based on AbstractSinkOperator!");
     public:
-
-        using InputTuple = typename IsBasedOnAbstractSinkOperator<SinkOperator>::InputTuple;
 
         explicit SinkLink(SinkOperator&& sinkOperator)
                 : vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
@@ -37,7 +35,7 @@ namespace Energyleaf::Stream::V1::Link {
             return this->vOperator;
         }
 
-        void setInputTupleR(InputTuple& tuple) override {
+        void setInputTupleR(Tuple::Tuple& tuple) override {
             if(!this->vProcessing) {
                 this->inputTuple = tuple;
             } else {
@@ -45,7 +43,7 @@ namespace Energyleaf::Stream::V1::Link {
             }
         }
 
-        void setInputTuple(InputTuple tuple) override {
+        void setInputTuple(Tuple::Tuple tuple) override {
             if(!this->vProcessing) {
                 this->inputTuple = tuple;
             } else {
@@ -73,7 +71,7 @@ namespace Energyleaf::Stream::V1::Link {
 
     private:
         SinkOperator vOperator;
-        InputTuple inputTuple;
+        Tuple::Tuple inputTuple;
     protected:
     };
 

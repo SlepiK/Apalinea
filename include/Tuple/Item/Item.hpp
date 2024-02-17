@@ -1,76 +1,20 @@
 //
-// Created by simon on 27.01.2024.
+// Created by SlepiK on 16.02.2024.
 //
 
-#ifndef STREAM_V1_TUPLE_TUPLEDATA_HPP
-#define STREAM_V1_TUPLE_TUPLEDATA_HPP
+#ifndef STREAM_V1_TUPLE_IITEM_HPP
+#define STREAM_V1_TUPLE_IITEM_HPP
 
 #include <string>
-#include <string_view>
-#include <utility>
+#include "IEvaluate.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
-
-    template<typename ItemData>
-    class Item {
+    class Item : public IEvaluate {
     public:
-
-        Item(std::string &&name, ItemData &&data)
-                : vName(std::move(name)), vData(std::forward<ItemData>(data)) {
-        }
-
-        Item(std::string &name, ItemData &data)
-                : vName(std::move(name)), vData(std::move(data)) {
-        }
-
-        Item(std::string &&name,const ItemData &data)
-                : vName(std::move(name)), vData(std::move(data)) {
-        }
-
-        Item(Item &&other)
-        noexcept: vName(std::move(other.vName)), vData(std::move(other.vData)) {
-        }
-
-        Item(Item &&other, ItemData &&data)
-                : vName(std::move(other.vName)), vData(std::forward<ItemData>(data)) {
-        }
-
-        Item(const Item& other) {
-            vData = other.vData;
-            vName = other.vName;
-        }
-
         virtual ~Item() = default;
-
-        Item& operator=(Item&& other) noexcept {
-            vData = std::move(other.vData);
-            vName = std::move(other.vName);
-            return *this;
-        }
-
-        Item& operator=(const Item& other) {
-            vData = other.vData;
-            vName = other.vName;
-            return *this;
-        }
-
-        ItemData getData() const {
-            return this->vData;
-        }
-
-        [[nodiscard]] std::string_view getName() const {
-            return this->vName;
-        }
-
-        void updateName(std::string&& name) {
-            this->vName = std::move(name);
-        }
-
-    private:
-        ItemData vData;
-        std::string vName;
+        [[nodiscard]] virtual std::unique_ptr<Item> copy() const = 0;
+        [[nodiscard]] virtual const std::string& getName() const = 0;
     };
+}
 
-} // Stream::V1::Tuple
-
-#endif //STREAM_V1_TUPLE_TUPLEDATA_HPP
+#endif //STREAM_V1_TUPLE_IITEM_HPP

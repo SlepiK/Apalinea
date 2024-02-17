@@ -7,6 +7,7 @@
 
 #include "IOperator.hpp"
 #include <stdexcept>
+#include "Tuple/Tuple.hpp"
 
 namespace Energyleaf::Stream::V1::Operator {
 

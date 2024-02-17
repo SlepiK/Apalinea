@@ -11,8 +11,7 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     template<typename Input, typename Output>
-    class WindowPipeOperator : Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Input>,
-            Energyleaf::Stream::V1::Tuple::Tuple<Output,std::size_t>> {
+    class WindowPipeOperator : Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         void setSize(std::size_t&& size) {
             this->vWindowSize = size;
@@ -30,11 +29,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         std::size_t vWindowSize = 1;
         std::size_t vWindowSizeActual = 0;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Input> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<Output,std::size_t> &outputTuple) override {
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
             outputTuple.clear();
-            outputTuple.addItem(inputTuple);
-            outputTuple.addItem(std::string("INTERNAL_WINDOW"),this->vWindowCurrent);
+            /*outputTuple.addItem(inputTuple);
+            outputTuple.addItem(std::string("INTERNAL_WINDOW"),this->vWindowCurrent);*/
             if(++this->vWindowSizeActual == this->vWindowSize) {
                 this->vWindowSizeActual = 0;
                 ++this->vWindowCurrent;

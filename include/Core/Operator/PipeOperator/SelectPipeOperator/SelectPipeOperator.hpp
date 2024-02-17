@@ -10,8 +10,7 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class SelectPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::size_t,std::string>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         void setThreshold(int&& threshold) {
             this->vThreshold = threshold;
@@ -23,13 +22,13 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     private:
         int vThreshold = 0;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::size_t,std::string> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &outputTuple) override {
-            std::size_t input = inputTuple.getItem<std::size_t>(1).getData();
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
+            std::size_t input = 0;// inputTuple.getItem<std::size_t>(1).getData();
             bool select = input > this->vThreshold;
             outputTuple.clear();
-            outputTuple.addItem(inputTuple.getItem<std::string>(0));
-            outputTuple.addItem(std::string("SELECT"), select);
+            /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
+            outputTuple.addItem(std::string("SELECT"), select);*/
         }
     };
 }

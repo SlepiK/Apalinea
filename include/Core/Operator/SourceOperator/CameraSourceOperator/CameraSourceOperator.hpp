@@ -13,7 +13,7 @@
 namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     template<typename Camera>
     class CameraSourceOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractSourceOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractSourceOperator {
         static_assert(Trait::IsBasedOnAbstractCamera<Camera>::value,"Camera needs to be derived from AbstractCamera!");
     public:
         using CameraConfig = typename Trait::IsBasedOnAbstractCamera<Camera>::CameraConfig;
@@ -47,11 +47,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     private:
         Camera vCamera;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image> &outputTuple) override {
+        void work(Tuple::Tuple &outputTuple) override {
             Energyleaf::Stream::V1::Types::Image img = this->vCamera.getImage();
             if(img.getData() != nullptr) {
                 outputTuple.clear();
-                outputTuple.addItem(std::string("Image"),img);
+                //outputTuple.addItem(std::string("Image"),img);
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;

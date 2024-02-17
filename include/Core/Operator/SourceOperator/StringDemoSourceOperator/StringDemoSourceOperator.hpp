@@ -10,13 +10,13 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     class StringDemoSourceOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractSourceOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractSourceOperator {
     public:
     private:
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::string> &outputTuple) override {
+        void work(Tuple::Tuple &outputTuple) override {
             outputTuple.clear();
-            outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
+            //outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::SourceOperator

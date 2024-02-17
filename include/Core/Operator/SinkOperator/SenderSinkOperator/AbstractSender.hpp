@@ -8,12 +8,11 @@
 #include <Operator/SinkOperator/AbstractSinkOperator.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
-    template<typename TupleInput>
     class AbstractSender {
     public:
         AbstractSender() = default;
         ~AbstractSender() = default;
-        virtual bool work(TupleInput &inputTuple) = 0;
+        virtual bool work(Tuple::Tuple &inputTuple) = 0;
     private:
     protected:
     };

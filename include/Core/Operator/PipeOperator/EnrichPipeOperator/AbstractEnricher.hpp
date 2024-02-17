@@ -8,12 +8,11 @@
 #include <Operator/PipeOperator/AbstractPipeOperator.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
-    template<typename TupleInput, typename TupleOutput>
     class AbstractEnricher {
     public:
         AbstractEnricher() = default;
         ~AbstractEnricher() = default;
-        virtual bool work(TupleInput &inputTuple, TupleOutput& outputTuple) = 0;
+        virtual bool work(Tuple::Tuple &inputTuple, Tuple::Tuple& outputTuple) = 0;
     private:
     protected:
     };

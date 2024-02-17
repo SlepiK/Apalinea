@@ -10,7 +10,7 @@
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Sender>
     class SenderSinkOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractSinkOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power,std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractSinkOperator {
     public:
         explicit SenderSinkOperator() : vSender() {
         }
@@ -31,7 +31,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     private:
         Sender vSender;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power,std::string> &inputTuple) override {
+        void work(Tuple::Tuple &inputTuple) override {
             try {
                 /*if(vSender.work(inputTuple)) {
                     vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;

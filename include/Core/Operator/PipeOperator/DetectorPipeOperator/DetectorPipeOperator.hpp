@@ -15,8 +15,7 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class DetectorPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<std::size_t,std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         void setLowerBorder(Energyleaf::Stream::V1::Types::Pixel::HSV&& hsv) {
             this->vLowerBorder = hsv;
@@ -37,11 +36,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         Energyleaf::Stream::V1::Types::Pixel::HSV vLowerBorder = Energyleaf::Stream::V1::Types::Pixel::HSV(0.f,0.f,0.f);
         Energyleaf::Stream::V1::Types::Pixel::HSV vHigherBorder = Energyleaf::Stream::V1::Types::Pixel::HSV(0.f,0.f,0.f);;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<std::size_t,std::string> &outputTuple) override {
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
             std::size_t foundPixel = 0;
 
-            Energyleaf::Stream::V1::Types::Image image = inputTuple.getItem<Energyleaf::Stream::V1::Types::Image>(1).getData();
+            Energyleaf::Stream::V1::Types::Image image;// = inputTuple.getItem<Energyleaf::Stream::V1::Types::Image>(1).getData();
             Energyleaf::Stream::V1::Types::Pixel::HSV hsv;
             for (std::size_t i = 0; i < (image.getWidth() * image.getHeight()); ++i) {
                 std::size_t index = i * image.getBytesPerPixel();
@@ -58,8 +57,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             }
 
             outputTuple.clear();
-            outputTuple.addItem(inputTuple.getItem<std::string>(0));
-            outputTuple.addItem(std::string("FOUNDPIXEL"),foundPixel);
+            /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
+            outputTuple.addItem(std::string("FOUNDPIXEL"),foundPixel);*/
         }
     };
 }

@@ -12,7 +12,7 @@
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Writer>
     class WriteSinkOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractSinkOperator<Energyleaf::Stream::V1::Tuple::Tuple<std::string>>{
+            : public Energyleaf::Stream::V1::Operator::AbstractSinkOperator{
     public:
         explicit WriteSinkOperator() : vWriter() {
         }
@@ -33,9 +33,9 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     private:
         Writer vWriter;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<std::string> &inputTuple) override {
+        void work(Tuple::Tuple &inputTuple) override {
             try {
-                vWriter << inputTuple.getItem<std::string>(0).getData() << std::endl;
+                //vWriter << inputTuple.getItem<std::string>(0).getData() << std::endl;
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             } catch (std::exception& e) {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;

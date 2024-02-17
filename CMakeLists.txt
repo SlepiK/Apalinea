@@ -13,7 +13,7 @@ set(PROJECT_HEADERS
         include/Operator/SourceOperator/AbstractSourceOperator.hpp
         include/Operator/AbstractOperator.hpp
         include/Operator/IOperator.hpp
-        include/Tuple/Item/Item.hpp
+        include/Tuple/Item/Entry.hpp
         include/Tuple/Tuple.hpp
         include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
         include/Link/ILink.hpp
@@ -43,6 +43,9 @@ set(PROJECT_HEADERS
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
         include/Operator/ProcessState/OperatorProcessState.hpp
+        include/Tuple/Item/Item.hpp
+        include/Tuple/Item/IEvaluate.hpp
+        include/Tuple/Item/ItemTrait.hpp
 )
 
 set(PROJECT_SOURCES

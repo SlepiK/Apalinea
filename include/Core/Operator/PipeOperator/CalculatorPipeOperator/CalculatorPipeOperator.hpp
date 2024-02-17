@@ -13,7 +13,7 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class CalculatorPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>, Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power,std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         static constexpr float WATT_PER_MILLISECOND = 3600000.0f;
         static constexpr float WATT_PER_SECOND = 3600.0f;
@@ -67,8 +67,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             return std::chrono::steady_clock::now();
         }
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Power,std::string> &outputTuple) override {
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
             if(!this->vRotationPerKWhSet) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
@@ -88,8 +88,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 this->vLast = getCurrentTimePoint();
             }
             outputTuple.clear();
-            outputTuple.addItem(inputTuple.getItem<std::string>(0));
-            outputTuple.addItem(std::string("Power"),power);
+            /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
+            outputTuple.addItem(std::string("Power"),power);*/
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::PipeOperator

@@ -11,8 +11,7 @@
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class StatePipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>>{
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         void setState(bool&& state) {
             if(!this->vReady) {
@@ -27,9 +26,9 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         bool vState;
         bool vReady = false;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &outputTuple) override {
-            bool input = inputTuple.getItem<bool>(1).getData();
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
+            bool input = false; //inputTuple.getItem<bool>(1).getData();
             bool output;
             if(this->vReady) {
                 bool tmp = (this->vState != input);
@@ -44,8 +43,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             if(output){
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
                 outputTuple.clear();
-                outputTuple.addItem(inputTuple.getItem<std::string>(0));
-                outputTuple.addItem(std::string("State"),output);
+                /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
+                outputTuple.addItem(std::string("State"),output);*/
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             }

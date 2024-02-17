@@ -10,8 +10,7 @@
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     template<typename Enricher>
     class EnrichPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string>>{
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator{
     public:
         explicit EnrichPipeOperator() : vEnricher() {
         }
@@ -32,8 +31,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     private:
         Enricher vEnricher;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string>& outputTuple) override {
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple& outputTuple) override {
             try {
                 if(vEnricher.work(inputTuple,outputTuple)) {
                     vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;

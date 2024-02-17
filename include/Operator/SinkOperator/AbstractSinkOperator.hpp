@@ -9,7 +9,6 @@
 
 namespace Energyleaf::Stream::V1::Operator {
 
-    template <typename InputTuple>
     class AbstractSinkOperator : public AbstractOperator {
     public:
         AbstractSinkOperator() = default;
@@ -20,7 +19,7 @@ namespace Energyleaf::Stream::V1::Operator {
             return OperatorType::SINK;
         }
 
-        virtual void process(InputTuple& inputTuple) final {
+        virtual void process(Tuple::Tuple& inputTuple) final {
             if (this->vProcessing) throw std::runtime_error("Operator is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
@@ -31,10 +30,9 @@ namespace Energyleaf::Stream::V1::Operator {
             this->vProcessed = true;
         }
 
-        using SinkInputTuple = InputTuple;
     private:
     protected:
-        virtual void work(InputTuple& inputTuple) = 0;
+        virtual void work(Tuple::Tuple& inputTuple) = 0;
     };
 
 } // Stream::V1::Operator

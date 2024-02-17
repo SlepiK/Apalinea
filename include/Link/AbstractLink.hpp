@@ -7,6 +7,7 @@
 
 #include "ILink.hpp"
 #include "Trait/LinkTrait.hpp"
+#include "Tuple/Tuple.hpp"
 
 namespace Energyleaf::Stream::V1::Link {
 
