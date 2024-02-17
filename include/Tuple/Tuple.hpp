@@ -75,9 +75,17 @@ namespace Energyleaf::Stream::V1::Tuple {
             }
         }
 
-        const Energyleaf::Stream::V1::Tuple::Entry& getItem(const ItemName& name) const {
+        const Energyleaf::Stream::V1::Tuple::Entry& getEntry(const ItemName& name) {
             if(this->vItems.contains(name)) {
                 return this->vItems.at(name);
+            }
+            throw std::runtime_error("No Item was found with that name!");
+        }
+
+        template<typename T>
+        const T& getItem(const ItemName& name) {
+            if(this->vItems.contains(name)) {
+                return this->vItems.at(name).get<T>();
             }
             throw std::runtime_error("No Item was found with that name!");
         }

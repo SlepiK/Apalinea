@@ -46,6 +46,8 @@ set(PROJECT_HEADERS
         include/Tuple/Item/Item.hpp
         include/Tuple/Item/IEvaluate.hpp
         include/Tuple/Item/ItemTrait.hpp
+        include/Types/Base/TBaseItem.hpp
+        include/Types/Base/StringItem.hpp
 )
 
 set(PROJECT_SOURCES

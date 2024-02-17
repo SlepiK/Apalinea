@@ -8,6 +8,7 @@
 #include <Operator/SinkOperator/AbstractSinkOperator.hpp>
 #include <ostream>
 #include <Tuple/Tuple.hpp>
+#include <Types/Base/StringItem.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Writer>
@@ -36,6 +37,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
         void work(Tuple::Tuple &inputTuple) override {
             try {
                 //vWriter << inputTuple.getItem<std::string>(0).getData() << std::endl;
+                vWriter << inputTuple.getItem<Types::Base::StringItem>("DemoString").getData() << std::endl;
+                vWriter << inputTuple.getEntry("DemoString").get<Types::Base::StringItem>().getData() << std::endl;
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             } catch (std::exception& e) {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
