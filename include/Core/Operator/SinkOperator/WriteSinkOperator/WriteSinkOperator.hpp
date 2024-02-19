@@ -10,6 +10,9 @@
 #include <Tuple/Tuple.hpp>
 #include <Types/Base/StringItem.hpp>
 
+#include <Expression/ToExpression/ToStringExpression.hpp>
+#include <Expression/ExpressionUnit.hpp>
+
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Writer>
     class WriteSinkOperator
@@ -36,6 +39,14 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     protected:
         void work(Tuple::Tuple &inputTuple) override {
             try {
+                /*Expression::ToStringExpression* tse = new Expression::ToStringExpression();
+                Expression::ExpressionUnit* eu = new Expression::ExpressionUnit("DemoString");
+                eu->setTuple(inputTuple);
+                tse->add(eu);
+                tse->execute();
+                tse->remove(eu);
+                delete eu;
+                delete tse;*/ //Demo Code of a real basic expression to get or convert an unit to string.
                 vWriter << inputTuple.getItem<Types::Base::StringItem>("DemoString").toString() << std::endl;
                 vWriter << inputTuple.getEntry("DemoString").get<Types::Base::StringItem>().toString() << std::endl;
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;

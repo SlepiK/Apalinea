@@ -48,6 +48,10 @@ set(PROJECT_HEADERS
         include/Tuple/Item/ItemTrait.hpp
         include/Types/Base/TBaseItem.hpp
         include/Types/Base/StringItem.hpp
+        include/Expression/IExpression.hpp
+        include/Expression/Expression.hpp
+        include/Expression/ExpressionUnit.hpp
+        include/Expression/ToExpression/ToStringExpression.hpp
 )
 
 set(PROJECT_SOURCES

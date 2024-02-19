@@ -13,6 +13,9 @@ namespace Energyleaf::Stream::V1::Tuple {
 
     class Entry {
     public:
+        Entry() {
+        }
+
         template <typename T>
         Entry(T item) : vItem(std::make_unique<T>(std::move(item))) {
         }
