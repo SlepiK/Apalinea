@@ -52,6 +52,8 @@ set(PROJECT_HEADERS
         include/Expression/Expression.hpp
         include/Expression/ExpressionUnit.hpp
         include/Expression/ToExpression/ToStringExpression.hpp
+        include/Tuple/Item/ItemType.hpp
+        include/Tuple/Item/ItemTypeRegistry.hpp
 )
 
 set(PROJECT_SOURCES

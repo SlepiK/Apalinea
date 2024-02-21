@@ -6,6 +6,8 @@
 #include "Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "Core/Plan/Plan.hpp"
 
+#include "Tuple/Item/ItemTypeRegistry.hpp"
+
 int main(int argc, char *argv[])
 {
     Energyleaf::Stream::V1::Core::Plan::Plan plan;
