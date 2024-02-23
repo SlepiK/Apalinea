@@ -11,7 +11,11 @@
 namespace Energyleaf::Stream::V1::Tuple {
     class ItemType {
     public:
-        ItemType(std::string&& name) : vName(std::move(name)) {
+        explicit ItemType(std::string&& name) : vName(std::move(name)) {
+        }
+
+        bool operator==(const ItemType& other) const {
+            return this->vName == other.vName;
         }
 
         [[nodiscard]] std::string_view getName() const {

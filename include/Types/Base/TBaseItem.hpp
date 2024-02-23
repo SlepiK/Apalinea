@@ -19,12 +19,6 @@ namespace Energyleaf::Stream::V1::Types::Base {
         [[nodiscard]] const T& getData() const {
             return vData;
         }
-
-        [[nodiscard]] std::string toString() const override {
-            std::ostringstream oss;
-            oss << vData;
-            return oss.str();
-        }
     private:
     protected:
         T vData;
@@ -37,10 +31,6 @@ namespace Energyleaf::Stream::V1::Types::Base {
         }
 
         [[nodiscard]] const std::string& getData() const {
-            return vData;
-        }
-
-        [[nodiscard]] std::string toString() const override {
             return vData;
         }
     private:

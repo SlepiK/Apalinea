@@ -34,8 +34,8 @@ namespace Energyleaf::Stream::V1::Tuple {
         template<typename T>
         const T& get() const {
             static_assert(std::is_base_of<Item,T>::value,"Used type must be derived from Item!");
-            static_assert(HasItemAnName<T>::value, "Wanted Type did not have a static NAME specifier!");
-            if(vItem->getName() == T::NAME) {
+            static_assert(HasItemAnType<T>::value, "Wanted Type did not have a static NAME specifier!");
+            if(vItem->getType() == T::TYPE) {
                 return static_cast<const T&>(*vItem);
             } else {
                 throw std::runtime_error("Could not cast to Type!");

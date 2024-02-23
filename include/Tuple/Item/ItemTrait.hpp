@@ -11,10 +11,10 @@
 namespace Energyleaf::Stream::V1::Tuple {
 
     template<typename T, typename = void>
-    struct HasItemAnName : std::false_type {};
+    struct HasItemAnType : std::false_type {};
 
     template <typename T>
-    struct HasItemAnName<T, std::void_t<decltype(T::NAME)>> : std::is_base_of<Item, T> {};
+    struct HasItemAnType<T, std::void_t<decltype(T::TYPE)>> : std::is_base_of<Item, T> {};
 
 }
 

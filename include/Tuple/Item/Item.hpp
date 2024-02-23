@@ -7,14 +7,14 @@
 
 #include <string>
 #include "IEvaluate.hpp"
+#include "ItemType.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
     class Item : public IEvaluate {
     public:
         virtual ~Item() = default;
         [[nodiscard]] virtual std::unique_ptr<Item> copy() const = 0;
-        [[nodiscard]] virtual const std::string& getName() const = 0;
-        [[nodiscard]] virtual std::string toString() const = 0;
+        [[nodiscard]] virtual const ItemType& getType() const = 0;
     };
 }
 

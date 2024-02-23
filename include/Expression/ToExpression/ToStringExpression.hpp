@@ -22,7 +22,7 @@ namespace Energyleaf::Stream::V1::Expression {
             for(IExpression* expression : vSubExpressions) {
                 if(!expression->isComposite()) {
                     expression->execute();
-                    this->vValue = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Base::StringItem>().toString();
+                    this->vValue = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Base::StringItem>().getData();
                 } else {
                     throw std::runtime_error("Something went wrong!");
                 }
