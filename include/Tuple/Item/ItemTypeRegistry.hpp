@@ -6,6 +6,7 @@
 #define STREAM_V1_TUPLE_ITEM_ITEMTYPEREGISTRY_HPP
 
 #include <vector>
+#include <algorithm>
 #include "ItemType.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
