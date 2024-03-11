@@ -54,6 +54,20 @@ set(PROJECT_HEADERS
         include/Expression/ToExpression/ToStringExpression.hpp
         include/Tuple/Item/ItemType.hpp
         include/Tuple/Item/ItemTypeRegistry.hpp
+        include/Types/Datatype/DtString.hpp
+        include/Types/Datatype/DtInt32.hpp
+        include/Types/Datatype/DtInt8.hpp
+        include/Types/Datatype/DtInt16.hpp
+        include/Types/Datatype/DtUInt8.hpp
+        include/Types/Datatype/DtUInt16.hpp
+        include/Types/Datatype/DtUInt32.hpp
+        include/Types/Datatype/DtInt64.hpp
+        include/Types/Datatype/DtUInt64.hpp
+        include/Types/Datatype/DtInt.hpp
+        include/Types/Datatype/DtSizeT.hpp
+        include/Tuple/Item/IItime.hpp
+        include/Types/TupleItem/StringItem.hpp
+        include/Types/TupleItem/StringItem.hpp
 )
 
 set(PROJECT_SOURCES
@@ -61,19 +75,6 @@ set(PROJECT_SOURCES
 
 set(DEMO_SOURCES
         example/example.cpp
-        include/Core/Constants/Settings.hpp
-        include/Core/Operator/PipeOperator/EnrichPipeOperator/AbstractEnricher.hpp
-        include/Core/Operator/PipeOperator/EnrichPipeOperator/EnrichPipeOperator.hpp
-        include/Core/Operator/SinkOperator/SenderSinkOperator/AbstractSender.hpp
-        include/Core/Operator/SinkOperator/SenderSinkOperator/SenderSinkOperator.hpp
-        include/Core/Operator/SinkOperator/WriteSinkOperator/AbstractWriter.hpp
-        include/Core/Operator/SinkOperator/WriteSinkOperator/WriteSinkOperator.hpp
-        include/Extras/Memory/CreatorArgument.hpp
-        include/Extras/Memory/CreatorContainer.hpp
-        include/Extras/Memory/DefaultCreator.hpp
-        include/Extras/Memory/ICreator.hpp
-        include/Extras/Network/WebSender/AbstractWebSender.hpp
-        include/Core/Operator/SinkOperator/CoutSinkOperator/ConsoleWriter.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
