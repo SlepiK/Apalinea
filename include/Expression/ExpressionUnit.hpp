@@ -7,22 +7,26 @@
 
 #include "IExpression.hpp"
 #include <Tuple/Tuple.hpp>
-#include <Tuple/Item/DepItem.hpp>
 #include <string>
 
 namespace Energyleaf::Stream::V1::Expression {
     class ExpressionUnit : public IExpression {
     public:
+
+        [[deprecated]]
         explicit ExpressionUnit(std::string&& unitName)
         : vUnitName(std::move(unitName)) {
         }
 
+        [[deprecated]]
         virtual ~ExpressionUnit() = default;
 
+        [[deprecated]]
         [[nodiscard]] bool isComposite() const override {
             return false;
         }
 
+        [[deprecated]]
         void execute() override {
             if(this->vTuple.getItems().empty()) {
                 throw std::runtime_error("No tuple was loaded!");
@@ -34,10 +38,12 @@ namespace Energyleaf::Stream::V1::Expression {
             }
         }
 
+        [[deprecated]]
         Tuple::Entry& getEntry() {
             return this->vUnitEntry;
         }
 
+        [[deprecated]]
         void setTuple(Tuple::Tuple& tuple) {
             this->vTuple = tuple;
         }

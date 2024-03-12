@@ -13,7 +13,7 @@ set(PROJECT_HEADERS
         include/Operator/SourceOperator/AbstractSourceOperator.hpp
         include/Operator/AbstractOperator.hpp
         include/Operator/IOperator.hpp
-        include/Tuple/Item/Entry.hpp
+        include/Tuple/Entry/Entry.hpp
         include/Tuple/Tuple.hpp
         include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
         include/Link/ILink.hpp
@@ -43,15 +43,11 @@ set(PROJECT_HEADERS
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
         include/Operator/ProcessState/OperatorProcessState.hpp
-        include/Tuple/Item/DepItem.hpp
-        include/Tuple/Item/IEvaluate.hpp
         include/Types/Datatype/IDtTrait.hpp
         include/Expression/IExpression.hpp
         include/Expression/Expression.hpp
         include/Expression/ExpressionUnit.hpp
-        include/Expression/ToExpression/ToStringExpression.hpp
-        include/Tuple/Item/ItemType.hpp
-        include/Tuple/Item/ItemTypeRegistry.hpp
+        include/Expression/ToExpression/ToDtStringExpression.hpp
         include/Types/Datatype/DtString.hpp
         include/Types/Datatype/DtInt32.hpp
         include/Types/Datatype/DtInt8.hpp
@@ -63,9 +59,20 @@ set(PROJECT_HEADERS
         include/Types/Datatype/DtUInt64.hpp
         include/Types/Datatype/DtInt.hpp
         include/Types/Datatype/DtSizeT.hpp
-        include/Tuple/Item/Item.hpp
         include/Exception/NotImplementedException.hpp
         include/Types/Datatype/IDt.hpp
+        include/Expression/Datatype/DtIntExpression.hpp
+        include/Expression/Datatype/DtInt16Expression.hpp
+        include/Expression/Datatype/DtInt32Expression.hpp
+        include/Expression/Datatype/DtInt64Expression.hpp
+        include/Expression/Datatype/DtInt8Expression.hpp
+        include/Expression/Datatype/DtSizeTExpression.hpp
+        include/Expression/Datatype/DtStringExpression.hpp
+        include/Expression/Datatype/DtUInt8Expression.hpp
+        include/Expression/Datatype/DtUInt16Expression.hpp
+        include/Expression/Datatype/DtUInt32Expression.hpp
+        include/Expression/Datatype/DtUInt64Expression.hpp
+        include/Expression/ToExpression/ToDtIntExpression.hpp
 )
 
 set(PROJECT_SOURCES

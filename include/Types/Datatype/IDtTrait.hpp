@@ -6,7 +6,6 @@
 #define STREAM_V1_TUPLE_ITEMVISITOR_HPP
 
 #include <type_traits>
-#include "Tuple/Item/DepItem.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
 

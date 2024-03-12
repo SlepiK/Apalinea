@@ -9,7 +9,7 @@
 #include <ostream>
 #include <Tuple/Tuple.hpp>
 
-#include <Expression/ToExpression/ToStringExpression.hpp>
+#include <Expression/ToExpression/ToDtStringExpression.hpp>
 #include <Expression/ExpressionUnit.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
@@ -38,7 +38,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     protected:
         void work(Tuple::Tuple &inputTuple) override {
             try {
-                Expression::ToStringExpression* tse = new Expression::ToStringExpression();
+                Expression::ToDtStringExpression* tse = new Expression::ToDtStringExpression();
                 Expression::ExpressionUnit* eu = new Expression::ExpressionUnit("DemoString");
                 eu->setTuple(inputTuple);
                 tse->add(eu);

@@ -20,6 +20,13 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtString(std::string &&data) : IDt({IDENTIFIER}), data(std::move(data)) {
         }
 
+        DtString& operator=(const DtString &other) {
+            if(&other != this) {
+                this->data = other.data;
+            }
+            return *this;
+        }
+
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
             return std::make_unique<DtString>(*this);
         }

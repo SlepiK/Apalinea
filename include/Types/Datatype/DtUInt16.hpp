@@ -20,6 +20,13 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtUInt16(uint16_t data) : IDt({IDENTIFIER}), data(data) {
         }
 
+        DtUInt16& operator=(const DtUInt16 &other) {
+            if(&other != this) {
+                this->data = other.data;
+            }
+            return *this;
+        }
+
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
             return std::make_unique<DtUInt16>(*this);
         }

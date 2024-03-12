@@ -20,6 +20,13 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtSizeT(std::size_t data) : IDt({IDENTIFIER}), data(data) {
         }
 
+        DtSizeT& operator=(const DtSizeT &other) {
+            if(&other != this) {
+                this->data = other.data;
+            }
+            return *this;
+        }
+
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
             return std::make_unique<DtSizeT>(*this);
         }

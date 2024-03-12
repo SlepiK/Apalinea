@@ -6,7 +6,6 @@
 #define STREAM_V1_TUPLE_TUPLEDATA_HPP
 
 #include <memory>
-#include "Item.hpp"
 #include <Types/Datatype/IDt.hpp>
 #include "Types/Datatype/IDtTrait.hpp"
 

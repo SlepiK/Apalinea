@@ -12,9 +12,9 @@
 #include <Types/Datatype/DtString.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
-    class ToStringExpression : public Expression {
+    class ToDtStringExpression : public Expression {
     public:
-        ToStringExpression() {
+        ToDtStringExpression() {
             this->setMax(1);
         }
 
@@ -22,7 +22,7 @@ namespace Energyleaf::Stream::V1::Expression {
             for(IExpression* expression : vSubExpressions) {
                 if(!expression->isComposite()) {
                     expression->execute();
-                    /*const std::unique_ptr<Energyleaf::Stream::V1::Tuple::Item>& item = static_cast<ExpressionUnit*>(expression)->getEntry().get();
+                    /*const std::unique_ptr<Energyleaf::Stream::V1::Tuple::Entry>& item = static_cast<ExpressionUnit*>(expression)->getEntry().get();
                     if(item->isCastAble(Types::Datatype::DtString::IDENTIFIER)) {
                         this->vValue = item.get()->toString();
                     }*/

@@ -9,8 +9,7 @@
 #include <unordered_map>
 #include <memory>
 
-#include "Item/Entry.hpp"
-#include "Tuple/Item/DepItem.hpp"
+#include "Entry/Entry.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
 

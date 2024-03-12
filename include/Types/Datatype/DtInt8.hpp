@@ -20,6 +20,13 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtInt8(int8_t data) : IDt({IDENTIFIER}), data(data) {
         }
 
+        DtInt8& operator=(const DtInt8 &other) {
+            if(&other != this) {
+                this->data = other.data;
+            }
+            return *this;
+        }
+
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
             return std::make_unique<DtInt8>(*this);
         }
