@@ -7,12 +7,28 @@
 
 #include <cstdint>
 #include <string_view>
+#include "IDt.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
-    class DtInt64 {
+    class DtInt64 : public IDt {
     public:
-        static constexpr std::string_view Identifier{"DtInt64"};
-        [[nodiscard]] virtual int64_t toInt64() const = 0;
+        static constexpr std::string_view IDENTIFIER{"DtInt64"};
+
+        explicit DtInt64() : IDt({IDENTIFIER}) {
+        }
+
+        explicit DtInt64(int64_t data) : IDt({IDENTIFIER}), data(data) {
+        }
+
+        [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
+            return std::make_unique<DtInt64>(*this);
+        }
+
+        [[nodiscard]] virtual int64_t toInt64() const {
+            return this->data;
+        }
+    protected:
+        int64_t data{};
     };
 }
 

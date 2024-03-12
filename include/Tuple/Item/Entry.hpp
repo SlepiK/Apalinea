@@ -7,7 +7,8 @@
 
 #include <memory>
 #include "Item.hpp"
-#include "ItemTrait.hpp"
+#include <Types/Datatype/IDt.hpp>
+#include "Types/Datatype/IDtTrait.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
 
@@ -31,11 +32,11 @@ namespace Energyleaf::Stream::V1::Tuple {
 
         Entry& operator=(Entry&&) noexcept = default;
 
+
         template<typename T>
         const T& get() const {
-            static_assert(std::is_base_of<Item,T>::value,"Used type must be derived from Item!");
-            static_assert(HasItemAnType<T>::value, "Wanted Type did not have a static NAME specifier!");
-            if(vItem->getType() == T::TYPE) {
+            static_assert(HasTypeAnIdentifier<T>::value, "Wanted Type did not have a static identifier specifier!");
+            if(vItem->isCastAble(T::IDENTIFIER)) {
                 return static_cast<const T&>(*vItem);
             } else {
                 throw std::runtime_error("Could not cast to Type!");
@@ -43,7 +44,7 @@ namespace Energyleaf::Stream::V1::Tuple {
         }
 
     private:
-        std::unique_ptr<Item> vItem;
+        std::unique_ptr<Types::Datatype::IDt> vItem;
     };
 
 } // Stream::V1::Tuple

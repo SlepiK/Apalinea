@@ -7,12 +7,28 @@
 
 #include <cstddef>
 #include <string_view>
+#include "IDt.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
-    class DtSizeT {
+    class DtSizeT : public IDt {
     public:
-        static constexpr std::string_view Identifier{"DtSizeT"};
-        [[nodiscard]] virtual std::size_t toSizeT() const = 0;
+        static constexpr std::string_view IDENTIFIER{"DtSizeT"};
+
+        explicit DtSizeT() : IDt({IDENTIFIER}) {
+        }
+
+        explicit DtSizeT(std::size_t data) : IDt({IDENTIFIER}), data(data) {
+        }
+
+        [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
+            return std::make_unique<DtSizeT>(*this);
+        }
+
+        [[nodiscard]] virtual std::size_t toSizeT() const {
+            return this->data;
+        }
+    protected:
+        std::size_t data{};
     };
 }
 

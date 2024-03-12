@@ -10,7 +10,7 @@
 #include <memory>
 
 #include "Item/Entry.hpp"
-#include "Item/Item.hpp"
+#include "Tuple/Item/DepItem.hpp"
 
 namespace Energyleaf::Stream::V1::Tuple {
 
@@ -79,7 +79,7 @@ namespace Energyleaf::Stream::V1::Tuple {
             if(this->vItems.contains(name)) {
                 return this->vItems.at(name);
             }
-            throw std::runtime_error("No Item was found with that name!");
+            throw std::runtime_error("No DepItem was found with that name!");
         }
 
         template<typename T>
@@ -87,7 +87,7 @@ namespace Energyleaf::Stream::V1::Tuple {
             if(this->vItems.contains(name)) {
                 return this->vItems.at(name).get<T>();
             }
-            throw std::runtime_error("No Item was found with that name!");
+            throw std::runtime_error("No DepItem was found with that name!");
         }
 
         [[nodiscard]] const std::unordered_map<std::string, Energyleaf::Stream::V1::Tuple::Entry> &getItems() const {

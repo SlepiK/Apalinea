@@ -8,7 +8,6 @@
 #include <Operator/SinkOperator/AbstractSinkOperator.hpp>
 #include <ostream>
 #include <Tuple/Tuple.hpp>
-#include <Types/Base/StringItem.hpp>
 
 #include <Expression/ToExpression/ToStringExpression.hpp>
 #include <Expression/ExpressionUnit.hpp>

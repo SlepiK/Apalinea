@@ -7,7 +7,7 @@
 
 #include "Operator/SourceOperator/AbstractSourceOperator.hpp"
 #include "Tuple/Tuple.hpp"
-#include "Types/Base/StringItem.hpp"
+#include <Types/Datatype/DtString.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     class StringDemoSourceOperator
@@ -17,7 +17,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     protected:
         void work(Tuple::Tuple &outputTuple) override {
             outputTuple.clear();
-            outputTuple.addItem(std::string("DemoString"),Types::Base::StringItem("Hello World"));
+            outputTuple.addItem(std::string("DemoString"),Types::Datatype::DtString("Hello World"));
             //outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
         }
     };

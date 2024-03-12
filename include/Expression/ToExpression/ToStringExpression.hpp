@@ -9,7 +9,7 @@
 #include <Expression/Expression.hpp>
 #include <Expression/ExpressionUnit.hpp>
 #include <string>
-#include <Types/Base/StringItem.hpp>
+#include <Types/Datatype/DtString.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
     class ToStringExpression : public Expression {
@@ -22,7 +22,13 @@ namespace Energyleaf::Stream::V1::Expression {
             for(IExpression* expression : vSubExpressions) {
                 if(!expression->isComposite()) {
                     expression->execute();
-                    this->vValue = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Base::StringItem>().getData();
+                    /*const std::unique_ptr<Energyleaf::Stream::V1::Tuple::Item>& item = static_cast<ExpressionUnit*>(expression)->getEntry().get();
+                    if(item->isCastAble(Types::Datatype::DtString::IDENTIFIER)) {
+                        this->vValue = item.get()->toString();
+                    }*/
+                    auto tmp = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Datatype::DtString>();
+                    this->vValue = tmp.toString();
+                    //this->vValue = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Base::StringItem>().getData();
                 } else {
                     throw std::runtime_error("Something went wrong!");
                 }

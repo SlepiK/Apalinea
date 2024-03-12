@@ -43,11 +43,9 @@ set(PROJECT_HEADERS
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
         include/Operator/ProcessState/OperatorProcessState.hpp
-        include/Tuple/Item/Item.hpp
+        include/Tuple/Item/DepItem.hpp
         include/Tuple/Item/IEvaluate.hpp
-        include/Tuple/Item/ItemTrait.hpp
-        include/Types/Base/TBaseItem.hpp
-        include/Types/Base/StringItem.hpp
+        include/Types/Datatype/IDtTrait.hpp
         include/Expression/IExpression.hpp
         include/Expression/Expression.hpp
         include/Expression/ExpressionUnit.hpp
@@ -65,9 +63,9 @@ set(PROJECT_HEADERS
         include/Types/Datatype/DtUInt64.hpp
         include/Types/Datatype/DtInt.hpp
         include/Types/Datatype/DtSizeT.hpp
-        include/Tuple/Item/IItime.hpp
-        include/Types/TupleItem/StringItem.hpp
-        include/Types/TupleItem/StringItem.hpp
+        include/Tuple/Item/Item.hpp
+        include/Exception/NotImplementedException.hpp
+        include/Types/Datatype/IDt.hpp
 )
 
 set(PROJECT_SOURCES

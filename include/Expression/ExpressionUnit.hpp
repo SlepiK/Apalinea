@@ -7,7 +7,7 @@
 
 #include "IExpression.hpp"
 #include <Tuple/Tuple.hpp>
-#include <Tuple/Item/Item.hpp>
+#include <Tuple/Item/DepItem.hpp>
 #include <string>
 
 namespace Energyleaf::Stream::V1::Expression {
@@ -30,7 +30,7 @@ namespace Energyleaf::Stream::V1::Expression {
             if(this->vTuple.containsItem(this->vUnitName)) {
                 this->vUnitEntry = this->vTuple.getEntry(this->vUnitName);
             } else {
-                throw std::runtime_error("Unit/Entry/Item could not found in the tuple!");
+                throw std::runtime_error("Unit/Entry/DepItem could not found in the tuple!");
             }
         }
 

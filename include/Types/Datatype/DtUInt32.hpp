@@ -7,12 +7,28 @@
 
 #include <cstdint>
 #include <string_view>
+#include "IDt.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
-    class DtUInt32 {
+    class DtUInt32 : public IDt {
     public:
-        static constexpr std::string_view Identifier{"DtUInt32"};
-        [[nodiscard]] virtual uint32_t toUInt32() const = 0;
+        static constexpr std::string_view IDENTIFIER{"DtUInt32"};
+
+        explicit DtUInt32() : IDt({IDENTIFIER}) {
+        }
+
+        explicit DtUInt32(uint32_t data) : IDt({IDENTIFIER}), data(data) {
+        }
+
+        [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
+            return std::make_unique<DtUInt32>(*this);
+        }
+
+        [[nodiscard]] virtual uint32_t toUInt32() const {
+            return this->data;
+        }
+    protected:
+        uint32_t data{};
     };
 }
 
