@@ -6,6 +6,7 @@
 #define STREAM_V1_TUPLE_TUPLE_HPP
 
 #include <vector>
+#include <string>
 #include <unordered_map>
 #include <memory>
 
