@@ -60,8 +60,8 @@ namespace Energyleaf::Stream::V1::Expression {
                     if(item->isCastAble(Types::Datatype::DtString::IDENTIFIER)) {
                         this->vValue = item.get()->toString();
                     }*/
-                    auto tmp = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Datatype::DtString>();
-                    this->vValue = tmp.toString();
+                    //auto tmp = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Datatype::DtString>();
+                    //this->vValue = tmp.toString();
                     //this->vValue = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Base::StringItem>().getData();
                 } else {
                     throw std::runtime_error("Something went wrong!");
