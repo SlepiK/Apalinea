@@ -6,11 +6,17 @@
 #define STREAM_V1_EXPRESSION_EXPRESSION_HPP
 
 #include <list>
+#include <utility>
 #include "IExpression.hpp"
 
 namespace Energyleaf::Stream::V1::Expression {
     class Expression : public IExpression {
     public:
+        explicit Expression(std::vector<std::string_view> datatypes) : IExpression(std::move(datatypes)){
+        }
+
+        ~Expression() override = default;
+
         void add(IExpression *expression) override {
             if(this->vSubExpressions.size() <= this->vMax) {
                 this->vSubExpressions.push_back(expression);

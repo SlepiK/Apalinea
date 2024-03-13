@@ -9,8 +9,9 @@
 #include <ostream>
 #include <Tuple/Tuple.hpp>
 
-#include <Expression/ToExpression/ToDtStringExpression.hpp>
-#include <Expression/ExpressionUnit.hpp>
+//#include <Expression/ToExpression/ToDtStringExpression.hpp>
+//#include <Expression/ExpressionUnit.hpp>
+#include <Expression/Datatype/DtInt8Expression.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Writer>
@@ -38,15 +39,16 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     protected:
         void work(Tuple::Tuple &inputTuple) override {
             try {
-                Expression::ToDtStringExpression* tse = new Expression::ToDtStringExpression();
-                Expression::ExpressionUnit* eu = new Expression::ExpressionUnit("DemoString");
+                /*Expression::ToDtStringExpression* tse = new Expression::ToDtStringExpression();
+                Expression::ExpressionUnit* eu = new Expression::ExpressionUnit(std::vector<std::string_view>(),
+                                                                                "DemoString");
                 eu->setTuple(inputTuple);
                 tse->add(eu);
                 tse->execute();
                 vWriter << tse->getString() << std::endl;
                 tse->remove(eu);
                 delete eu;
-                delete tse; //Demo Code of a real basic expression to get or convert an unit to string.
+                delete tse;*/ //Demo Code of a real basic expression to get or convert an unit to string.
                 //vWriter << inputTuple.getItem<Types::Base::StringItem>("DemoString").toString() << std::endl;
                 //vWriter << inputTuple.getEntry("DemoString").get<Types::Base::StringItem>().toString() << std::endl;
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;

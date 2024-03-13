@@ -73,6 +73,7 @@ set(PROJECT_HEADERS
         include/Expression/Datatype/DtUInt32Expression.hpp
         include/Expression/Datatype/DtUInt64Expression.hpp
         include/Expression/ToExpression/ToDtIntExpression.hpp
+        include/Expression/IExpressionUnit.hpp
 )
 
 set(PROJECT_SOURCES

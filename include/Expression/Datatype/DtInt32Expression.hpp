@@ -10,10 +10,11 @@
 #include "Types/Datatype/DtInt32.hpp"
 
 namespace Energyleaf::Stream::V1::Expression::DataType {
-    class DtInt32Expression : public Expression {
+    class DtInt32Expression : public IExpression {
     public:
-        explicit DtInt32Expression(std::string&& entry) : entry(std::move(entry)) {
-            this->setMax(1);
+        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtInt32::IDENTIFIER;
+
+        explicit DtInt32Expression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)) {
         }
 
         ~DtInt32Expression() override = default;
@@ -26,7 +27,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             this->tuple = tuple;
         }
 
-        const Types::Datatype::DtInt32& getData() {
+        const Types::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -40,6 +41,10 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             } else {
                 throw std::runtime_error("Entry was not found in the given tuple!");
             }
+        }
+
+        std::string_view getIdentifier() const override {
+            return IDENTIFIER;
         }
     private:
         Tuple::Tuple tuple;

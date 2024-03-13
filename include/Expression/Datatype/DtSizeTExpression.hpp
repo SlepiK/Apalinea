@@ -10,10 +10,11 @@
 #include "Types/Datatype/DtSizeT.hpp"
 
 namespace Energyleaf::Stream::V1::Expression::DataType {
-    class DtSizeTExpression : public Expression {
+    class DtSizeTExpression : public IExpression {
     public:
-        explicit DtSizeTExpression(std::string&& entry) : entry(std::move(entry)) {
-            this->setMax(1);
+        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtSizeT::IDENTIFIER;
+
+        explicit DtSizeTExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)) {
         }
 
         ~DtSizeTExpression() override = default;
@@ -26,7 +27,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             this->tuple = tuple;
         }
 
-        const Types::Datatype::DtSizeT& getData() {
+        const Types::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -40,6 +41,10 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             } else {
                 throw std::runtime_error("Entry was not found in the given tuple!");
             }
+        }
+
+        std::string_view getIdentifier() const override {
+            return IDENTIFIER;
         }
     private:
         Tuple::Tuple tuple;

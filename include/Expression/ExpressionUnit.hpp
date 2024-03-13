@@ -14,8 +14,8 @@ namespace Energyleaf::Stream::V1::Expression {
     public:
 
         [[deprecated]]
-        explicit ExpressionUnit(std::string&& unitName)
-        : vUnitName(std::move(unitName)) {
+        explicit ExpressionUnit(std::string &&unitName)
+        : IExpression({""}), vUnitName(std::move(unitName)) {
         }
 
         [[deprecated]]
