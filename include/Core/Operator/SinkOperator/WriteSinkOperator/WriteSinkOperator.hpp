@@ -9,9 +9,9 @@
 #include <ostream>
 #include <Tuple/Tuple.hpp>
 
-//#include <Expression/ToExpression/ToDtStringExpression.hpp>
-//#include <Expression/ExpressionUnit.hpp>
+#include <Expression/ToExpression/ToDtStringExpression.hpp>
 #include <Expression/Datatype/DtInt8Expression.hpp>
+#include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Writer>
@@ -39,6 +39,18 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     protected:
         void work(Tuple::Tuple &inputTuple) override {
             try {
+                Expression::ToDtStringExpression tse = Expression::ToDtStringExpression();
+                Expression::DataType::DtInt8Expression *edt = new Expression::DataType::DtInt8Expression("DemoString");
+                edt->setTuple(inputTuple);
+                tse.add(edt);
+                tse.execute();
+                if(Types::Datatype::DtRegistry::get(tse.getIdentifier()) == Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
+                    vWriter << static_cast<const Types::Datatype::DtString&>(tse.getData()).toString() << std::endl;
+                }
+                tse.remove(edt);
+                delete edt;
+
+
                 /*Expression::ToDtStringExpression* tse = new Expression::ToDtStringExpression();
                 Expression::ExpressionUnit* eu = new Expression::ExpressionUnit(std::vector<std::string_view>(),
                                                                                 "DemoString");

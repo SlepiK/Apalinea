@@ -8,6 +8,7 @@ set(INCLUDE_DIRECTORYS
 
 set(PROJECT_HEADERS
         include/Operator/Type/OperatorType.hpp
+        include/Types/Datatype/DtRegistry.hpp
         include/Operator/PipeOperator/AbstractPipeOperator.hpp
         include/Operator/SinkOperator/AbstractSinkOperator.hpp
         include/Operator/SourceOperator/AbstractSourceOperator.hpp

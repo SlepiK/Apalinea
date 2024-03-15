@@ -12,12 +12,16 @@
 namespace Energyleaf::Stream::V1::Types::Datatype {
     class DtUInt8 : public IDt {
     public:
-        static constexpr std::string_view IDENTIFIER{"DtUInt8"};
+        static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtUInt8"};
 
         explicit DtUInt8() : IDt({IDENTIFIER}) {
         }
 
         explicit DtUInt8(uint8_t data) : IDt({IDENTIFIER}), data(data) {
+        }
+
+        DtRegistry::DtRegistryIdentifier getIdentifier() const override {
+            return IDENTIFIER;
         }
 
         DtUInt8& operator=(const DtUInt8 &other) {

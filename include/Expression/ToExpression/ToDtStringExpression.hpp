@@ -7,7 +7,6 @@
 
 #include <list>
 #include <Expression/Expression.hpp>
-#include <Expression/ExpressionUnit.hpp>
 #include <string>
 #include <Types/Datatype/DtString.hpp>
 #include "Types/Datatype/DtInt8.hpp"
@@ -20,6 +19,7 @@
 #include "Types/Datatype/DtUInt32.hpp"
 #include "Types/Datatype/DtUInt64.hpp"
 #include "Types/Datatype/DtSizeT.hpp"
+#include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
     class ToDtStringExpression : public Expression {
@@ -46,27 +46,35 @@ namespace Energyleaf::Stream::V1::Expression {
                 throw std::runtime_error("The datatype returned from the given expression is not allowed!");
             }
 
-            
-
+            exp->execute();
             const Types::Datatype::IDt& expData = exp->getData();
-
-
-            for(IExpression* expression : vSubExpressions) {
-                if(!expression->isComposite()) {
-                    expression->execute();
-
-                    auto tmpData = (static_cast<ExpressionUnit*>(expression)).
-                    /*const std::unique_ptr<Energyleaf::Stream::V1::Tuple::Entry>& item = static_cast<ExpressionUnit*>(expression)->getEntry().get();
-                    if(item->isCastAble(Types::Datatype::DtString::IDENTIFIER)) {
-                        this->vValue = item.get()->toString();
-                    }*/
-                    //auto tmp = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Datatype::DtString>();
-                    //this->vValue = tmp.toString();
-                    //this->vValue = (static_cast<ExpressionUnit*>(expression))->getEntry().get<Types::Base::StringItem>().getData();
+            Types::Datatype::DtRegistry::DtRegistryIndex tmpDataIndex = Types::Datatype::DtRegistry::get(expData.getIdentifier());
+            if(!exp->isComposite()) {
+                if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt8::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt8::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtInt8&>(expData)).toInt8()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt16::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt16::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtInt16&>(expData)).toInt16()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt32::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt32::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtInt32&>(expData)).toInt32()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt64::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt64::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtInt64&>(expData)).toInt64()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt8::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt8::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtUInt8&>(expData)).toUInt8()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt16::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt16::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtUInt16&>(expData)).toUInt16()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt32::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt32::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtUInt32&>(expData)).toUInt32()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt64::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt64::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtUInt64&>(expData)).toUInt64()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtInt&>(expData)).toInt()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtSizeT::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtSizeT::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtString(std::to_string((static_cast<const Types::Datatype::DtSizeT&>(expData)).toSizeT()));
                 } else {
-                    throw std::runtime_error("Something went wrong!");
+                    throw std::runtime_error("Cant convert given type to string!");
                 }
-                expression->execute();
+            } else {
+                throw std::runtime_error("This expression cant be used as first expression!");
             }
         }
 

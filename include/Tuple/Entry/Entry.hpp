@@ -35,7 +35,7 @@ namespace Energyleaf::Stream::V1::Tuple {
         template<typename T>
         const T& get() const {
             static_assert(HasTypeAnIdentifier<T>::value, "Wanted Type did not have a static identifier specifier!");
-            if(vItem->isCastAble(T::IDENTIFIER)) {
+            if(vItem->isBasedOn(T::IDENTIFIER)) {
                 return static_cast<const T&>(*vItem);
             } else {
                 throw std::runtime_error("Could not cast to Type!");

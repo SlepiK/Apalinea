@@ -13,12 +13,16 @@
 namespace Energyleaf::Stream::V1::Types::Datatype {
     class DtUInt64 : public IDt {
     public:
-        static constexpr std::string_view IDENTIFIER{"DtUInt64"};
+        static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtUInt64"};
 
         explicit DtUInt64() : IDt({IDENTIFIER}) {
         }
 
         explicit DtUInt64(uint64_t data) : IDt({IDENTIFIER}), data(data) {
+        }
+
+        DtRegistry::DtRegistryIdentifier getIdentifier() const override {
+            return IDENTIFIER;
         }
 
         DtUInt64& operator=(const DtUInt64 &other) {
