@@ -36,12 +36,12 @@ namespace Energyleaf::Stream::V1::Expression {
 
         virtual void execute() = 0;
 
-        bool isDatatypeAllowed(std::string_view datatype) const {
+        [[nodiscard]] bool isDatatypeAllowed(std::string_view datatype) const {
             return this->datatypes.find(datatype) != this->datatypes.end();
         }
 
-        virtual const Types::Datatype::IDt& getData() const = 0;
-        virtual std::string_view getIdentifier() const = 0;
+        [[nodiscard]] virtual const Types::Datatype::IDt& getData() const = 0;
+        [[nodiscard]] virtual std::string_view getIdentifier() const = 0;
     protected:
         IExpression *vHeadExpression{};
     private:

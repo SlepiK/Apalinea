@@ -27,7 +27,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             this->tuple = tuple;
         }
 
-        const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -43,7 +43,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             }
         }
 
-        std::string_view getIdentifier() const override {
+        [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
     private:

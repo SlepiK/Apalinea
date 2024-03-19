@@ -9,6 +9,7 @@
 #include <utility>
 #include "IExpression.hpp"
 
+//ToDo: Rename to Abstract
 namespace Energyleaf::Stream::V1::Expression {
     class Expression : public IExpression {
     public:

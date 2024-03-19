@@ -47,7 +47,6 @@ set(PROJECT_HEADERS
         include/Types/Datatype/IDtTrait.hpp
         include/Expression/IExpression.hpp
         include/Expression/Expression.hpp
-        include/Expression/ExpressionUnit.hpp
         include/Expression/ToExpression/ToDtStringExpression.hpp
         include/Types/Datatype/DtString.hpp
         include/Types/Datatype/DtInt32.hpp

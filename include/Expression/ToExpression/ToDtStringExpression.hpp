@@ -2,8 +2,8 @@
 // Created by SlepiK on 19.02.24.
 //
 
-#ifndef STREAM_V1_EXPRESSION_TOEXPRESSION_TOSTRING_HPP
-#define STREAM_V1_EXPRESSION_TOEXPRESSION_TOSTRING_HPP
+#ifndef STREAM_V1_EXPRESSION_TOEXPRESSION_TODTSTRING_HPP
+#define STREAM_V1_EXPRESSION_TOEXPRESSION_TODTSTRING_HPP
 
 #include <list>
 #include <Expression/Expression.hpp>
@@ -78,11 +78,11 @@ namespace Energyleaf::Stream::V1::Expression {
             }
         }
 
-        const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
             return this->data;
         }
 
-        std::string_view getIdentifier() const override {
+        [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
     private:
@@ -90,4 +90,4 @@ namespace Energyleaf::Stream::V1::Expression {
     };
 }
 
-#endif //STREAM_V1_EXPRESSION_TOEXPRESSION_TOSTRING_HPP
+#endif //STREAM_V1_EXPRESSION_TOEXPRESSION_TODTSTRING_HPP
