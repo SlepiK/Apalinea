@@ -20,7 +20,7 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtUInt8(uint8_t data) : IDt({IDENTIFIER}), data(data) {
         }
 
-        DtRegistry::DtRegistryIdentifier getIdentifier() const override {
+        [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
             return IDENTIFIER;
         }
 
@@ -37,6 +37,48 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
 
         [[nodiscard]] virtual uint8_t toUInt8() const {
             return this->data;
+        }
+
+        bool operator==(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt8() == (static_cast<const DtUInt8&>(other)).toUInt8();
+            }
+            return false;
+        }
+
+        bool operator!=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt8() != (static_cast<const DtUInt8&>(other)).toUInt8();
+            }
+            return false;
+        }
+
+        bool operator<(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt8() < (static_cast<const DtUInt8&>(other)).toUInt8();
+            }
+            return false;
+        }
+
+        bool operator>(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt8() > (static_cast<const DtUInt8&>(other)).toUInt8();
+            }
+            return false;
+        }
+
+        bool operator<=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt8() <= (static_cast<const DtUInt8&>(other)).toUInt8();
+            }
+            return false;
+        }
+
+        bool operator>=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt8() >= (static_cast<const DtUInt8&>(other)).toUInt8();
+            }
+            return false;
         }
     protected:
         uint8_t data{};

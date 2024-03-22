@@ -9,6 +9,7 @@
 #include <ostream>
 #include <Tuple/Tuple.hpp>
 
+#include <Expression/Compare/CompareExpression.hpp>
 #include <Expression/ToExpression/ToDtStringExpression.hpp>
 #include <Expression/Datatype/DtInt8Expression.hpp>
 #include <Types/Datatype/DtRegistry.hpp>
@@ -41,8 +42,13 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
             try {
                 Expression::ToDtStringExpression tse = Expression::ToDtStringExpression();
                 Expression::DataType::DtInt8Expression *edt = new Expression::DataType::DtInt8Expression("DemoString");
+                Expression::DataType::DtInt8Expression *edtBase = new Expression::DataType::DtInt8Expression(2);
+                Expression::Compare::CompareExpression *comp = new Expression::Compare::CompareExpression();
                 edt->setTuple(inputTuple);
-                tse.add(edt);
+                comp->add(edt);
+                comp->add(edtBase);
+                comp->setCompareType(Expression::Compare::CompareTypes::EQUAL);
+                tse.add(comp);
                 tse.execute();
                 if(Types::Datatype::DtRegistry::get(tse.getIdentifier()) == Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
                     vWriter << static_cast<const Types::Datatype::DtString&>(tse.getData()).toString() << std::endl;

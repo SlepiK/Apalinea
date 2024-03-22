@@ -14,7 +14,10 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
     public:
         static constexpr std::string_view IDENTIFIER = Types::Datatype::DtUInt8::IDENTIFIER;
 
-        explicit DtUInt8Expression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)) {
+        explicit DtUInt8Expression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
+        }
+
+        explicit DtUInt8Expression(uint8_t&& value) : IExpression({IDENTIFIER}), load(false), data(value) {
         }
 
         ~DtUInt8Expression() override = default;
@@ -24,7 +27,9 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         }
 
         void setTuple(Tuple::Tuple& tuple) {
-            this->tuple = tuple;
+            if(load) {
+                this->tuple = tuple;
+            }
         }
 
         [[nodiscard]] const Types::Datatype::IDt& getData() const override {
@@ -50,6 +55,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         Tuple::Tuple tuple;
         std::string entry;
         Types::Datatype::DtUInt8 data;
+        bool load;
     };
 }
 

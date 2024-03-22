@@ -1,30 +1,29 @@
 //
-// Created by SlepiK on 10.03.2024.
+// Created by SlepiK on 20.03.24.
 //
 
-#ifndef STREAM_V1_TYPES_DATATYPE_DTINT16_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTINT16_HPP
+#ifndef STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP
+#define STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP
 
-#include <cstdint>
 #include <string_view>
 #include "IDt.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
-    class DtInt16 : public IDt {
+    class DtBool : public IDt {
     public:
-        static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtInt16"};
+        static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtBool"};
 
-        explicit DtInt16() : IDt({IDENTIFIER}) {
+        DtBool() : IDt(IDENTIFIER,{IDENTIFIER}) {
         }
 
-        explicit DtInt16(int16_t data) : IDt({IDENTIFIER}), data(data) {
+        explicit DtBool(int &&data) : IDt({IDENTIFIER}), data(data) {
         }
 
         [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
             return IDENTIFIER;
         }
 
-        DtInt16& operator=(const DtInt16 &other) {
+        DtBool& operator=(const DtBool &other) {
             if(&other != this) {
                 this->data = other.data;
             }
@@ -32,57 +31,57 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         }
 
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
-            return std::make_unique<DtInt16>(*this);
+            return std::make_unique<DtBool>(*this);
         }
 
-        [[nodiscard]] virtual int16_t toInt16() const {
+        [[nodiscard]] virtual int toBool() const {
             return this->data;
         }
 
         bool operator==(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt16() == (static_cast<const DtInt16&>(other)).toInt16();
+                return this->toBool() == (static_cast<const DtBool&>(other)).toBool();
             }
             return false;
         }
 
         bool operator!=(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt16() != (static_cast<const DtInt16&>(other)).toInt16();
+                return this->toBool() != (static_cast<const DtBool&>(other)).toBool();
             }
             return false;
         }
 
         bool operator<(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt16() < (static_cast<const DtInt16&>(other)).toInt16();
+                return this->toBool() < (static_cast<const DtBool&>(other)).toBool();
             }
             return false;
         }
 
         bool operator>(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt16() > (static_cast<const DtInt16&>(other)).toInt16();
+                return this->toBool() > (static_cast<const DtBool&>(other)).toBool();
             }
             return false;
         }
 
         bool operator<=(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt16() <= (static_cast<const DtInt16&>(other)).toInt16();
+                return this->toBool() <= (static_cast<const DtBool&>(other)).toBool();
             }
             return false;
         }
 
         bool operator>=(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt16() >= (static_cast<const DtInt16&>(other)).toInt16();
+                return this->toBool() >= (static_cast<const DtBool&>(other)).toBool();
             }
             return false;
         }
     protected:
-        int16_t data{};
+        bool data{};
     };
 }
 
-#endif //STREAM_V1_TYPES_DATATYPE_DTINT16_HPP
+#endif //STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP

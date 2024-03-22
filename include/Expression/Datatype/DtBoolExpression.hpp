@@ -1,26 +1,26 @@
 //
-// Created by SlepiK on 12.03.2024.
+// Created by SlepiK on 20.03.24.
 //
 
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTINTEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTINTEXPRESSION_HPP
+#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTBOOLEXPRESSION_HPP
+#define STREAM_V1_EXPRESSION_DATATYPE_DTBOOLEXPRESSION_HPP
 
-#include "Expression/Expression.hpp"
+#include "Expression/IExpression.hpp"
 #include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtInt.hpp"
+#include "Types/Datatype/DtBool.hpp"
 
 namespace Energyleaf::Stream::V1::Expression::DataType {
-    class DtIntExpression : public IExpression {
+    class DtBoolExpression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtInt::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtBool::IDENTIFIER;
 
-        explicit DtIntExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
+        explicit DtBoolExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
 
-        explicit DtIntExpression(int&& value) : IExpression({IDENTIFIER}), load(false), data(std::move(value)) {
+        explicit DtBoolExpression(bool&& value) : IExpression({IDENTIFIER}), load(false), data(std::move(value)) {
         }
 
-        ~DtIntExpression() override = default;
+        ~DtBoolExpression() override = default;
 
         [[nodiscard]] bool isComposite() const override {
             return false;
@@ -43,7 +43,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtInt>();
+                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtBool>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -56,9 +56,9 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
     private:
         Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtInt data;
+        Types::Datatype::DtBool data;
         bool load;
     };
 }
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTINTEXPRESSION_HPP
+#endif //STREAM_V1_EXPRESSION_DATATYPE_DTBOOLEXPRESSION_HPP

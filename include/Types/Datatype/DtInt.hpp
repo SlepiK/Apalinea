@@ -19,7 +19,7 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtInt(int &&data) : IDt({IDENTIFIER}), data(data) {
         }
 
-        DtRegistry::DtRegistryIdentifier getIdentifier() const override {
+        [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
             return IDENTIFIER;
         }
 
@@ -36,6 +36,48 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
 
         [[nodiscard]] virtual int toInt() const {
             return this->data;
+        }
+
+        bool operator==(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toInt() == (static_cast<const DtInt&>(other)).toInt();
+            }
+            return false;
+        }
+
+        bool operator!=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toInt() != (static_cast<const DtInt&>(other)).toInt();
+            }
+            return false;
+        }
+
+        bool operator<(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toInt() < (static_cast<const DtInt&>(other)).toInt();
+            }
+            return false;
+        }
+
+        bool operator>(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toInt() > (static_cast<const DtInt&>(other)).toInt();
+            }
+            return false;
+        }
+
+        bool operator<=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toInt() <= (static_cast<const DtInt&>(other)).toInt();
+            }
+            return false;
+        }
+
+        bool operator>=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toInt() >= (static_cast<const DtInt&>(other)).toInt();
+            }
+            return false;
         }
     protected:
         int data{};

@@ -74,6 +74,9 @@ set(PROJECT_HEADERS
         include/Expression/Datatype/DtUInt64Expression.hpp
         include/Expression/ToExpression/ToDtIntExpression.hpp
         include/Expression/IExpressionUnit.hpp
+        include/Expression/Compare/CompareExpression.hpp
+        include/Types/Datatype/DtBool.hpp
+        include/Expression/Datatype/DtBoolExpression.hpp
 )
 
 set(PROJECT_SOURCES

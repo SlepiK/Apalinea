@@ -20,7 +20,7 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtString(std::string &&data) : IDt({IDENTIFIER}), data(std::move(data)) {
         }
 
-        DtRegistry::DtRegistryIdentifier getIdentifier() const override {
+        [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
             return IDENTIFIER;
         }
 
@@ -37,6 +37,36 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
 
         [[nodiscard]] virtual const std::string& toString() const {
             return this->data;
+        }
+
+        bool operator==(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toString() == (static_cast<const DtString&>(other)).toString();
+            }
+            return false;
+        }
+
+        bool operator!=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toString() != (static_cast<const DtString&>(other)).toString();
+            }
+            return false;
+        }
+
+        bool operator<(const IDt& other) const override {
+            throw std::runtime_error("DtString dont support < operator!");
+        }
+
+        bool operator>(const IDt& other) const override {
+            throw std::runtime_error("DtString dont support > operator!");
+        }
+
+        bool operator<=(const IDt& other) const override {
+            throw std::runtime_error("DtString dont support <= operator!");
+        }
+
+        bool operator>=(const IDt& other) const override {
+            throw std::runtime_error("DtString dont support >= operator!");
         }
     protected:
         std::string data;

@@ -20,7 +20,7 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         explicit DtUInt32(uint32_t data) : IDt({IDENTIFIER}), data(data) {
         }
 
-        DtRegistry::DtRegistryIdentifier getIdentifier() const override {
+        [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
             return IDENTIFIER;
         }
 
@@ -37,6 +37,48 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
 
         [[nodiscard]] virtual uint32_t toUInt32() const {
             return this->data;
+        }
+
+        bool operator==(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt32() == (static_cast<const DtUInt32&>(other)).toUInt32();
+            }
+            return false;
+        }
+
+        bool operator!=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt32() != (static_cast<const DtUInt32&>(other)).toUInt32();
+            }
+            return false;
+        }
+
+        bool operator<(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt32() < (static_cast<const DtUInt32&>(other)).toUInt32();
+            }
+            return false;
+        }
+
+        bool operator>(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt32() > (static_cast<const DtUInt32&>(other)).toUInt32();
+            }
+            return false;
+        }
+
+        bool operator<=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt32() <= (static_cast<const DtUInt32&>(other)).toUInt32();
+            }
+            return false;
+        }
+
+        bool operator>=(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return this->toUInt32() >= (static_cast<const DtUInt32&>(other)).toUInt32();
+            }
+            return false;
         }
     protected:
         uint32_t data{};

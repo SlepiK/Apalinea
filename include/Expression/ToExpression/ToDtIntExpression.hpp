@@ -14,6 +14,8 @@
 #include "Types/Datatype/DtInt64.hpp"
 #include "Types/Datatype/DtUInt8.hpp"
 #include "Types/Datatype/DtUInt16.hpp"
+#include "Types/Datatype/DtBool.hpp"
+#include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
     class ToDtIntExpression : public Expression {
@@ -22,7 +24,7 @@ namespace Energyleaf::Stream::V1::Expression {
 
         ToDtIntExpression() : Expression({Types::Datatype::DtInt8::IDENTIFIER,Types::Datatype::DtInt16::IDENTIFIER,Types::Datatype::DtInt32::IDENTIFIER,
                                           Types::Datatype::DtString::IDENTIFIER,Types::Datatype::DtUInt8::IDENTIFIER,
-                                             Types::Datatype::DtUInt16::IDENTIFIER}) {
+                                             Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtBool::IDENTIFIER}) {
         }
 
         void execute() override {
@@ -54,7 +56,10 @@ namespace Energyleaf::Stream::V1::Expression {
                 } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt16::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt16::IDENTIFIER)) {
                     this->data = Types::Datatype::DtInt((static_cast<const Types::Datatype::DtUInt16&>(expData)).toUInt16());
                 } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtString::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
-                    this->data = Types::Datatype::DtInt(std::stoi((static_cast<const Types::Datatype::DtString&>(expData)).toString()));
+                    this->data = Types::Datatype::DtInt(
+                            std::stoi((static_cast<const Types::Datatype::DtString&>(expData)).toString()));
+                } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtBool::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtBool::IDENTIFIER)) {
+                    this->data = Types::Datatype::DtInt((static_cast<const Types::Datatype::DtBool&>(expData)).toBool());
                 } else {
                     throw std::runtime_error("Cant convert given type to string!");
                 }

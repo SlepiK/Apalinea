@@ -14,7 +14,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
     public:
         static constexpr std::string_view IDENTIFIER = Types::Datatype::DtString::IDENTIFIER;
 
-        explicit DtStringExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)) {
+        explicit DtStringExpression(std::string&& entry, bool load = true) :
+        IExpression({IDENTIFIER}), load(load) {
+            if(load) {
+                this->entry = std::move(entry);
+            } else {
+                this->data = Types::Datatype::DtString(std::move(entry));
+            }
         }
 
         ~DtStringExpression() override = default;
@@ -24,7 +30,9 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         }
 
         void setTuple(Tuple::Tuple& tuple) {
-            this->tuple = tuple;
+            if(load) {
+                this->tuple = tuple;
+            }
         }
 
         [[nodiscard]] const Types::Datatype::IDt& getData() const override {
@@ -32,14 +40,16 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         }
 
         void execute() override {
-            if(this->tuple.getItems().empty()) {
-                throw std::runtime_error("Tuple is empty!");
-            }
+            if(load) {
+                if (this->tuple.getItems().empty()) {
+                    throw std::runtime_error("Tuple is empty!");
+                }
 
-            if(this->tuple.containsItem(this->entry)) {
-                this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtString>();
-            } else {
-                throw std::runtime_error("Entry was not found in the given tuple!");
+                if (this->tuple.containsItem(this->entry)) {
+                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtString>();
+                } else {
+                    throw std::runtime_error("Entry was not found in the given tuple!");
+                }
             }
         }
 
@@ -50,7 +60,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         Tuple::Tuple tuple;
         std::string entry;
         Types::Datatype::DtString data;
-
+        bool load;
     };
 }
 

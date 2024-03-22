@@ -41,12 +41,22 @@ namespace Energyleaf::Stream::V1::Expression {
         }
 
         [[nodiscard]] virtual const Types::Datatype::IDt& getData() const = 0;
+
         [[nodiscard]] virtual std::string_view getIdentifier() const = 0;
     protected:
         IExpression *vHeadExpression{};
     private:
         const std::unordered_set<std::string_view> datatypes;
     };
+
+    template<typename T>
+    [[nodiscard]] static const T& getData(IExpression* expression) {
+        if(expression->getIdentifier() == T::IDENTIFIER) {
+            return static_cast<const T&>(expression->getData());
+        } else {
+            throw std::runtime_error("Not allowed!");
+        }
+    }
 }
 
 #endif //STREAM_V1_EXPRESSION_IEXPRESSION_HPP

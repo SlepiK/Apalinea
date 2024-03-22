@@ -28,7 +28,14 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
             return this->datatypes.find(datatype) != this->datatypes.end();
         }
 
-        virtual DtRegistry::DtRegistryIdentifier getIdentifier() const = 0;
+        [[nodiscard]] virtual DtRegistry::DtRegistryIdentifier getIdentifier() const = 0;
+
+        virtual bool operator==(const IDt& other) const = 0;
+        virtual bool operator!=(const IDt& other) const = 0;
+        virtual bool operator<(const IDt& other) const = 0;
+        virtual bool operator>(const IDt& other) const = 0;
+        virtual bool operator<=(const IDt& other) const = 0;
+        virtual bool operator>=(const IDt& other) const = 0;
     private:
         //ToDo: Verify in future if multiple datatypes are needed or even possible, due to some restrictions.
         const std::unordered_set<DtRegistry::DtRegistryIdentifier> datatypes;
