@@ -1,16 +1,16 @@
 //
-// Created by SlepiK on 10.03.2024.
+// Created by SlepiK on 24.03.24.
 //
 
-#ifndef STREAM_V1_TYPES_DATATYPE_DTINT8_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTINT8_HPP
+#ifndef STREAM_V1_TYPES_DATATYPE_DTFLOAT_HPP
+#define STREAM_V1_TYPES_DATATYPE_DTFLOAT_HPP
 
-#include <cstdint>
 #include <string_view>
 #include <cmath>
 #include "IDt.hpp"
 
 #include "DtInt.hpp"
+#include "DtInt8.hpp"
 #include "DtInt16.hpp"
 #include "DtInt32.hpp"
 #include "DtInt64.hpp"
@@ -21,24 +21,23 @@
 #include "DtSizeT.hpp"
 #include "DtBool.hpp"
 #include "DtDouble.hpp"
-#include "DtFloat.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
-    class DtInt8 : public IDt {
+    class DtFloat : public IDt {
     public:
-        static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtInt8"};
+        static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtFloat"};
 
-        explicit DtInt8() : IDt({IDENTIFIER}) {
+        DtFloat() : IDt(IDENTIFIER,{IDENTIFIER}) {
         }
 
-        explicit DtInt8(int8_t data) : IDt({IDENTIFIER}), data(data) {
+        explicit DtFloat(float data) : IDt({IDENTIFIER}), data(data) {
         }
 
         [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
             return IDENTIFIER;
         }
 
-        DtInt8& operator=(const DtInt8 &other) {
+        DtFloat& operator=(const DtFloat &other) {
             if(&other != this) {
                 this->data = other.data;
             }
@@ -46,51 +45,51 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         }
 
         [[nodiscard]] std::unique_ptr<Energyleaf::Stream::V1::Types::Datatype::IDt> copy() const override {
-            return std::make_unique<DtInt8>(*this);
+            return std::make_unique<DtFloat>(*this);
         }
 
-        [[nodiscard]] virtual int8_t toInt8() const {
+        [[nodiscard]] virtual float toFloat() const {
             return this->data;
         }
 
         bool operator==(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt8() == (static_cast<const DtInt8&>(other)).toInt8();
+                return this->toFloat() == (static_cast<const DtFloat&>(other)).toFloat();
             }
             return false;
         }
 
         bool operator!=(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt8() != (static_cast<const DtInt8&>(other)).toInt8();
+                return this->toFloat() != (static_cast<const DtFloat&>(other)).toFloat();
             }
             return false;
         }
 
         bool operator<(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt8() < (static_cast<const DtInt8&>(other)).toInt8();
+                return this->toFloat() < (static_cast<const DtFloat&>(other)).toFloat();
             }
             return false;
         }
 
         bool operator>(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt8() > (static_cast<const DtInt8&>(other)).toInt8();
+                return this->toFloat() > (static_cast<const DtFloat&>(other)).toFloat();
             }
             return false;
         }
 
         bool operator<=(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt8() <= (static_cast<const DtInt8&>(other)).toInt8();
+                return this->toFloat() <= (static_cast<const DtFloat&>(other)).toFloat();
             }
             return false;
         }
 
         bool operator>=(const IDt& other) const override {
             if(other.getIdentifier() == this->getIdentifier()) {
-                return this->toInt8() >= (static_cast<const DtInt8&>(other)).toInt8();
+                return this->toFloat() >= (static_cast<const DtFloat&>(other)).toFloat();
             }
             return false;
         }
@@ -102,8 +101,8 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         IDt* operator^(const IDt& other) const override;
         IDt* operator%(const IDt& other) const override;
     protected:
-        int8_t data{};
+        float data{};
     };
 }
 
-#endif //STREAM_V1_TYPES_DATATYPE_DTINT8_HPP
+#endif //STREAM_V1_TYPES_DATATYPE_DTFLOAT_HPP

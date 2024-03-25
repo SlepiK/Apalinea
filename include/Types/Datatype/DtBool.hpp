@@ -6,7 +6,22 @@
 #define STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP
 
 #include <string_view>
+#include <cmath>
 #include "IDt.hpp"
+
+
+#include "DtInt.hpp"
+#include "DtInt8.hpp"
+#include "DtInt16.hpp"
+#include "DtInt32.hpp"
+#include "DtInt64.hpp"
+#include "DtUInt8.hpp"
+#include "DtUInt16.hpp"
+#include "DtUInt32.hpp"
+#include "DtUInt64.hpp"
+#include "DtSizeT.hpp"
+#include "DtFloat.hpp"
+#include "DtDouble.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
     class DtBool : public IDt {
@@ -16,7 +31,7 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         DtBool() : IDt(IDENTIFIER,{IDENTIFIER}) {
         }
 
-        explicit DtBool(int &&data) : IDt({IDENTIFIER}), data(data) {
+        explicit DtBool(bool data) : IDt({IDENTIFIER}), data(data) {
         }
 
         [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {
@@ -79,6 +94,13 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
             }
             return false;
         }
+
+        IDt* operator+(const IDt& other) const override;
+        IDt* operator-(const IDt& other) const override;
+        IDt* operator*(const IDt& other) const override;
+        IDt* operator/(const IDt& other) const override;
+        IDt* operator^(const IDt& other) const override;
+        IDt* operator%(const IDt& other) const override;
     protected:
         bool data{};
     };

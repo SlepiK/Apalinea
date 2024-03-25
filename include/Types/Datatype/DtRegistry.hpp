@@ -2,8 +2,8 @@
 // Created by SlepiK on 15.03.2024.
 //
 
-#ifndef STREAM_V1_TYPES_DATATYPEDTREGISTRY_HPP
-#define STREAM_V1_TYPES_DATATYPEDTREGISTRY_HPP
+#ifndef STREAM_V1_TYPES_DATATYPE_DTREGISTRY_HPP
+#define STREAM_V1_TYPES_DATATYPE_DTREGISTRY_HPP
 
 #include <unordered_map>
 #include <string_view>
@@ -53,9 +53,9 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         static DtRegistryIndex dtCurrentIndex;
     };
 
-    std::unordered_map<DtRegistry::DtRegistryIdentifier , DtRegistry::DtRegistryIndex> DtRegistry::dtMap;
-    DtRegistry::DtRegistryIndex DtRegistry::dtCurrentIndex = 0;
+    //Special identifier, when a type cant be set directly and will be set during runtime!
+    static constexpr DtRegistry::DtRegistryIdentifier UNDEFINED{"UNDEFINED"};
 
 }
 
-#endif //STREAM_V1_TYPES_DATATYPEDTREGISTRY_HPP
+#endif //STREAM_V1_TYPES_DATATYPE_DTREGISTRY_HPP

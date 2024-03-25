@@ -7,8 +7,22 @@
 
 #include <cstdint>
 #include <string_view>
+#include <cmath>
 #include <utility>
 #include "IDt.hpp"
+
+#include "DtInt.hpp"
+#include "DtInt8.hpp"
+#include "DtInt16.hpp"
+#include "DtInt32.hpp"
+#include "DtInt64.hpp"
+#include "DtUInt8.hpp"
+#include "DtUInt16.hpp"
+#include "DtUInt32.hpp"
+#include "DtSizeT.hpp"
+#include "DtBool.hpp"
+#include "DtDouble.hpp"
+#include "DtFloat.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
     class DtUInt64 : public IDt {
@@ -81,6 +95,45 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
             }
             return false;
         }
+
+        IDt* operator+(const IDt& other) const override;
+        IDt* operator-(const IDt& other) const override;
+        IDt* operator*(const IDt& other) const override;
+        IDt* operator/(const IDt& other) const override;
+        IDt* operator^(const IDt& other) const override;
+        IDt* operator%(const IDt& other) const override;
+
+        /*IDt* operator*(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return new DtUInt64(this->toUInt64() * (static_cast<const DtUInt64&>(other)).toUInt64());
+            } else {
+                throw std::runtime_error("Not Implemented with the given types");
+            }
+        }
+
+        IDt* operator/(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {//ToDo: Later float to return or double better
+                return new DtUInt64(this->toUInt64() / (static_cast<const DtUInt64&>(other)).toUInt64());
+            } else {
+                throw std::runtime_error("Not Implemented with the given types");
+            }
+        }
+
+        IDt* operator^(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) {
+                return new DtUInt64(this->toUInt64() ^ (static_cast<const DtUInt64&>(other)).toUInt64());
+            } else {
+                throw std::runtime_error("Not Implemented with the given types");
+            }
+        }
+
+        IDt* operator%(const IDt& other) const override {
+            if(other.getIdentifier() == this->getIdentifier()) { //ToDo: Later DtInt to return better
+                return new DtUInt64(this->toUInt64() * (static_cast<const DtUInt64&>(other)).toUInt64());
+            } else {
+                throw std::runtime_error("Not Implemented with the given types");
+            }
+        }*/
     protected:
         uint64_t data{};
     };

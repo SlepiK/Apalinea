@@ -77,9 +77,27 @@ set(PROJECT_HEADERS
         include/Expression/Compare/CompareExpression.hpp
         include/Types/Datatype/DtBool.hpp
         include/Expression/Datatype/DtBoolExpression.hpp
+        include/Expression/Calculation/CalculationExpression.hpp
+        include/Types/Datatype/DtNumbers.hpp
+        include/Types/Datatype/DtRegistry.cpp
+        include/Types/Datatype/DtFloat.hpp
+        include/Types/Datatype/DtDouble.hpp
 )
 
 set(PROJECT_SOURCES
+        include/Types/Datatype/DtUInt64.cpp
+        include/Types/Datatype/DtInt64.cpp
+        include/Types/Datatype/DtInt8.cpp
+        include/Types/Datatype/DtInt16.cpp
+        include/Types/Datatype/DtInt32.cpp
+        include/Types/Datatype/DtSizeT.cpp
+        include/Types/Datatype/DtUInt8.cpp
+        include/Types/Datatype/DtUInt16.cpp
+        include/Types/Datatype/DtUInt32.cpp
+        include/Types/Datatype/DtInt.cpp
+        include/Types/Datatype/DtBool.cpp
+        include/Types/Datatype/DtFloat.cpp
+        include/Types/Datatype/DtDouble.cpp
 )
 
 set(DEMO_SOURCES

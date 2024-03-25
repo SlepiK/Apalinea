@@ -68,6 +68,30 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         bool operator>=(const IDt& other) const override {
             throw std::runtime_error("DtString dont support >= operator!");
         }
+
+        IDt* operator+(const IDt& other) const override {
+            throw std::runtime_error("Not supported method");
+        }
+
+        IDt* operator-(const IDt& other) const override {
+            throw std::runtime_error("Not supported method");
+        }
+
+        IDt* operator*(const IDt& other) const override {
+            throw std::runtime_error("Not supported method");
+        }
+
+        IDt* operator/(const IDt& other) const override {
+            throw std::runtime_error("Not supported method");
+        }
+
+        IDt* operator^(const IDt& other) const override{
+            throw std::runtime_error("Not supported method");
+        }
+
+        IDt* operator%(const IDt& other) const override{
+            throw std::runtime_error("Not supported method");
+        }
     protected:
         std::string data;
     };

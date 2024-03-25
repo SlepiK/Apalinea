@@ -7,7 +7,21 @@
 
 #include <cstdint>
 #include <string_view>
+#include <cmath>
 #include "IDt.hpp"
+
+#include "DtInt.hpp"
+#include "DtInt8.hpp"
+#include "DtInt16.hpp"
+#include "DtInt32.hpp"
+#include "DtInt64.hpp"
+#include "DtUInt8.hpp"
+#include "DtUInt32.hpp"
+#include "DtUInt64.hpp"
+#include "DtSizeT.hpp"
+#include "DtBool.hpp"
+#include "DtDouble.hpp"
+#include "DtFloat.hpp"
 
 namespace Energyleaf::Stream::V1::Types::Datatype {
     class DtUInt16 : public IDt {
@@ -80,6 +94,13 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
             }
             return false;
         }
+
+        IDt* operator+(const IDt& other) const override;
+        IDt* operator-(const IDt& other) const override;
+        IDt* operator*(const IDt& other) const override;
+        IDt* operator/(const IDt& other) const override;
+        IDt* operator^(const IDt& other) const override;
+        IDt* operator%(const IDt& other) const override;
     protected:
         uint16_t data{};
     };
