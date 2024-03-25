@@ -102,6 +102,14 @@ namespace Energyleaf::Stream::V1::Expression {
                        tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtBool::IDENTIFIER)) {
                 this->data = Types::Datatype::DtString(
                         (static_cast<const Types::Datatype::DtBool &>(expData)).toBool() ? "true" : "false");
+            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtFloat::IDENTIFIER) &&
+                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtFloat::IDENTIFIER)) {
+                this->data = Types::Datatype::DtString(
+                        std::to_string((static_cast<const Types::Datatype::DtFloat &>(expData)).toFloat()));
+            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtDouble::IDENTIFIER) &&
+                      tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtDouble::IDENTIFIER)) {
+                this->data = Types::Datatype::DtString(
+                        std::to_string((static_cast<const Types::Datatype::DtDouble &>(expData)).toDouble()));
             } else {
                 throw std::runtime_error("Cant convert given type to string!");
             }

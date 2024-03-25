@@ -44,7 +44,7 @@ namespace Energyleaf::Stream::V1::Expression {
             exp->execute();
             const Types::Datatype::IDt& expData = exp->getData();
             Types::Datatype::DtRegistry::DtRegistryIndex tmpDataIndex = Types::Datatype::DtRegistry::get(expData.getIdentifier());
-            if(!exp->isComposite()) {
+            if(!exp->isComposite()) {//ToDo: Rewrite that code.
                 if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt8::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt8::IDENTIFIER)) {
                     this->data = Types::Datatype::DtInt((static_cast<const Types::Datatype::DtInt8&>(expData)).toInt8());
                 } else if(Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt16::IDENTIFIER) && tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt16::IDENTIFIER)) {

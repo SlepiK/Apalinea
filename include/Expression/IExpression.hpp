@@ -7,6 +7,7 @@
 
 #include <stdexcept>
 #include <Types/Datatype/IDt.hpp>
+#include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
     class IExpression {
@@ -37,6 +38,7 @@ namespace Energyleaf::Stream::V1::Expression {
         virtual void execute() = 0;
 
         [[nodiscard]] bool isDatatypeAllowed(std::string_view datatype) const {
+            if(datatype == Types::Datatype::UNDEFINED) return true;
             return this->datatypes.find(datatype) != this->datatypes.end();
         }
 
