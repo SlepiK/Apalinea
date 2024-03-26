@@ -82,6 +82,11 @@ set(PROJECT_HEADERS
         include/Types/Datatype/DtRegistry.cpp
         include/Types/Datatype/DtFloat.hpp
         include/Types/Datatype/DtDouble.hpp
+        include/Expression/Datatype/DtFloatExpression.hpp
+        include/Expression/Datatype/DtDoubleExpression.hpp
+        include/Expression/ToExpression/ToDtFloatExpression.hpp
+        include/Expression/ToExpression/ToDtDoubleExpression.hpp
+        include/Expression/ToExpression/ToDtBoolExpression.hpp
 )
 
 set(PROJECT_SOURCES

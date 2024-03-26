@@ -20,6 +20,8 @@
 #include "Types/Datatype/DtUInt64.hpp"
 #include "Types/Datatype/DtSizeT.hpp"
 #include "Types/Datatype/DtBool.hpp"
+#include "Types/Datatype/DtFloat.hpp"
+#include "Types/Datatype/DtDouble.hpp"
 #include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
@@ -35,7 +37,8 @@ namespace Energyleaf::Stream::V1::Expression {
                                              Types::Datatype::DtUInt32::IDENTIFIER,
                                              Types::Datatype::DtUInt64::IDENTIFIER,
                                              Types::Datatype::DtSizeT::IDENTIFIER,
-                                             Types::Datatype::DtBool::IDENTIFIER}) {
+                                             Types::Datatype::DtBool::IDENTIFIER,Types::Datatype::DtFloat::IDENTIFIER, Types::Datatype::DtDouble::IDENTIFIER,
+                                             Types::Datatype::DtString::IDENTIFIER}) {
         }
 
         void execute() override {
@@ -110,6 +113,10 @@ namespace Energyleaf::Stream::V1::Expression {
                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtDouble::IDENTIFIER)) {
                 this->data = Types::Datatype::DtString(
                         std::to_string((static_cast<const Types::Datatype::DtDouble &>(expData)).toDouble()));
+            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtString::IDENTIFIER) &&
+                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
+                this->data = Types::Datatype::DtString(
+                        static_cast<std::string>((static_cast<const Types::Datatype::DtString &>(expData)).toString()));
             } else {
                 throw std::runtime_error("Cant convert given type to string!");
             }

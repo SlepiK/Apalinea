@@ -13,6 +13,7 @@
 #include <Expression/ToExpression/ToDtStringExpression.hpp>
 #include <Expression/Datatype/DtInt8Expression.hpp>
 #include <Expression/Calculation/CalculationExpression.hpp>
+#include <Expression/ToExpression/ToDtFloatExpression.hpp>
 #include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
@@ -46,6 +47,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
                 Expression::DataType::DtInt8Expression *edtBase = new Expression::DataType::DtInt8Expression(2);
                 Expression::DataType::DtInt8Expression *edtBase2 = new Expression::DataType::DtInt8Expression(4);
                 Expression::Calculation::CalculationExpression *calc = new Expression::Calculation::CalculationExpression();
+                Expression::ToDtFloatExpression* tfe = new Expression::ToDtFloatExpression();
                 calc->setCalculationType(Expression::Calculation::CalculationTypes::DIVISION);
                 calc->add(edtBase);
                 calc->add(edtBase2);
@@ -54,7 +56,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
                 comp->add(edt);
                 comp->add(edtBase);
                 comp->setCompareType(Expression::Compare::CompareTypes::EQUAL);
-                tse.add(calc);
+                tfe->add(calc);
+                tse.add(tfe);
                 tse.execute();
                 if(Types::Datatype::DtRegistry::get(tse.getIdentifier()) == Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
                     vWriter << static_cast<const Types::Datatype::DtString&>(tse.getData()).toString() << std::endl;
