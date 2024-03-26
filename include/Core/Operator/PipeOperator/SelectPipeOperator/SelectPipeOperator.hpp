@@ -26,11 +26,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     protected:
         void work(Tuple::Tuple &inputTuple,
                   Tuple::Tuple &outputTuple) override {
-            std::size_t input = 0;// inputTuple.getItem<std::size_t>(1).getData();
-            bool select = input > this->vThreshold;
-            outputTuple.clear();
-            /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
-            outputTuple.addItem(std::string("SELECT"), select);*/
 
             try {
                 if (this->expression) {
