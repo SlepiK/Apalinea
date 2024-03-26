@@ -61,21 +61,21 @@ namespace Energyleaf::Stream::V1::Tuple {
         }
 
         void updateItemName(const ItemName& oldName, const ItemName& newName) {
-            if(this->vItems.contains(oldName) && !this->vItems.contains(newName)){
+            if(this->vItems.find(oldName) != this->vItems.end() && this->vItems.find(newName) == this->vItems.end()/*this->vItems.contains(oldName) && !this->vItems.contains(newName)*/){
                 this->vItems.insert({newName,std::move(this->vItems.at(oldName))});
                 this->vItems.erase(oldName);
             }
         }
 
         void updateItemName(ItemName&& oldName, ItemName&& newName) {
-            if(this->vItems.contains(oldName) && !this->vItems.contains(newName)){
+            if(this->vItems.find(oldName) != this->vItems.end() && this->vItems.find(newName) == this->vItems.end()/*this->vItems.contains(oldName) && !this->vItems.contains(newName)*/){
                 this->vItems.insert({std::move(newName),std::move(this->vItems.at(oldName))});
                 this->vItems.erase(oldName);
             }
         }
 
         const Energyleaf::Stream::V1::Tuple::Entry& getEntry(const ItemName& name) {
-            if(this->vItems.contains(name)) {
+            if(this->vItems.find(name) != this->vItems.end()/*this->vItems.contains(name)*/) {
                 return this->vItems.at(name);
             }
             throw std::runtime_error("No DepItem was found with that name!");
@@ -83,7 +83,7 @@ namespace Energyleaf::Stream::V1::Tuple {
 
         template<typename T>
         const T& getItem(const ItemName& name) {
-            if(this->vItems.contains(name)) {
+            if(this->vItems.find(name) != this->vItems.end()/*this->vItems.contains(name)*/) {
                 return this->vItems.at(name).get<T>();
             }
             throw std::runtime_error("No DepItem was found with that name!");
@@ -94,7 +94,7 @@ namespace Energyleaf::Stream::V1::Tuple {
         }
 
         bool containsItem(const ItemName& name) const {
-            return this->vItems.contains(name);
+            return this->vItems.find(name) != this->vItems.end()/*this->vItems.contains(name)*/;
         }
 
         void clear() {
