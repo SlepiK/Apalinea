@@ -29,7 +29,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) {
+        void setTuple(Tuple::Tuple& tuple) override {
             if(load) {
                 this->tuple = tuple;
             }

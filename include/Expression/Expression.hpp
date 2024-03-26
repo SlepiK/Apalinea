@@ -16,12 +16,18 @@ namespace Energyleaf::Stream::V1::Expression {
         explicit Expression(std::vector<std::string_view> datatypes) : IExpression(std::move(datatypes)){
         }
 
-        ~Expression() override = default;
+        ~Expression() override {
+            for(IExpression* exp : vSubExpressions) {
+                if(exp != nullptr) {
+                    delete exp;
+                    exp = nullptr;
+                }
+            }
+        }
 
         void add(IExpression *expression) override {
             if(this->vSubExpressions.size() <= this->vMax) {
                 this->vSubExpressions.push_back(expression);
-                expression->setHeadExpression(this);
             } else {
                 throw std::runtime_error("Limit of expression already reached!");
             }
@@ -32,12 +38,17 @@ namespace Energyleaf::Stream::V1::Expression {
                 throw std::runtime_error("Cant remove expression if no subexpression is known!");
             } else {
                 vSubExpressions.remove(expression);
-                expression->setHeadExpression(nullptr);
             }
         }
 
         [[nodiscard]] bool isComposite() const override {
             return true;
+        }
+
+        void setTuple(Tuple::Tuple& tuple) override {
+            for(IExpression* exp : vSubExpressions) {
+                exp->setTuple(tuple);
+            }
         }
     private:
         unsigned int vMax = 1;

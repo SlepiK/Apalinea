@@ -9,12 +9,8 @@
 #include <ostream>
 #include <Tuple/Tuple.hpp>
 
-#include <Expression/Compare/CompareExpression.hpp>
-#include <Expression/ToExpression/ToDtStringExpression.hpp>
-#include <Expression/Datatype/DtInt8Expression.hpp>
-#include <Expression/Calculation/CalculationExpression.hpp>
-#include <Expression/ToExpression/ToDtFloatExpression.hpp>
 #include <Types/Datatype/DtRegistry.hpp>
+#include "Types/Datatype/DtString.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     template<typename Writer>
@@ -32,7 +28,12 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
                 : vWriter(other.vWriter) {
         }
 
-        ~WriteSinkOperator() override = default;
+        ~WriteSinkOperator() override {
+            if(this->expression != nullptr) {
+                delete this->expression;
+                this->expression = nullptr;
+            }
+        }
 
         Writer& getWriter() {
             return this->vWriter;
@@ -42,44 +43,20 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     protected:
         void work(Tuple::Tuple &inputTuple) override {
             try {
-                Expression::ToDtStringExpression tse = Expression::ToDtStringExpression();
-                Expression::DataType::DtInt8Expression *edt = new Expression::DataType::DtInt8Expression("DemoString");
-                Expression::DataType::DtInt8Expression *edtBase = new Expression::DataType::DtInt8Expression(2);
-                Expression::DataType::DtInt8Expression *edtBase2 = new Expression::DataType::DtInt8Expression(4);
-                Expression::Calculation::CalculationExpression *calc = new Expression::Calculation::CalculationExpression();
-                Expression::ToDtFloatExpression* tfe = new Expression::ToDtFloatExpression();
-                calc->setCalculationType(Expression::Calculation::CalculationTypes::DIVISION);
-                calc->add(edtBase);
-                calc->add(edtBase2);
-                Expression::Compare::CompareExpression *comp = new Expression::Compare::CompareExpression();
-                edt->setTuple(inputTuple);
-                comp->add(edt);
-                comp->add(edtBase);
-                comp->setCompareType(Expression::Compare::CompareTypes::EQUAL);
-                tfe->add(calc);
-                tse.add(tfe);
-                tse.execute();
-                if(Types::Datatype::DtRegistry::get(tse.getIdentifier()) == Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
-                    vWriter << static_cast<const Types::Datatype::DtString&>(tse.getData()).toString() << std::endl;
+                if (this->expression) {
+                    this->expression->setTuple(inputTuple);
+                    this->expression->execute();
+                    if (Types::Datatype::DtRegistry::get(this->expression->getIdentifier()) ==
+                        Types::Datatype::DtRegistry::get(Types::Datatype::DtString::IDENTIFIER)) {
+                        vWriter
+                                << static_cast<const Types::Datatype::DtString &>(this->expression->getData()).toString()
+                                << std::endl;
+                    }
+                    vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+                } else {
+                    throw std::runtime_error("No expression was used!");
                 }
-                tse.remove(edt);
-                delete edt;
-
-
-                /*Expression::ToDtStringExpression* tse = new Expression::ToDtStringExpression();
-                Expression::ExpressionUnit* eu = new Expression::ExpressionUnit(std::vector<std::string_view>(),
-                                                                                "DemoString");
-                eu->setTuple(inputTuple);
-                tse->add(eu);
-                tse->execute();
-                vWriter << tse->getString() << std::endl;
-                tse->remove(eu);
-                delete eu;
-                delete tse;*/ //Demo Code of a real basic expression to get or convert an unit to string.
-                //vWriter << inputTuple.getItem<Types::Base::StringItem>("DemoString").toString() << std::endl;
-                //vWriter << inputTuple.getEntry("DemoString").get<Types::Base::StringItem>().toString() << std::endl;
-                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
-            } catch (std::exception& e) {
+            } catch (const std::exception& e) {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             }
         }

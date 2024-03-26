@@ -7,6 +7,7 @@
 
 #include <stdexcept>
 #include <Types/Datatype/IDt.hpp>
+#include "Tuple/Tuple.hpp"
 #include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
@@ -16,14 +17,6 @@ namespace Energyleaf::Stream::V1::Expression {
         }
 
         virtual ~IExpression() = default;
-
-        void setHeadExpression(IExpression *expression) {
-            this->vHeadExpression = expression;
-        }
-
-        [[nodiscard]] IExpression *getHeadExpression() const {
-            return this->vHeadExpression;
-        }
 
         virtual void add(IExpression *component) {
             throw std::runtime_error("Operation is not direct supported!");
@@ -45,9 +38,19 @@ namespace Energyleaf::Stream::V1::Expression {
         [[nodiscard]] virtual const Types::Datatype::IDt& getData() const = 0;
 
         [[nodiscard]] virtual std::string_view getIdentifier() const = 0;
+
+        virtual void setTuple(Tuple::Tuple& tuple) = 0;
+
+        void setUsed(bool use) {
+            this->used = use;
+        }
+
+        [[nodiscard]] bool isUsed() const {
+            return this->used;
+        }
     protected:
-        IExpression *vHeadExpression{};
     private:
+        bool used;
         const std::unordered_set<std::string_view> datatypes;
     };
 
