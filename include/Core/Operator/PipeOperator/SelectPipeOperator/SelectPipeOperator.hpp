@@ -14,15 +14,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class SelectPipeOperator
             : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
-        void setThreshold(int&& threshold) {
-            this->vThreshold = threshold;
-        }
-
-        [[nodiscard]] const int& getThreshold() const {
-            return this->vThreshold;
-        }
     private:
-        int vThreshold = 0;
     protected:
         void work(Tuple::Tuple &inputTuple,
                   Tuple::Tuple &outputTuple) override {
