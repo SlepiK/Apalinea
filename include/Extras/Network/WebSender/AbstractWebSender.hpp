@@ -20,8 +20,8 @@ namespace Energyleaf::Stream::V1::Extras::Network {
 
         virtual void setSecure(bool secure) = 0;
 
-        const Sender *getSenderR() {
-            return this->vSender;
+        void setSender(const AbstractWebSender &other) {
+            this->vSender = other.vSender;
         }
     private:
         Sender *vSender;
