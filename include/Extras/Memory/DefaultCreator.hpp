@@ -6,6 +6,7 @@
 #define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
 
 #include <Extras/Memory/ICreator.hpp>
+#include <new>
 
 namespace Energyleaf::Stream::V1::Extras::Memory {
     template <typename Type>

@@ -105,6 +105,7 @@ set(PROJECT_SOURCES
         include/Types/Datatype/DtBool.cpp
         include/Types/Datatype/DtFloat.cpp
         include/Types/Datatype/DtDouble.cpp
+        include/Core/Constants/Settings.cpp
 )
 
 set(DEMO_SOURCES
