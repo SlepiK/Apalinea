@@ -24,13 +24,13 @@ namespace Energyleaf::Stream::V1::Extras::Network {
 
         virtual void setSecure(bool secure) = 0;
 
-        const Sender& getSenderR() {
+        const Sender *getSenderR() {
             return this->vSender;
         }
     private:
-        Sender vSender;
+        Sender *vSender;
     protected:
-        Sender& getSender() {
+        Sender *getSender() {
             return this->vSender;
         }
     };
