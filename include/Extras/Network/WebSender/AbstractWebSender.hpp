@@ -12,7 +12,7 @@ namespace Energyleaf::Stream::V1::Extras::Network {
         AbstractWebSender() : vSender() {
         }
 
-        AbstractWebSender(const Sender *sender)
+        AbstractWebSender(Sender *sender)
                 : vSender(sender) {
         }
 
