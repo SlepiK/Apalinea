@@ -12,11 +12,7 @@ namespace Energyleaf::Stream::V1::Extras::Network {
         AbstractWebSender() : vSender() {
         }
 
-        AbstractWebSender(Sender&& sender)
-                : vSender(std::forward<Sender>(sender)) {
-        }
-
-        AbstractWebSender(Sender& sender)
+        AbstractWebSender(const Sender *sender)
                 : vSender(sender) {
         }
 
