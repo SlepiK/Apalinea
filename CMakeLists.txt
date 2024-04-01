@@ -87,6 +87,8 @@ set(PROJECT_HEADERS
         include/Expression/ToExpression/ToDtFloatExpression.hpp
         include/Expression/ToExpression/ToDtDoubleExpression.hpp
         include/Expression/ToExpression/ToDtBoolExpression.hpp
+        include/Types/Datatype/DtImage.cpp
+        include/Types/Datatype/DtImage.hpp
 )
 
 set(PROJECT_SOURCES

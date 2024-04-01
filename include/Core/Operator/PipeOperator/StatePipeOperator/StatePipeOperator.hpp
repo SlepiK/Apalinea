@@ -8,6 +8,7 @@
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Tuple/Tuple.hpp"
 #include <utility>
+#include "Types/Datatype/DtBool.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class StatePipeOperator
@@ -43,8 +44,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             if(output){
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
                 outputTuple.clear();
-                /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
-                outputTuple.addItem(std::string("State"),output);*/
+                outputTuple.addItem(std::string("State"),Types::Datatype::DtBool(output));
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             }

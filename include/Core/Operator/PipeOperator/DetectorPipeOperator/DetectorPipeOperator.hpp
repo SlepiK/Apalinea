@@ -12,6 +12,7 @@
 #include "Types/Pixel/RGB.hpp"
 #include "Extras/Converter/Types/Pixel/RGBtoHSV.hpp"
 #include <utility>
+#include "Types/Datatype/DtSizeT.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class DetectorPipeOperator
@@ -57,8 +58,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             }
 
             outputTuple.clear();
-            /*outputTuple.addItem(inputTuple.getItem<std::string>(0));
-            outputTuple.addItem(std::string("FOUNDPIXEL"),foundPixel);*/
+            outputTuple.addItem(std::string("FOUNDPIXEL"),Types::Datatype::DtSizeT(foundPixel));
         }
     };
 }
