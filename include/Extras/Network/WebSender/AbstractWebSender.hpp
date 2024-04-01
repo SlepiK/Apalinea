@@ -23,6 +23,10 @@ namespace Energyleaf::Stream::V1::Extras::Network {
         ~AbstractWebSender() = default;
 
         virtual void setSecure(bool secure) = 0;
+
+        const Sender& getSenderR() {
+            return this->vSender;
+        }
     private:
         Sender vSender;
     protected:

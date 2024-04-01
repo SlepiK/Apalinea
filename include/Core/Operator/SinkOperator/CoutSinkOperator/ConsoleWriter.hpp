@@ -15,7 +15,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
             std::cout << message;
         }
 
-
         void breakAndFlush() override {
             std::cout << std::endl;
         }

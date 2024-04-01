@@ -33,11 +33,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
     protected:
         void work(Tuple::Tuple &inputTuple) override {
             try {
-                /*if(vSender.work(inputTuple)) {
+                if(vSender.work(inputTuple)) {
                     vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
                 } else {
                     vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
-                }*/
+                }
             } catch (std::exception& e) {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             }
