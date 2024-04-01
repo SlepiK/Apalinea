@@ -18,8 +18,6 @@ namespace Energyleaf::Stream::V1::Extras::Network {
 
         ~AbstractWebSender() = default;
 
-        virtual void setSecure(bool secure) = 0;
-
         void setSender(const AbstractWebSender &other) {
             delete this->vSender;
             this->vSender = other.vSender;
