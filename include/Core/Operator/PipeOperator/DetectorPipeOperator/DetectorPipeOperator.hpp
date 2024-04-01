@@ -13,6 +13,7 @@
 #include "Extras/Converter/Types/Pixel/RGBtoHSV.hpp"
 #include <utility>
 #include "Types/Datatype/DtSizeT.hpp"
+#include "Types/Datatype/DtImage.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class DetectorPipeOperator
@@ -39,9 +40,16 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     protected:
         void work(Tuple::Tuple &inputTuple,
                   Tuple::Tuple &outputTuple) override {
-            std::size_t foundPixel = 0;
+            if(!inputTuple.containsItem("Image")){
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
+                return;
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            }
+            Energyleaf::Stream::V1::Types::Image image = inputTuple.getItem<Types::Datatype::DtImage>("Image").toImage();
+            inputTuple.clear();
 
-            Energyleaf::Stream::V1::Types::Image image;// = inputTuple.getItem<Energyleaf::Stream::V1::Types::Image>(1).getData();
+            std::size_t foundPixel = 0;
             Energyleaf::Stream::V1::Types::Pixel::HSV hsv;
             for (std::size_t i = 0; i < (image.getWidth() * image.getHeight()); ++i) {
                 std::size_t index = i * image.getBytesPerPixel();

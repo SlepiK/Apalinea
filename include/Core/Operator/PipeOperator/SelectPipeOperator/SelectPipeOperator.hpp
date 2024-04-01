@@ -29,7 +29,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                         bool eval = static_cast<const Types::Datatype::DtBool&>(this->expression->getData()).toBool();
                         outputTuple.clear();
                         if(eval) {
-                            outputTuple.addItem(std::string("SELECT"),Types::Datatype::DtBool(eval));
+                            outputTuple.addItem(std::string("Select"),Types::Datatype::DtBool(eval));
                             vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
                         } else {
                             vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;

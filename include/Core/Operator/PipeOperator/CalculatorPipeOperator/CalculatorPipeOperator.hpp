@@ -70,6 +70,13 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     protected:
         void work(Tuple::Tuple &inputTuple,
                   Tuple::Tuple &outputTuple) override {
+            if(!inputTuple.containsItem("State")){
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
+                return;
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            }
+            inputTuple.clear();
             if(!this->vRotationPerKWhSet) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }

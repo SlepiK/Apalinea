@@ -9,6 +9,7 @@
 #include "Tuple/Tuple.hpp"
 #include "Types/Image/Image.hpp"
 #include "CameraSourceOperatorTrait.hpp"
+#include "Types/Datatype/DtImage.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
     template<typename Camera>
@@ -51,7 +52,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
             Energyleaf::Stream::V1::Types::Image img = this->vCamera.getImage();
             if(img.getData() != nullptr) {
                 outputTuple.clear();
-                //outputTuple.addItem(std::string("Image"),img);
+                outputTuple.addItem(std::string("Image"),Types::Datatype::DtImage(img));
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;

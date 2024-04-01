@@ -29,7 +29,14 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     protected:
         void work(Tuple::Tuple &inputTuple,
                   Tuple::Tuple &outputTuple) override {
-            bool input = false; //inputTuple.getItem<bool>(1).getData();
+            if(!inputTuple.containsItem("Select")){
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
+                return;
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            }
+            bool input = inputTuple.getItem<Types::Datatype::DtBool>("Select").toBool();
+            inputTuple.clear();
             bool output;
             if(this->vReady) {
                 bool tmp = (this->vState != input);
