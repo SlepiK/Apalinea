@@ -8,12 +8,13 @@ set(INCLUDE_DIRECTORYS
 
 set(PROJECT_HEADERS
         include/Operator/Type/OperatorType.hpp
+        include/Types/Datatype/DtRegistry.hpp
         include/Operator/PipeOperator/AbstractPipeOperator.hpp
         include/Operator/SinkOperator/AbstractSinkOperator.hpp
         include/Operator/SourceOperator/AbstractSourceOperator.hpp
         include/Operator/AbstractOperator.hpp
         include/Operator/IOperator.hpp
-        include/Tuple/Item/Item.hpp
+        include/Tuple/Entry/Entry.hpp
         include/Tuple/Tuple.hpp
         include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
         include/Link/ILink.hpp
@@ -43,26 +44,72 @@ set(PROJECT_HEADERS
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
         include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
         include/Operator/ProcessState/OperatorProcessState.hpp
+        include/Types/Datatype/IDtTrait.hpp
+        include/Expression/IExpression.hpp
+        include/Expression/Expression.hpp
+        include/Expression/ToExpression/ToDtStringExpression.hpp
+        include/Types/Datatype/DtString.hpp
+        include/Types/Datatype/DtInt32.hpp
+        include/Types/Datatype/DtInt8.hpp
+        include/Types/Datatype/DtInt16.hpp
+        include/Types/Datatype/DtUInt8.hpp
+        include/Types/Datatype/DtUInt16.hpp
+        include/Types/Datatype/DtUInt32.hpp
+        include/Types/Datatype/DtInt64.hpp
+        include/Types/Datatype/DtUInt64.hpp
+        include/Types/Datatype/DtInt.hpp
+        include/Types/Datatype/DtSizeT.hpp
+        include/Exception/NotImplementedException.hpp
+        include/Types/Datatype/IDt.hpp
+        include/Expression/Datatype/DtIntExpression.hpp
+        include/Expression/Datatype/DtInt16Expression.hpp
+        include/Expression/Datatype/DtInt32Expression.hpp
+        include/Expression/Datatype/DtInt64Expression.hpp
+        include/Expression/Datatype/DtInt8Expression.hpp
+        include/Expression/Datatype/DtSizeTExpression.hpp
+        include/Expression/Datatype/DtStringExpression.hpp
+        include/Expression/Datatype/DtUInt8Expression.hpp
+        include/Expression/Datatype/DtUInt16Expression.hpp
+        include/Expression/Datatype/DtUInt32Expression.hpp
+        include/Expression/Datatype/DtUInt64Expression.hpp
+        include/Expression/ToExpression/ToDtIntExpression.hpp
+        include/Expression/IExpressionUnit.hpp
+        include/Expression/Compare/CompareExpression.hpp
+        include/Types/Datatype/DtBool.hpp
+        include/Expression/Datatype/DtBoolExpression.hpp
+        include/Expression/Calculation/CalculationExpression.hpp
+        include/Types/Datatype/DtNumbers.hpp
+        include/Types/Datatype/DtFloat.hpp
+        include/Types/Datatype/DtDouble.hpp
+        include/Expression/Datatype/DtFloatExpression.hpp
+        include/Expression/Datatype/DtDoubleExpression.hpp
+        include/Expression/ToExpression/ToDtFloatExpression.hpp
+        include/Expression/ToExpression/ToDtDoubleExpression.hpp
+        include/Expression/ToExpression/ToDtBoolExpression.hpp
+        include/Types/Datatype/DtImage.hpp
 )
 
 set(PROJECT_SOURCES
+        include/Types/Datatype/DtUInt64.cpp
+        include/Types/Datatype/DtInt64.cpp
+        include/Types/Datatype/DtInt8.cpp
+        include/Types/Datatype/DtInt16.cpp
+        include/Types/Datatype/DtInt32.cpp
+        include/Types/Datatype/DtSizeT.cpp
+        include/Types/Datatype/DtUInt8.cpp
+        include/Types/Datatype/DtUInt16.cpp
+        include/Types/Datatype/DtUInt32.cpp
+        include/Types/Datatype/DtInt.cpp
+        include/Types/Datatype/DtBool.cpp
+        include/Types/Datatype/DtFloat.cpp
+        include/Types/Datatype/DtDouble.cpp
+        include/Core/Constants/Settings.cpp
+        include/Types/Datatype/DtImage.cpp
+        include/Types/Datatype/DtRegistry.cpp
 )
 
 set(DEMO_SOURCES
         example/example.cpp
-        include/Core/Constants/Settings.hpp
-        include/Core/Operator/PipeOperator/EnrichPipeOperator/AbstractEnricher.hpp
-        include/Core/Operator/PipeOperator/EnrichPipeOperator/EnrichPipeOperator.hpp
-        include/Core/Operator/SinkOperator/SenderSinkOperator/AbstractSender.hpp
-        include/Core/Operator/SinkOperator/SenderSinkOperator/SenderSinkOperator.hpp
-        include/Core/Operator/SinkOperator/WriteSinkOperator/AbstractWriter.hpp
-        include/Core/Operator/SinkOperator/WriteSinkOperator/WriteSinkOperator.hpp
-        include/Extras/Memory/CreatorArgument.hpp
-        include/Extras/Memory/CreatorContainer.hpp
-        include/Extras/Memory/DefaultCreator.hpp
-        include/Extras/Memory/ICreator.hpp
-        include/Extras/Network/WebSender/AbstractWebSender.hpp
-        include/Core/Operator/SinkOperator/CoutSinkOperator/ConsoleWriter.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})

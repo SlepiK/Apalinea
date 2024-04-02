@@ -6,10 +6,10 @@
 #define STREAM_V1_OPERATOR_PIPEOPERATOR_HPP
 
 #include "Operator/AbstractOperator.hpp"
+#include "Expression/IExpression.hpp"
 
 namespace Energyleaf::Stream::V1::Operator {
 
-    template <typename InputTuple,typename OutputTuple>
     class AbstractPipeOperator : public AbstractOperator {
     public:
         AbstractPipeOperator() = default;
@@ -20,7 +20,7 @@ namespace Energyleaf::Stream::V1::Operator {
             return OperatorType::PIPE;
         }
 
-        virtual void process(InputTuple& inputTuple, OutputTuple& outputTuple) final {
+        virtual void process(Tuple::Tuple& inputTuple, Tuple::Tuple& outputTuple) final {
             if (this->vProcessing) throw std::runtime_error("Operator is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
@@ -31,11 +31,24 @@ namespace Energyleaf::Stream::V1::Operator {
             this->vProcessed = true;
         }
 
-        using PipeInputTuple = InputTuple;
-        using PipeOutputTuple = OutputTuple;
+        void setExpression(Expression::IExpression* exp) {
+            if(!exp->isUsed()) {
+                this->expression = exp;
+                exp->setUsed(true);
+            } else {
+                throw std::runtime_error("Given Expression is already in use!");
+            }
+        }
+
+        Expression::IExpression* getExpression() {
+            return this->expression;
+        }
+
     private:
     protected:
-        virtual void work(InputTuple& inputTuple, OutputTuple& outputTuple) = 0;
+        Expression::IExpression* expression{nullptr};
+        virtual void work(Tuple::Tuple& inputTuple, Tuple::Tuple& outputTuple) = 0;
+
     };
 
 } // Stream::V1::Operator

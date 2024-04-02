@@ -6,14 +6,14 @@
 #define STREAM_V1_LINK_LINKWRAPPER_HPP
 
 #include "Operator/ProcessState/OperatorProcessState.hpp"
+#include "Tuple/Tuple.hpp"
 
 namespace Energyleaf::Stream::V1::Link {
-    template<typename InputTuple>
     class LinkWrapper {
     public:
         virtual ~LinkWrapper() = default;
-        virtual void setInputTuple(InputTuple tuple) = 0;
-        virtual void setInputTupleR(InputTuple& tuple) = 0;
+        virtual void setInputTuple(Tuple::Tuple tuple) = 0;
+        virtual void setInputTupleR(Tuple::Tuple& tuple) = 0;
         virtual void setOperatorProcessState(Operator::OperatorProcessState state) = 0;
     private:
     };

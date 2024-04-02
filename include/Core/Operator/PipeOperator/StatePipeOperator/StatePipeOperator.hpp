@@ -8,11 +8,11 @@
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Tuple/Tuple.hpp"
 #include <utility>
+#include "Types/Datatype/DtBool.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class StatePipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string>>{
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         void setState(bool&& state) {
             if(!this->vReady) {
@@ -27,9 +27,16 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         bool vState;
         bool vReady = false;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<bool,std::string> &outputTuple) override {
-            bool input = inputTuple.getItem<bool>(1).getData();
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
+            if(!inputTuple.containsItem("Select")){
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
+                return;
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            }
+            bool input = inputTuple.getItem<Types::Datatype::DtBool>("Select").toBool();
+            inputTuple.clear();
             bool output;
             if(this->vReady) {
                 bool tmp = (this->vState != input);
@@ -44,10 +51,9 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             if(output){
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
                 outputTuple.clear();
-                outputTuple.addItem(inputTuple.getItem<std::string>(0));
-                outputTuple.addItem(std::string("State"),output);
+                outputTuple.addItem(std::string("State"),Types::Datatype::DtBool(output));
             } else {
-                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
             }
         }
     };

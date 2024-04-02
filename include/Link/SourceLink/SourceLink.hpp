@@ -18,7 +18,6 @@ namespace Energyleaf::Stream::V1::Link {
     class SourceLink : public AbstractLink {
         static_assert(IsBasedOnAbstractSourceOperator<SourceOperator>::value,"SourceOperator must be based on AbstractSourceOperator!");
     public:
-        using OutputTuple = typename IsBasedOnAbstractSourceOperator<SourceOperator>::OutputTuple;
 
         explicit SourceLink(SourceOperator&& sourceOperator)
                 : vOperator(std::forward<SourceOperator>(sourceOperator)) {
@@ -44,7 +43,7 @@ namespace Energyleaf::Stream::V1::Link {
             if (!this->vProcessing) this->vProcessing = true;
 
             if(this->vState == Operator::OperatorProcessState::CONTINUE || this->vState == Operator::OperatorProcessState::BREAK) {
-                OutputTuple outputTuple;
+                Tuple::Tuple outputTuple;
                 this->vOperator.process(outputTuple);
                 this->vState = this->vOperator.getOperatorProcessState();
 
@@ -65,22 +64,18 @@ namespace Energyleaf::Stream::V1::Link {
 
         template<typename PipeOperator>
         void connect(const PipeLinkPtr<PipeOperator> &nextLink) {
-            static_assert(std::is_same_v<OutputTuple, typename PipeLink<PipeOperator>::InputTuple>,
-                          "InputTuple types must be the same for connection.");
             this->vLinks.push_back(nextLink);
         }
 
         template<typename SinkOperator>
         void connect(const SinkLinkPtr<SinkOperator> &nextLink) {
-            static_assert(std::is_same_v<OutputTuple, typename SinkLink<SinkOperator>::InputTuple>,
-                          "InputTuple types must be the same for connection.");
             this->vLinks.push_back(nextLink);
         }
 
     private:
         SourceOperator vOperator;
-        std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>> vLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper<OutputTuple>>>::iterator;
+        std::vector<std::shared_ptr<LinkWrapper>> vLinks;
+        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
     protected:
     };
 

@@ -9,26 +9,26 @@ namespace Energyleaf::Stream::V1::Extras::Network {
     template<typename Sender>
     class AbstractWebSender {
     public:
-        AbstractWebSender() : vSender() {
+        AbstractWebSender() : vSender(new Sender()) {
         }
 
-        AbstractWebSender(Sender&& sender)
-                : vSender(std::forward<Sender>(sender)) {
-        }
-
-        AbstractWebSender(Sender& sender)
+        AbstractWebSender(Sender *sender)
                 : vSender(sender) {
         }
 
         ~AbstractWebSender() = default;
 
-        virtual void setSecure(bool secure) = 0;
-    private:
-        Sender vSender;
-    protected:
-        Sender& getSender() {
+        void setSender(const AbstractWebSender &other) {
+            delete this->vSender;
+            this->vSender = other.vSender;
+        }
+
+        Sender *getSender() {
             return this->vSender;
         }
+    private:
+        Sender *vSender;
+    protected:
     };
 }
 

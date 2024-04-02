@@ -9,7 +9,6 @@
 
 namespace Energyleaf::Stream::V1::Operator {
 
-    template<typename OutputTuple>
     class AbstractSourceOperator : public AbstractOperator {
     public:
         AbstractSourceOperator() = default;
@@ -20,7 +19,7 @@ namespace Energyleaf::Stream::V1::Operator {
             return OperatorType::SOURCE;
         }
 
-        virtual void process(OutputTuple& outputTuple) final {
+        virtual void process(Tuple::Tuple& outputTuple) final {
             if (this->vProcessing) throw std::runtime_error("Operator is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
@@ -31,10 +30,9 @@ namespace Energyleaf::Stream::V1::Operator {
             this->vProcessed = true;
         }
 
-        using SourceOutputTuple = OutputTuple;
     private:
     protected:
-        virtual void work(OutputTuple& outputTuple) = 0;
+        virtual void work(Tuple::Tuple& outputTuple) = 0;
     };
 
 } // Stream::V1::Operator

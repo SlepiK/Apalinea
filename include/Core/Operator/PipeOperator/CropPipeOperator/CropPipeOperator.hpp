@@ -9,11 +9,11 @@
 #include "Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Types/Image/Image.hpp"
 #include "Tuple/Tuple.hpp"
+#include "Types/Datatype/DtImage.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class CropPipeOperator
-            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator<Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string>,
-                    Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string>> {
+            : public Energyleaf::Stream::V1::Operator::AbstractPipeOperator {
     public:
         void setSize(int x, int width, int y, int height) {
             this->vX = x;
@@ -27,10 +27,15 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         int vY = 0;
         int vHeight = 0;
     protected:
-        void work(Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string> &inputTuple,
-                  Energyleaf::Stream::V1::Tuple::Tuple<Energyleaf::Stream::V1::Types::Image,std::string> &outputTuple) override {
-            outputTuple.addItem(inputTuple.getItem<std::string>(0));
-            Energyleaf::Stream::V1::Types::Image img = inputTuple.getItem<Energyleaf::Stream::V1::Types::Image>(1).getData();
+        void work(Tuple::Tuple &inputTuple,
+                  Tuple::Tuple &outputTuple) override {
+            if(!inputTuple.containsItem("Image")){
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
+                return;
+            } else {
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            }
+            Energyleaf::Stream::V1::Types::Image img = inputTuple.getItem<Types::Datatype::DtImage>("Image").toImage();
             inputTuple.clear();
 
             if (this->vX < 0 || this->vWidth <= 0 || this->vX + this->vWidth > img.getWidth() ||
@@ -52,7 +57,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             }
 
             outputTuple.clear();
-            outputTuple.addItem(std::string("Image"),outImg);
+            outputTuple.addItem(std::string("Image"),Types::Datatype::DtImage(outImg));
         }
     };
 }
