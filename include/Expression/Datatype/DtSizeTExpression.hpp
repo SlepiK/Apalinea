@@ -37,14 +37,16 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         }
 
         void execute() override {
-            if(this->tuple.getItems().empty()) {
-                throw std::runtime_error("Tuple is empty!");
-            }
+            if(load) {
+                if (this->tuple.getItems().empty()) {
+                    throw std::runtime_error("Tuple is empty!");
+                }
 
-            if(this->tuple.containsItem(this->entry)) {
-                this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtSizeT>();
-            } else {
-                throw std::runtime_error("Entry was not found in the given tuple!");
+                if (this->tuple.containsItem(this->entry)) {
+                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtSizeT>();
+                } else {
+                    throw std::runtime_error("Entry was not found in the given tuple!");
+                }
             }
         }
 

@@ -13,7 +13,7 @@
 namespace Energyleaf::Stream::V1::Expression {
     class IExpression {
     public:
-        explicit IExpression(std::vector<std::string_view> datatypes) : datatypes(datatypes.begin(),datatypes.end()){
+        explicit IExpression(std::vector<std::string_view> datatypes) : datatypes(datatypes.begin(),datatypes.end()), used(false){
         }
 
         virtual ~IExpression() = default;
