@@ -9,7 +9,7 @@ namespace Energyleaf::Stream::V1::Extras::Network {
     template<typename Sender>
     class AbstractWebSender {
     public:
-        AbstractWebSender() : vSender() {
+        AbstractWebSender() : vSender(new Sender()) {
         }
 
         AbstractWebSender(Sender *sender)
@@ -22,12 +22,13 @@ namespace Energyleaf::Stream::V1::Extras::Network {
             delete this->vSender;
             this->vSender = other.vSender;
         }
-    private:
-        Sender *vSender;
-    protected:
+
         Sender *getSender() {
             return this->vSender;
         }
+    private:
+        Sender *vSender;
+    protected:
     };
 }
 

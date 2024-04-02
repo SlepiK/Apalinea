@@ -53,7 +53,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 outputTuple.clear();
                 outputTuple.addItem(std::string("State"),Types::Datatype::DtBool(output));
             } else {
-                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
+                vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
             }
         }
     };

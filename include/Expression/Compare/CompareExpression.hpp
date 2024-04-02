@@ -97,6 +97,17 @@ namespace Energyleaf::Stream::V1::Expression::Compare {
             }
         }
 
+        void setTuple(Tuple::Tuple& tuple) override {
+            if(first == nullptr && second == nullptr) {
+                for (IExpression *exp: vSubExpressions) {
+                    exp->setTuple(tuple);
+                }
+            } else {
+                first->setTuple(tuple);
+                second->setTuple(tuple);
+            }
+        }
+
         [[nodiscard]] const Types::Datatype::IDt& getData() const override {
             return this->data;
         }
