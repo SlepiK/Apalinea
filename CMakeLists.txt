@@ -79,7 +79,6 @@ set(PROJECT_HEADERS
         include/Expression/Datatype/DtBoolExpression.hpp
         include/Expression/Calculation/CalculationExpression.hpp
         include/Types/Datatype/DtNumbers.hpp
-        include/Types/Datatype/DtRegistry.cpp
         include/Types/Datatype/DtFloat.hpp
         include/Types/Datatype/DtDouble.hpp
         include/Expression/Datatype/DtFloatExpression.hpp
@@ -87,7 +86,6 @@ set(PROJECT_HEADERS
         include/Expression/ToExpression/ToDtFloatExpression.hpp
         include/Expression/ToExpression/ToDtDoubleExpression.hpp
         include/Expression/ToExpression/ToDtBoolExpression.hpp
-        include/Types/Datatype/DtImage.cpp
         include/Types/Datatype/DtImage.hpp
 )
 
@@ -106,6 +104,8 @@ set(PROJECT_SOURCES
         include/Types/Datatype/DtFloat.cpp
         include/Types/Datatype/DtDouble.cpp
         include/Core/Constants/Settings.cpp
+        include/Types/Datatype/DtImage.cpp
+        include/Types/Datatype/DtRegistry.cpp
 )
 
 set(DEMO_SOURCES
