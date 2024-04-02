@@ -8,7 +8,7 @@
 #include <string_view>
 #include <cmath>
 #include "IDt.hpp"
-
+#include "Exception/NotImplementedException.hpp"
 
 #include "DtInt.hpp"
 #include "DtInt8.hpp"

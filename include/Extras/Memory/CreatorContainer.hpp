@@ -8,6 +8,7 @@
 #include <Extras/Memory/ICreator.hpp>
 #include <Extras/Memory/DefaultCreator.hpp>
 #include <memory>
+#include <stdexcept>
 
 namespace Energyleaf::Stream::V1::Extras::Memory {
     template <typename CreatorType>
