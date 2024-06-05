@@ -8,6 +8,7 @@ set(INCLUDE_DIRECTORYS
 
 set(BOOST_REQUIRED_COMPONENTS
         filesystem
+        thread
 )
 
 set(BOOST_MIN_VERSION 1.80.0)

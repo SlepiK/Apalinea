@@ -12,6 +12,7 @@ namespace Energyleaf::Stream::V1::Extras::Memory {
     template <typename Type>
     class ICreator {
     public:
+        virtual ~ICreator() = default;
         virtual Type* create(std::size_t size) = 0;
         virtual void destroy(Type* ptr, CreatorArgument arg = CreatorArgument::SINGLE) = 0;
     };
