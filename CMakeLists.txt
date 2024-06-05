@@ -6,6 +6,18 @@ set(CMAKE_CXX_STANDARD 20)
 set(INCLUDE_DIRECTORYS
         include)
 
+set(BOOST_REQUIRED_COMPONENTS
+        filesystem
+)
+
+set(BOOST_MIN_VERSION 1.80.0)
+
+# Find Boost
+find_package(Boost ${BOOST_MIN_VERSION} REQUIRED COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
+
+# Include Boost
+include_directories(${Boost_INCLUDE_DIRS})
+
 set(PROJECT_HEADERS
         include/Operator/Type/OperatorType.hpp
         include/Types/Datatype/DtRegistry.hpp
@@ -114,5 +126,8 @@ set(DEMO_SOURCES
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_include_directories(stream PRIVATE ${INCLUDE_DIRECTORYS})
+target_link_libraries(stream ${Boost_LIBRARIES})
+
 add_executable(example ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${DEMO_SOURCES})
 target_include_directories(example PRIVATE ${INCLUDE_DIRECTORYS})
+target_link_libraries(example ${Boost_LIBRARIES})

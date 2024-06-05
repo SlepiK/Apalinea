@@ -68,10 +68,15 @@ namespace Energyleaf::Stream::V1::Core::Plan {
             source->connect(target);
         }
 
+        [[deprecated("Use evtProcess() instead. Look for usage in the demo.")]]
         void process() {
             for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                 (*iterator)->process();
             }
+        }
+
+        void evtProcess() {
+
         }
     private:
         std::vector<std::shared_ptr<Link::ILink>> vLinks;
