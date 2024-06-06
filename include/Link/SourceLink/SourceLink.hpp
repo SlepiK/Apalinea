@@ -19,12 +19,14 @@ namespace Energyleaf::Stream::V1::Link {
         static_assert(IsBasedOnAbstractSourceOperator<SourceOperator>::value,"SourceOperator must be based on AbstractSourceOperator!");
     public:
 
-        explicit SourceLink(SourceOperator&& sourceOperator)
-                : vOperator(std::forward<SourceOperator>(sourceOperator)) {
+        explicit SourceLink(SourceOperator&& sourceOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+            AbstractLink(executor),
+            vOperator(std::forward<SourceOperator>(sourceOperator)) {
         }
 
-        explicit SourceLink(SourceOperator& sourceOperator)
-                : vOperator(std::move(sourceOperator)) {
+        explicit SourceLink(SourceOperator& sourceOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::move(sourceOperator)) {
         }
 
         SourceLink(SourceLink &&other) noexcept
@@ -84,8 +86,9 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename SourceOperator>
     using SourceLinkUPtr = std::unique_ptr<SourceLink<SourceOperator>>;
     template <typename SourceOperator>
+    [[deprecated("Use Plan::createSource() instead. Look for usage in the demo.")]]
     SourceLinkUPtr<SourceOperator> make_SourceLinkUPtr() {
-        return std::make_unique<SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()));
+        return std::make_unique<SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()),nullptr);
     }
 
 } // Stream::V1::Link

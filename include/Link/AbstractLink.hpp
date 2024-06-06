@@ -5,15 +5,22 @@
 #ifndef STREAM_V1_LINK_ABSTRACTLINK_HPP
 #define STREAM_V1_LINK_ABSTRACTLINK_HPP
 
+#include <utility>
+
 #include "ILink.hpp"
 #include "Trait/LinkTrait.hpp"
 #include "Tuple/Tuple.hpp"
+#include "Core/Executor/IExecutor.hpp"
 
 namespace Energyleaf::Stream::V1::Link {
 
     class AbstractLink : public ILink {
     public:
-        AbstractLink() : vProcessed(false), vProcessing(false) , vState(Operator::OperatorProcessState::CONTINUE){
+        explicit AbstractLink(std::shared_ptr<Core::Executor::IExecutor> executor) :
+            vProcessed(false),
+            vProcessing(false) ,
+            vState(Operator::OperatorProcessState::CONTINUE),
+            executor(std::move(executor)) {
         }
 
         ~AbstractLink() override = default;
@@ -31,6 +38,7 @@ namespace Energyleaf::Stream::V1::Link {
         bool vProcessing;
         bool vProcessed;
         Operator::OperatorProcessState vState;
+        std::shared_ptr<Core::Executor::IExecutor> executor;
     };
 
 } // Stream::V1::Link

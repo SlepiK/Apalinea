@@ -17,12 +17,14 @@ namespace Energyleaf::Stream::V1::Link {
         static_assert(IsBasedOnAbstractSinkOperator<SinkOperator>::value,"SinkOperator must be based on AbstractSinkOperator!");
     public:
 
-        explicit SinkLink(SinkOperator&& sinkOperator)
-                : vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
+        explicit SinkLink(SinkOperator&& sinkOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
         }
 
-        explicit SinkLink(SinkOperator& sinkOperator)
-                : vOperator(std::move(sinkOperator)), inputTuple() {
+        explicit SinkLink(SinkOperator& sinkOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::move(sinkOperator)), inputTuple() {
         }
 
         SinkLink(SinkLink&& other) noexcept
@@ -80,8 +82,9 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename SinkOperator>
     using SinkLinkUPtr = std::unique_ptr<SinkLink<SinkOperator>>;
     template <typename SinkOperator>
+    [[deprecated("Use Plan::createSink() instead. Look for usage in the demo.")]]
     SinkLinkUPtr<SinkOperator> make_SinkLinkUPtr() {
-        return std::make_unique<SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()));
+        return std::make_unique<SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()),nullptr);
     }
 
 } // Stream::V1::Link

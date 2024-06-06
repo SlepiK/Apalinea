@@ -22,12 +22,14 @@ namespace Energyleaf::Stream::V1::Link {
                       "PipeOperator must be based on AbstractPipeOperator!");
     public:
 
-        explicit PipeLink(PipeOperator &&pipeOperator)
-                : vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple() {
+        explicit PipeLink(PipeOperator &&pipeOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple() {
         }
 
-        explicit PipeLink(PipeOperator &pipeOperator)
-                : vOperator(std::move(pipeOperator)) , inputTuple()  {
+        explicit PipeLink(PipeOperator &pipeOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::move(pipeOperator)) , inputTuple()  {
         }
 
         PipeLink(PipeLink &&other) noexcept
@@ -114,8 +116,9 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename PipeOperator>
     using PipeLinkUPtr = std::unique_ptr<PipeLink<PipeOperator>>;
     template <typename PipeOperator>
+    [[deprecated("Use Plan::createPipe() instead. Look for usage in the demo.")]]
     PipeLinkUPtr<PipeOperator> make_PipeLinkUPtr() {
-        return std::make_unique<PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()));
+        return std::make_unique<PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()),nullptr);
     }
 
 } // Stream::V1::Link

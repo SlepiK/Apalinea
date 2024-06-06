@@ -100,6 +100,8 @@ set(PROJECT_HEADERS
         include/Expression/ToExpression/ToDtDoubleExpression.hpp
         include/Expression/ToExpression/ToDtBoolExpression.hpp
         include/Types/Datatype/DtImage.hpp
+        include/Core/Executor/IExecutor.hpp
+        include/Core/Executor/BoostExecutor.hpp
 )
 
 set(PROJECT_SOURCES
