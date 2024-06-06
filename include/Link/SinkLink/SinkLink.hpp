@@ -54,6 +54,18 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         void process() override {
+            this->executor.get()->task([this] { this->exec(); });
+        }
+
+        void setOperatorProcessState(Operator::OperatorProcessState state) override {
+            this->vState = state;
+        }
+
+    private:
+        SinkOperator vOperator;
+        Tuple::Tuple inputTuple;
+    protected:
+        void exec() {
             if (this->vProcessing) throw std::runtime_error("Link is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
@@ -66,15 +78,6 @@ namespace Energyleaf::Stream::V1::Link {
             this->vProcessing = false;
             this->vProcessed = true;
         }
-
-        void setOperatorProcessState(Operator::OperatorProcessState state) override {
-            this->vState = state;
-        }
-
-    private:
-        SinkOperator vOperator;
-        Tuple::Tuple inputTuple;
-    protected:
     };
 
     template<typename SinkOperator>

@@ -25,8 +25,8 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         explicit SourceLink(SourceOperator& sourceOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
-                AbstractLink(executor),
-                vOperator(std::move(sourceOperator)) {
+            AbstractLink(executor),
+            vOperator(std::move(sourceOperator)) {
         }
 
         SourceLink(SourceLink &&other) noexcept
@@ -40,6 +40,25 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         void process() override {
+            this->executor.get()->task([this] { this->exec(); });
+        }
+
+        template<typename PipeOperator>
+        void connect(const PipeLinkPtr<PipeOperator> &nextLink) {
+            this->vLinks.push_back(nextLink);
+        }
+
+        template<typename SinkOperator>
+        void connect(const SinkLinkPtr<SinkOperator> &nextLink) {
+            this->vLinks.push_back(nextLink);
+        }
+
+    private:
+        SourceOperator vOperator;
+        std::vector<std::shared_ptr<LinkWrapper>> vLinks;
+        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
+    protected:
+        void exec() {
             if (this->vProcessing) throw std::runtime_error("Link is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
@@ -63,22 +82,6 @@ namespace Energyleaf::Stream::V1::Link {
             this->vProcessing = false;
             this->vProcessed = true;
         }
-
-        template<typename PipeOperator>
-        void connect(const PipeLinkPtr<PipeOperator> &nextLink) {
-            this->vLinks.push_back(nextLink);
-        }
-
-        template<typename SinkOperator>
-        void connect(const SinkLinkPtr<SinkOperator> &nextLink) {
-            this->vLinks.push_back(nextLink);
-        }
-
-    private:
-        SourceOperator vOperator;
-        std::vector<std::shared_ptr<LinkWrapper>> vLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
-    protected:
     };
 
     template<typename SourceOperator>

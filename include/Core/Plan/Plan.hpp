@@ -13,12 +13,15 @@
 #include "Link/SourceLink/SourceLink.hpp"
 
 #include "Core/Executor/IExecutor.hpp"
+#include "Core/Executor/BoostExecutor.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Plan {
 
     class Plan {
     public:
-        Plan() = default;
+        Plan() : executor(std::make_shared<Executor::BoostExecutor>(1)) {
+        }
+
         virtual ~Plan() = default;
 
         template <typename PipeOperator>
@@ -116,17 +119,17 @@ namespace Energyleaf::Stream::V1::Core::Plan {
     protected:
         template <typename SourceOperator>
         Link::SourceLinkPtr<SourceOperator> createSourceLinkPtr() {
-            return std::make_shared<Link::SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator(),this->executor));
+            return std::make_shared<Link::SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()),this->executor);
         }
 
         template <typename SinkOperator>
         Link::SinkLinkPtr<SinkOperator> createSinkLinkPtr() {
-            return std::make_shared<Link::SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator(),this->executor));
+            return std::make_shared<Link::SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()),this->executor);
         }
 
         template <typename PipeOperator>
         Link::PipeLinkPtr<PipeOperator> createPipeLinkPtr() {
-            return std::make_shared<Link::PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator(),this->executor));
+            return std::make_shared<Link::PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()),this->executor);
         }
     };
 

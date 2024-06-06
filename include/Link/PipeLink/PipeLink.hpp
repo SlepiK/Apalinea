@@ -59,30 +59,7 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         void process() override {
-            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
-            if (this->vProcessed) this->vProcessed = false;
-            if (!this->vProcessing) this->vProcessing = true;
-
-            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
-                Tuple::Tuple outputTuple;
-                this->vOperator.process(this->inputTuple, outputTuple);
-                this->inputTuple.clear();
-                this->vState = this->vOperator.getOperatorProcessState();
-
-                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                    if (this->vState == Operator::OperatorProcessState::CONTINUE) {
-                        (*iterator)->setInputTuple(outputTuple);
-                    } else {
-                        (*iterator)->setOperatorProcessState(this->vState);
-                    }
-                }
-                outputTuple.clear();
-            } else {
-                this->inputTuple.clear();
-            }
-
-            this->vProcessing = false;
-            this->vProcessed = true;
+            this->executor.get()->task([this] { this->exec(); });
         }
 
 
@@ -109,6 +86,32 @@ namespace Energyleaf::Stream::V1::Link {
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
     protected:
+        void exec() {
+            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
+            if (this->vProcessed) this->vProcessed = false;
+            if (!this->vProcessing) this->vProcessing = true;
+
+            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
+                Tuple::Tuple outputTuple;
+                this->vOperator.process(this->inputTuple, outputTuple);
+                this->inputTuple.clear();
+                this->vState = this->vOperator.getOperatorProcessState();
+
+                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                    if (this->vState == Operator::OperatorProcessState::CONTINUE) {
+                        (*iterator)->setInputTuple(outputTuple);
+                    } else {
+                        (*iterator)->setOperatorProcessState(this->vState);
+                    }
+                }
+                outputTuple.clear();
+            } else {
+                this->inputTuple.clear();
+            }
+
+            this->vProcessing = false;
+            this->vProcessed = true;
+        }
     };
 
     template<typename PipeOperator>
