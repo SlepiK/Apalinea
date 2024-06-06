@@ -51,6 +51,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         Link::SinkLinkPtr<SinkOperator> createSink() {
             Link::SinkLinkPtr<SinkOperator> sink = this->createSinkLinkPtr<SinkOperator>();
             vLinks.push_back(sink);
+            vSinkLinks.push_back(sink);
             return sink;
         }
 
@@ -99,21 +100,26 @@ namespace Energyleaf::Stream::V1::Core::Plan {
             source->connect(target);
         }
 
-        [[deprecated("Use evtProcess() instead. Look for usage in the demo.")]]
         void process() {
             for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                 (*iterator)->process();
             }
         }
 
-        void evtProcess() {
-
+        //Is checking if each registered Sink has processed
+        bool isProcessed() {
+            for(LinkIterator iterator = this->vSinkLinks.begin(); iterator != this->vSinkLinks.end(); ++iterator) {
+                if(!(*iterator)->isProcessed()) {
+                    return false;
+                }
+            }
+            return true;
         }
 
     private:
-        //ToDo: check if it can be optimised, that maybe only one list needed or so.
         std::vector<std::shared_ptr<Link::ILink>> vLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSourceLinks;
+        std::vector<std::shared_ptr<Link::ILink>> vSinkLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<Link::ILink>>::iterator;
         std::shared_ptr<Core::Executor::IExecutor> executor;
     protected:
