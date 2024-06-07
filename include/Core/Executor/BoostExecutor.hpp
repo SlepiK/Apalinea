@@ -23,6 +23,10 @@ namespace Energyleaf::Stream::V1::Core::Executor {
         void task(std::function<void()> task) override {
             boost::asio::post(this->excPool,std::move(task));
         }
+
+        void join() override {
+            this->excPool.join();
+        }
     private:
         boost::asio::thread_pool excPool;
     };

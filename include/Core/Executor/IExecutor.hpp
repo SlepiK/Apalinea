@@ -12,6 +12,7 @@ namespace Energyleaf::Stream::V1::Core::Executor {
     public:
         virtual ~IExecutor() = default;
         virtual void task(std::function<void()> task) = 0;
+        virtual void join() = 0;
     };
 }
 

@@ -116,6 +116,10 @@ namespace Energyleaf::Stream::V1::Core::Plan {
             return true;
         }
 
+        void join() {
+            this->executor->join();
+        }
+
     private:
         std::vector<std::shared_ptr<Link::ILink>> vLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSourceLinks;
