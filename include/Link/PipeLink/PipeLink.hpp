@@ -22,12 +22,14 @@ namespace Energyleaf::Stream::V1::Link {
                       "PipeOperator must be based on AbstractPipeOperator!");
     public:
 
-        explicit PipeLink(PipeOperator &&pipeOperator)
-                : vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple() {
+        explicit PipeLink(PipeOperator &&pipeOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple() {
         }
 
-        explicit PipeLink(PipeOperator &pipeOperator)
-                : vOperator(std::move(pipeOperator)) , inputTuple()  {
+        explicit PipeLink(PipeOperator &pipeOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::move(pipeOperator)) , inputTuple()  {
         }
 
         PipeLink(PipeLink &&other) noexcept
@@ -43,44 +45,37 @@ namespace Energyleaf::Stream::V1::Link {
         void setInputTupleR(Tuple::Tuple &tuple) override {
             if (!this->vProcessing) {
                 this->inputTuple = tuple;
+                this->vNewDataAvailable = true;
+                if(this->vOperator.getOperatorMode() == Operator::OperatorMode::DIRECT) {
+                    this->exec();
+                }
             } else {
-                throw std::runtime_error("Link is processing!");
+                //throw std::runtime_error("Link is processing!");
+                //ToDo: Add log functionality for this event.
+                return;
             }
         }
 
         void setInputTuple(Tuple::Tuple tuple) override {
             if (!this->vProcessing) {
                 this->inputTuple = tuple;
+                this->vNewDataAvailable = true;
+                if(this->vOperator.getOperatorMode() == Operator::OperatorMode::DIRECT) {
+                    this->exec();
+                }
             } else {
-                throw std::runtime_error("Link is processing!");
+                //throw std::runtime_error("Link is processing!");
+                //ToDo: Add log functionality for this event.
+                return;
             }
         }
 
         void process() override {
-            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
-            if (this->vProcessed) this->vProcessed = false;
-            if (!this->vProcessing) this->vProcessing = true;
-
-            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
-                Tuple::Tuple outputTuple;
-                this->vOperator.process(this->inputTuple, outputTuple);
-                this->inputTuple.clear();
-                this->vState = this->vOperator.getOperatorProcessState();
-
-                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                    if (this->vState == Operator::OperatorProcessState::CONTINUE) {
-                        (*iterator)->setInputTuple(outputTuple);
-                    } else {
-                        (*iterator)->setOperatorProcessState(this->vState);
-                    }
-                }
-                outputTuple.clear();
-            } else {
-                this->inputTuple.clear();
+            if (!this->vNewDataAvailable) return;
+            else this->vNewDataAvailable = false;
+            if(this->vOperator.getOperatorMode() == Operator::OperatorMode::TASK) {
+                this->executor.get()->addTask([this] { this->exec(); });
             }
-
-            this->vProcessing = false;
-            this->vProcessed = true;
         }
 
 
@@ -107,6 +102,32 @@ namespace Energyleaf::Stream::V1::Link {
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
     protected:
+        void exec() {
+            if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing!");
+            if (this->vProcessed) this->vProcessed = false;
+            if (!this->vProcessing) this->vProcessing = true;
+
+            if(this->vState == Operator::OperatorProcessState::CONTINUE) {
+                Tuple::Tuple outputTuple;
+                this->vOperator.process(this->inputTuple, outputTuple);
+                this->inputTuple.clear();
+                this->vState = this->vOperator.getOperatorProcessState();
+
+                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                    if (this->vState == Operator::OperatorProcessState::CONTINUE) {
+                        (*iterator)->setInputTuple(outputTuple);
+                    } else {
+                        (*iterator)->setOperatorProcessState(this->vState);
+                    }
+                }
+                outputTuple.clear();
+            } else {
+                this->inputTuple.clear();
+            }
+
+            this->vProcessing = false;
+            this->vProcessed = true;
+        }
     };
 
     template<typename PipeOperator>
@@ -114,8 +135,9 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename PipeOperator>
     using PipeLinkUPtr = std::unique_ptr<PipeLink<PipeOperator>>;
     template <typename PipeOperator>
+    [[deprecated("Use Plan::createPipe() instead. Look for usage in the demo.")]]
     PipeLinkUPtr<PipeOperator> make_PipeLinkUPtr() {
-        return std::make_unique<PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()));
+        return std::make_unique<PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()),nullptr);
     }
 
 } // Stream::V1::Link

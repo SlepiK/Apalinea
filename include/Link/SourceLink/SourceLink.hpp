@@ -19,12 +19,14 @@ namespace Energyleaf::Stream::V1::Link {
         static_assert(IsBasedOnAbstractSourceOperator<SourceOperator>::value,"SourceOperator must be based on AbstractSourceOperator!");
     public:
 
-        explicit SourceLink(SourceOperator&& sourceOperator)
-                : vOperator(std::forward<SourceOperator>(sourceOperator)) {
+        explicit SourceLink(SourceOperator&& sourceOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+            AbstractLink(executor),
+            vOperator(std::forward<SourceOperator>(sourceOperator)) {
         }
 
-        explicit SourceLink(SourceOperator& sourceOperator)
-                : vOperator(std::move(sourceOperator)) {
+        explicit SourceLink(SourceOperator& sourceOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+            AbstractLink(executor),
+            vOperator(std::move(sourceOperator)) {
         }
 
         SourceLink(SourceLink &&other) noexcept
@@ -38,7 +40,30 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         void process() override {
-            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
+            if(this->vOperator.getOperatorMode() == Operator::OperatorMode::TASK) {
+                this->executor.get()->addTask([this] { this->exec(); });
+            } else {
+                this->exec();
+            }
+        }
+
+        template<typename PipeOperator>
+        void connect(const PipeLinkPtr<PipeOperator> &nextLink) {
+            this->vLinks.push_back(nextLink);
+        }
+
+        template<typename SinkOperator>
+        void connect(const SinkLinkPtr<SinkOperator> &nextLink) {
+            this->vLinks.push_back(nextLink);
+        }
+
+    private:
+        SourceOperator vOperator;
+        std::vector<std::shared_ptr<LinkWrapper>> vLinks;
+        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
+    protected:
+        void exec() {
+            if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
@@ -61,22 +86,6 @@ namespace Energyleaf::Stream::V1::Link {
             this->vProcessing = false;
             this->vProcessed = true;
         }
-
-        template<typename PipeOperator>
-        void connect(const PipeLinkPtr<PipeOperator> &nextLink) {
-            this->vLinks.push_back(nextLink);
-        }
-
-        template<typename SinkOperator>
-        void connect(const SinkLinkPtr<SinkOperator> &nextLink) {
-            this->vLinks.push_back(nextLink);
-        }
-
-    private:
-        SourceOperator vOperator;
-        std::vector<std::shared_ptr<LinkWrapper>> vLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
-    protected:
     };
 
     template<typename SourceOperator>
@@ -84,8 +93,9 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename SourceOperator>
     using SourceLinkUPtr = std::unique_ptr<SourceLink<SourceOperator>>;
     template <typename SourceOperator>
+    [[deprecated("Use Plan::createSource() instead. Look for usage in the demo.")]]
     SourceLinkUPtr<SourceOperator> make_SourceLinkUPtr() {
-        return std::make_unique<SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()));
+        return std::make_unique<SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()),nullptr);
     }
 
 } // Stream::V1::Link

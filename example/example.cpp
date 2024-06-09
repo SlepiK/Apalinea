@@ -32,11 +32,17 @@ int main(int argc, char *argv[])
     tse->add(tfe);
 
     Energyleaf::Stream::V1::Core::Plan::Plan plan;
-    auto sourcelink = plan.createLink(Energyleaf::Stream::V1::Link::make_SourceLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>());
-    auto sinklink = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
+    //auto sourcelink = plan.createLink(Energyleaf::Stream::V1::Link::make_SourceLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>());
+    auto sourcelink = plan.createSource<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>();
+    auto sinklink = plan.createSink<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>();
     sinklink.get()->getOperator().setExpression(tse);
-    auto sinklink2 = plan.createLink(Energyleaf::Stream::V1::Link::make_SinkLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>());
+    auto sinklink2 = plan.createSink<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>();
     plan.connect(sourcelink,sinklink);
     plan.connect(sourcelink,sinklink2);
     plan.process();
+    plan.join();
+    plan.process();
+    plan.join();
+    plan.process();
+    plan.join();
 }

@@ -17,12 +17,14 @@ namespace Energyleaf::Stream::V1::Link {
         static_assert(IsBasedOnAbstractSinkOperator<SinkOperator>::value,"SinkOperator must be based on AbstractSinkOperator!");
     public:
 
-        explicit SinkLink(SinkOperator&& sinkOperator)
-                : vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
+        explicit SinkLink(SinkOperator&& sinkOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
         }
 
-        explicit SinkLink(SinkOperator& sinkOperator)
-                : vOperator(std::move(sinkOperator)), inputTuple() {
+        explicit SinkLink(SinkOperator& sinkOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
+                AbstractLink(executor),
+                vOperator(std::move(sinkOperator)), inputTuple() {
         }
 
         SinkLink(SinkLink&& other) noexcept
@@ -38,21 +40,49 @@ namespace Energyleaf::Stream::V1::Link {
         void setInputTupleR(Tuple::Tuple& tuple) override {
             if(!this->vProcessing) {
                 this->inputTuple = tuple;
+                this->vNewDataAvailable = true;
+                if(this->vOperator.getOperatorMode() == Operator::OperatorMode::DIRECT) {
+                    this->exec();
+                }
             } else {
-                throw std::runtime_error("Link is processing!");
+                //throw std::runtime_error("Link is processing!");
+                //ToDo: Add log functionality for this event.
+                return;
             }
         }
 
         void setInputTuple(Tuple::Tuple tuple) override {
             if(!this->vProcessing) {
                 this->inputTuple = tuple;
+                this->vNewDataAvailable = true;
+                if(this->vOperator.getOperatorMode() == Operator::OperatorMode::DIRECT) {
+                    this->exec();
+                }
             } else {
-                throw std::runtime_error("Link is processing!");
+                //throw std::runtime_error("Link is processing!");
+                //ToDo: Add log functionality for this event.
+                return;
             }
         }
 
         void process() override {
-            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
+            if (!this->vNewDataAvailable) return;
+            else this->vNewDataAvailable = false;
+            if(this->vOperator.getOperatorMode() == Operator::OperatorMode::TASK) {
+                this->executor.get()->addTask([this] { this->exec(); });
+            }
+        }
+
+        void setOperatorProcessState(Operator::OperatorProcessState state) override {
+            this->vState = state;
+        }
+
+    private:
+        SinkOperator vOperator;
+        Tuple::Tuple inputTuple;
+    protected:
+        void exec() {
+            if (this->vProcessing) throw std::runtime_error("(Sink-)Link is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
@@ -64,15 +94,6 @@ namespace Energyleaf::Stream::V1::Link {
             this->vProcessing = false;
             this->vProcessed = true;
         }
-
-        void setOperatorProcessState(Operator::OperatorProcessState state) override {
-            this->vState = state;
-        }
-
-    private:
-        SinkOperator vOperator;
-        Tuple::Tuple inputTuple;
-    protected:
     };
 
     template<typename SinkOperator>
@@ -80,8 +101,9 @@ namespace Energyleaf::Stream::V1::Link {
     template<typename SinkOperator>
     using SinkLinkUPtr = std::unique_ptr<SinkLink<SinkOperator>>;
     template <typename SinkOperator>
+    [[deprecated("Use Plan::createSink() instead. Look for usage in the demo.")]]
     SinkLinkUPtr<SinkOperator> make_SinkLinkUPtr() {
-        return std::make_unique<SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()));
+        return std::make_unique<SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()),nullptr);
     }
 
 } // Stream::V1::Link
