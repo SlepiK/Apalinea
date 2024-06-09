@@ -22,6 +22,13 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         Plan() : executor(std::make_shared<Executor::BoostExecutor>(3)) {
         }
 
+        template<typename executor>
+        Plan() : executor(std::make_shared<executor>()) {
+        }
+
+        explicit Plan(std::shared_ptr<Core::Executor::IExecutor> executor) : executor(std::move(executor)) {
+        }
+
         virtual ~Plan() = default;
 
         template <typename PipeOperator>
@@ -118,6 +125,13 @@ namespace Energyleaf::Stream::V1::Core::Plan {
 
         void join() {
             this->executor->joinTasks();
+        }
+
+        Core::Executor::IExecutor& getExecutor() {
+            if(!executor) {
+                throw std::runtime_error("Executor is not initialized");
+            }
+            return *this->executor;
         }
 
     private:

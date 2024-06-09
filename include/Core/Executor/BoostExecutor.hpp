@@ -16,6 +16,10 @@
 namespace Energyleaf::Stream::V1::Core::Executor {
     class BoostExecutor : public IExecutor {
     public:
+
+        BoostExecutor() : BoostExecutor(2) {
+        }
+
         explicit BoostExecutor(std::size_t numThreads) : excPool(numThreads), numTasksInProgress(0) {
         }
 
