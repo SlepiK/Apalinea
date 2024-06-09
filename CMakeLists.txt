@@ -103,6 +103,7 @@ set(PROJECT_HEADERS
         include/Core/Executor/IExecutor.hpp
         include/Core/Executor/BoostExecutor.hpp
         include/Operator/Type/OperatorMode.hpp
+        include/Core/Executor/STLExecutor.hpp
 )
 
 set(PROJECT_SOURCES
