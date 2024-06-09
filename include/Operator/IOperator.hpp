@@ -6,6 +6,7 @@
 #define STREAM_V1_OPERATOR_IOPERATOR_HPP
 
 #include "Type/OperatorType.hpp"
+#include "Type/OperatorMode.hpp"
 #include "ProcessState/OperatorProcessState.hpp"
 
 namespace Energyleaf::Stream::V1::Operator {
@@ -21,6 +22,8 @@ namespace Energyleaf::Stream::V1::Operator {
         [[nodiscard]] virtual bool isProcessing() const = 0;
 
         [[nodiscard]] virtual bool isProcessed() const = 0;
+
+        [[nodiscard]] virtual OperatorMode getOperatorMode() const = 0;
     };
 
 } // Stream::V1::Operator

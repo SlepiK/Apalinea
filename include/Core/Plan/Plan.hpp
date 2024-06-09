@@ -19,7 +19,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
 
     class Plan {
     public:
-        Plan() : executor(std::make_shared<Executor::BoostExecutor>(1)) {
+        Plan() : executor(std::make_shared<Executor::BoostExecutor>(3)) {
         }
 
         virtual ~Plan() = default;
@@ -117,7 +117,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         }
 
         void join() {
-            this->executor->join();
+            this->executor->joinTasks();
         }
 
     private:

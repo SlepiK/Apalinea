@@ -41,4 +41,8 @@ int main(int argc, char *argv[])
     plan.connect(sourcelink,sinklink2);
     plan.process();
     plan.join();
+    plan.process();
+    plan.join();
+    plan.process();
+    plan.join();
 }

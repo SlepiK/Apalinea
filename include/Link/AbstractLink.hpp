@@ -37,6 +37,7 @@ namespace Energyleaf::Stream::V1::Link {
     protected:
         bool vProcessing;
         bool vProcessed;
+        bool vNewDataAvailable;
         Operator::OperatorProcessState vState;
         std::shared_ptr<Core::Executor::IExecutor> executor;
     };

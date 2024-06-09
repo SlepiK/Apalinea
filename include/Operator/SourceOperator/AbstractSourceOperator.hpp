@@ -19,6 +19,10 @@ namespace Energyleaf::Stream::V1::Operator {
             return OperatorType::SOURCE;
         }
 
+        [[nodiscard]] OperatorMode getOperatorMode() const override {
+            return OperatorMode::TASK;
+        }
+
         virtual void process(Tuple::Tuple& outputTuple) final {
             if (this->vProcessing) throw std::runtime_error("Operator is already processing!");
             if (this->vProcessed) this->vProcessed = false;

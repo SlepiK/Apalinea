@@ -40,7 +40,11 @@ namespace Energyleaf::Stream::V1::Link {
         }
 
         void process() override {
-            this->executor.get()->task([this] { this->exec(); });
+            if(this->vOperator.getOperatorMode() == Operator::OperatorMode::TASK) {
+                this->executor.get()->addTask([this] { this->exec(); });
+            } else {
+                this->exec();
+            }
         }
 
         template<typename PipeOperator>
@@ -59,7 +63,7 @@ namespace Energyleaf::Stream::V1::Link {
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
     protected:
         void exec() {
-            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
+            if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 

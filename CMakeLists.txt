@@ -102,6 +102,7 @@ set(PROJECT_HEADERS
         include/Types/Datatype/DtImage.hpp
         include/Core/Executor/IExecutor.hpp
         include/Core/Executor/BoostExecutor.hpp
+        include/Operator/Type/OperatorMode.hpp
 )
 
 set(PROJECT_SOURCES

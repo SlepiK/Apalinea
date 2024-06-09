@@ -45,21 +45,37 @@ namespace Energyleaf::Stream::V1::Link {
         void setInputTupleR(Tuple::Tuple &tuple) override {
             if (!this->vProcessing) {
                 this->inputTuple = tuple;
+                this->vNewDataAvailable = true;
+                if(this->vOperator.getOperatorMode() == Operator::OperatorMode::DIRECT) {
+                    this->exec();
+                }
             } else {
-                throw std::runtime_error("Link is processing!");
+                //throw std::runtime_error("Link is processing!");
+                //ToDo: Add log functionality for this event.
+                return;
             }
         }
 
         void setInputTuple(Tuple::Tuple tuple) override {
             if (!this->vProcessing) {
                 this->inputTuple = tuple;
+                this->vNewDataAvailable = true;
+                if(this->vOperator.getOperatorMode() == Operator::OperatorMode::DIRECT) {
+                    this->exec();
+                }
             } else {
-                throw std::runtime_error("Link is processing!");
+                //throw std::runtime_error("Link is processing!");
+                //ToDo: Add log functionality for this event.
+                return;
             }
         }
 
         void process() override {
-            this->executor.get()->task([this] { this->exec(); });
+            if (!this->vNewDataAvailable) return;
+            else this->vNewDataAvailable = false;
+            if(this->vOperator.getOperatorMode() == Operator::OperatorMode::TASK) {
+                this->executor.get()->addTask([this] { this->exec(); });
+            }
         }
 
 
@@ -87,7 +103,7 @@ namespace Energyleaf::Stream::V1::Link {
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
     protected:
         void exec() {
-            if (this->vProcessing) throw std::runtime_error("Link is already processing!");
+            if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing!");
             if (this->vProcessed) this->vProcessed = false;
             if (!this->vProcessing) this->vProcessing = true;
 
