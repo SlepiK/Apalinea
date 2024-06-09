@@ -57,7 +57,14 @@ jobs:
 
     - name: Install Boost on Linux
       if: matrix.os == 'ubuntu-latest'
-      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget build-essential g++ python-dev autotools-dev libicu-dev libbz2-dev
+        wget https://boostorg.jfrog.io/artifactory/main/release/1.84.0/source/boost_1_84_0.tar.gz
+        tar -xzf boost_1_84_0.tar.gz
+        cd boost_1_84_0
+        ./bootstrap.sh --prefix=/usr/local
+        ./b2 install
 
     - name: Install Boost on Windows
       if: matrix.os == 'windows-latest'
