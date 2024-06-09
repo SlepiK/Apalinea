@@ -55,6 +55,16 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+    - name: Install Boost on Linux
+      if: matrix.os == 'ubuntu-latest'
+      run: sudo apt-get update && sudo apt-get install -y libboost-all-dev
+
+    - name: Install Boost on Windows
+      if: matrix.os == 'windows-latest'
+      run: |
+        choco install boost-msvc-14.2 --version=1.76.0
+        echo "BOOST_ROOT=C:\\local\\boost_1_76_0" >> $env:GITHUB_ENV
+
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
