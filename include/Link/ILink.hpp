@@ -5,8 +5,6 @@
 #ifndef STREAM_V1_LINK_ILINK_HPP
 #define STREAM_V1_LINK_ILINK_HPP
 
-#include <boost/asio/post.hpp>
-
 namespace Energyleaf::Stream::V1::Link {
     class ILink {
     public:
