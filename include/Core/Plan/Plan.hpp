@@ -13,14 +13,11 @@
 #include "Link/SourceLink/SourceLink.hpp"
 
 #include "Core/Executor/IExecutor.hpp"
-#include "Core/Executor/BoostExecutor.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Plan {
 
     class Plan {
     public:
-        Plan() : executor(std::make_shared<Executor::BoostExecutor>(3)) {
-        }
 
         template<typename executor>
         Plan() : executor(std::make_shared<executor>()) {
