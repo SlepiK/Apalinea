@@ -6,6 +6,7 @@
 #include "Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "Core/Plan/Plan.hpp"
 #include "Core/Executor/BoostExecutor.hpp"
+#include "Core/Executor/STLExecutor.hpp"
 
 #include <Expression/Compare/CompareExpression.hpp>
 #include <Expression/ToExpression/ToDtStringExpression.hpp>
@@ -31,7 +32,7 @@ int main(int argc, char *argv[])
     tfe->add(calc);
     tse->add(tfe);
 
-    Energyleaf::Stream::V1::Core::Plan::Plan plan(std::make_shared<Energyleaf::Stream::V1::Core::Executor::BoostExecutor>(3));
+    Energyleaf::Stream::V1::Core::Plan::Plan plan(std::make_shared<Energyleaf::Stream::V1::Core::Executor::STLExecutor>(3));
     //auto sourcelink = plan.createLink(Energyleaf::Stream::V1::Link::make_SourceLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>());
     auto sourcelink = plan.createSource<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>();
     auto sinklink = plan.createSink<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>();

@@ -36,7 +36,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
         }
 
         [[nodiscard]] Energyleaf::Stream::V1::Operator::OperatorMode getOperatorMode() const override {
-            return Energyleaf::Stream::V1::Operator::OperatorMode::DIRECT;
+            return Energyleaf::Stream::V1::Operator::OperatorMode::TASK;
         }
 
         Writer& getWriter() {

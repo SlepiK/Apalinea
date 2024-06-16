@@ -24,4 +24,4 @@ Thats an behaviour which will hopefully get resolved in the future.
 
 ## Version
 The current informations about the version of this library can be found inside of Core/Constants/Version.hpp.
-Without warranty, the current version is V2.0 Iluap.
+Without warranty, the current version is V2.1 Ivye.
