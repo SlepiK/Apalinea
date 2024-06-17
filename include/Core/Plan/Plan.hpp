@@ -131,12 +131,28 @@ namespace Energyleaf::Stream::V1::Core::Plan {
             return *this->executor;
         }
 
+        void order() {
+            if(vOrderedLinks.empty()) {
+                vOrderedLinks = vLinks;
+                std::sort(vOrderedLinks.begin(), vOrderedLinks.end(), compareLinks);
+            } else {
+                throw std::runtime_error("Links already ordered!");
+            }
+        }
+
+        void processOrdered() {
+            for(LinkIterator iterator = this->vOrderedLinks.begin(); iterator != this->vOrderedLinks.end(); ++iterator) {
+                (*iterator)->process();
+            }
+        }
+
     private:
         std::vector<std::shared_ptr<Link::ILink>> vLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSourceLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSinkLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<Link::ILink>>::iterator;
         std::shared_ptr<Core::Executor::IExecutor> executor;
+        std::vector<std::shared_ptr<Link::ILink>> vOrderedLinks;
     protected:
         template <typename SourceOperator>
         Link::SourceLinkPtr<SourceOperator> createSourceLinkPtr() {
@@ -151,6 +167,10 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         template <typename PipeOperator>
         Link::PipeLinkPtr<PipeOperator> createPipeLinkPtr() {
             return std::make_shared<Link::PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()),this->executor);
+        }
+
+        static bool compareLinks(const std::shared_ptr<Link::ILink>& left, const std::shared_ptr<Link::ILink>& right) {
+            return true;
         }
     };
 
