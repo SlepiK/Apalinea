@@ -7,9 +7,10 @@
 
 #include "Operator/ProcessState/OperatorProcessState.hpp"
 #include "Tuple/Tuple.hpp"
+#include "Link/IBaseLink.hpp"
 
 namespace Energyleaf::Stream::V1::Link {
-    class LinkWrapper {
+    class LinkWrapper : virtual public IBaseLink {
     public:
         virtual ~LinkWrapper() = default;
         virtual void setInputTuple(Tuple::Tuple tuple) = 0;

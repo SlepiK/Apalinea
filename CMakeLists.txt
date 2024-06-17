@@ -104,6 +104,8 @@ set(PROJECT_HEADERS
         include/Core/Executor/BoostExecutor.hpp
         include/Operator/Type/OperatorMode.hpp
         include/Core/Executor/STLExecutor.hpp
+        include/Link/Type/LinkType.hpp
+        include/Link/IBaseLink.hpp
 )
 
 set(PROJECT_SOURCES
