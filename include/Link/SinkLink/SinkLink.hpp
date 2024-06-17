@@ -77,6 +77,14 @@ namespace Energyleaf::Stream::V1::Link {
             this->vState = state;
         }
 
+        std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<LinkWrapper>>>> getLinks() override {
+            return std::nullopt;
+        }
+
+        LinkType getType() const override {
+            return LinkType::SINK;
+        }
+
     private:
         SinkOperator vOperator;
         Tuple::Tuple inputTuple;

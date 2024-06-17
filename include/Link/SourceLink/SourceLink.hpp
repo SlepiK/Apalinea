@@ -57,6 +57,14 @@ namespace Energyleaf::Stream::V1::Link {
             this->vLinks.push_back(nextLink);
         }
 
+        std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<LinkWrapper>>>> getLinks() override {
+            return std::cref(this->vLinks);
+        }
+
+        LinkType getType() const override {
+            return LinkType::SOURCE;
+        }
+
     private:
         SourceOperator vOperator;
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;

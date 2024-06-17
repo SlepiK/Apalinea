@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <queue>
 #include "Link/ILink.hpp"
 #include "Link/PipeLink/PipeLink.hpp"
 #include "Link/SinkLink/SinkLink.hpp"
@@ -40,6 +41,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         Link::PipeLinkPtr<PipeOperator> createPipe() {
             Link::PipeLinkPtr<PipeOperator> pipe = this->createPipeLinkPtr<PipeOperator>();
             vLinks.push_back(pipe);
+            vPipeLinks.push_back(pipe);
             return pipe;
         }
 
@@ -131,12 +133,31 @@ namespace Energyleaf::Stream::V1::Core::Plan {
             return *this->executor;
         }
 
+        void order() {
+            if(vOrderedLinks.empty()) {
+                vOrderedLinks = vSourceLinks;
+                std::vector<std::shared_ptr<Link::ILink>> last = vSourceLinks;
+                batchOrdering(last);
+            } else {
+                throw std::runtime_error("Links already ordered!");
+            }
+        }
+
+        void processOrdered() {
+            if(vOrderedLinks.empty()) throw std::runtime_error("Need ordered plan to run!");
+            for(LinkIterator iterator = this->vOrderedLinks.begin(); iterator != this->vOrderedLinks.end(); ++iterator) {
+                (*iterator)->process();
+            }
+        }
+
     private:
         std::vector<std::shared_ptr<Link::ILink>> vLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSourceLinks;
+        std::vector<std::shared_ptr<Link::ILink>> vPipeLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSinkLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<Link::ILink>>::iterator;
         std::shared_ptr<Core::Executor::IExecutor> executor;
+        std::vector<std::shared_ptr<Link::ILink>> vOrderedLinks;
     protected:
         template <typename SourceOperator>
         Link::SourceLinkPtr<SourceOperator> createSourceLinkPtr() {
@@ -152,6 +173,40 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         Link::PipeLinkPtr<PipeOperator> createPipeLinkPtr() {
             return std::make_shared<Link::PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()),this->executor);
         }
+
+        bool batchOrdering(std::vector<std::shared_ptr<Link::ILink>>& last) {
+            if (!last.empty()) {
+                std::queue<std::shared_ptr<Link::ILink>> queueLast;
+                for (auto& link : last) {
+                    queueLast.push(link);
+                }
+                while (!queueLast.empty()) {
+                    auto currentLink = queueLast.front();
+                    queueLast.pop();
+
+                    std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<Link::LinkWrapper>>>> connectedLinks = currentLink->getLinks();
+                    if (connectedLinks.has_value()) {
+                        for (const auto& connectedLink : connectedLinks.value().get()) {
+                            Link::IBaseLink* tmp = static_cast<Link::IBaseLink*>(connectedLink.get());
+                            for (auto& vLink : this->vLinks) {
+                                if (vLink->getType() == Link::LinkType::SOURCE)
+                                    continue;
+                                if (tmp == static_cast<Link::IBaseLink*>(vLink.get())) {
+                                    if (std::find(vOrderedLinks.begin(), vOrderedLinks.end(), vLink) == vOrderedLinks.end()) {
+                                        vOrderedLinks.push_back(vLink);
+                                        queueLast.push(vLink);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+            } else {
+                return false;
+            }
+        }
+
     };
 
 } // Stream::V1::Core::Plan

@@ -40,10 +40,18 @@ int main(int argc, char *argv[])
     auto sinklink2 = plan.createSink<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>();
     plan.connect(sourcelink,sinklink);
     plan.connect(sourcelink,sinklink2);
-    plan.process();
+    auto sourcelink2 = plan.createSource<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>();
+    auto sinklink3 = plan.createSink<Energyleaf::Stream::V1::Core::Operator::SinkOperator::CoutSinkOperator>();
+    plan.connect(sourcelink2,sinklink3);
+    /*plan.process();
     plan.join();
     plan.process();
     plan.join();
     plan.process();
+    plan.join();*/
+    plan.order();
+    plan.processOrdered();
+    plan.join();
+    plan.processOrdered();
     plan.join();
 }

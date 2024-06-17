@@ -96,6 +96,14 @@ namespace Energyleaf::Stream::V1::Link {
             }
         }
 
+        std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<LinkWrapper>>>> getLinks() override {
+            return std::cref(this->vLinks);
+        }
+
+        LinkType getType() const override {
+            return LinkType::PIPE;
+        }
+
     private:
         PipeOperator vOperator;
         Tuple::Tuple inputTuple;
