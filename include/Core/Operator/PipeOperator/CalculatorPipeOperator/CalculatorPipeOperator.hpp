@@ -77,7 +77,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             }
-            //ToDo: Rework later
+
             if(inputTuple.containsItem("RotationKWH")) {
                 vRotationPerKWh = inputTuple.getItem<Types::Datatype::DtInt>("RotationKWH").toInt();
                 this->vRotationPerKWhSet = true;

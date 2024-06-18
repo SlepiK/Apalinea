@@ -63,6 +63,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
             } catch (const std::exception& e) {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             }
+            inputTuple.clear();
         }
     };
 }

@@ -37,13 +37,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             }
             Energyleaf::Stream::V1::Types::Image img = inputTuple.getItem<Types::Datatype::DtImage>("Image").toImage();
-            //ToDo: Rework later
-            int vRotationPerKWh;
-            if(inputTuple.containsItem("RotationKWH")) {
-                vRotationPerKWh = inputTuple.getItem<Types::Datatype::DtInt>("RotationKWH").toInt();
-            }
-
-            inputTuple.clear();
+            inputTuple.removeItem("Image");
 
             if (this->vX < 0 || this->vWidth <= 0 || this->vX + this->vWidth > img.getWidth() ||
                 this->vY < 0 || this->vHeight <= 0 || this->vY + this->vHeight > img.getHeight()) {
@@ -64,9 +58,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
             }
 
             outputTuple.clear();
+            outputTuple.moveItems(std::move(inputTuple));
             outputTuple.addItem(std::string("Image"),Types::Datatype::DtImage(outImg));
-            //ToDo: Rework later
-            outputTuple.addItem(std::string("RotationKWH"),Types::Datatype::DtInt(vRotationPerKWh));
         }
     };
 }
