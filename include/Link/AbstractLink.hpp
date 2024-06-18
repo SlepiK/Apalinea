@@ -11,6 +11,7 @@
 #include "Trait/LinkTrait.hpp"
 #include "Tuple/Tuple.hpp"
 #include "Core/Executor/IExecutor.hpp"
+#include "Core/Log/LogManager.hpp"
 
 namespace Energyleaf::Stream::V1::Link {
 

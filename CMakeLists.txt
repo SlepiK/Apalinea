@@ -14,10 +14,10 @@ set(BOOST_REQUIRED_COMPONENTS
 set(BOOST_MIN_VERSION 1.70.0)
 
 # Find Boost
-find_package(Boost ${BOOST_MIN_VERSION} REQUIRED COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
+# find_package(Boost ${BOOST_MIN_VERSION} REQUIRED COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
 
 # Include Boost
-include_directories(${Boost_INCLUDE_DIRS})
+# include_directories(${Boost_INCLUDE_DIRS})
 
 set(PROJECT_HEADERS
         include/Operator/Type/OperatorType.hpp
@@ -107,6 +107,10 @@ set(PROJECT_HEADERS
         include/Link/Type/LinkType.hpp
         include/Link/IBaseLink.hpp
         include/Core/Log/ILog.hpp
+        include/Core/Log/LogLevelCategory.hpp
+        include/Core/Log/ILogListener.hpp
+        include/Core/Log/ConsoleLog.hpp
+        include/Core/Log/LogManager.hpp
 )
 
 set(PROJECT_SOURCES
@@ -126,15 +130,17 @@ set(PROJECT_SOURCES
         include/Core/Constants/Settings.cpp
         include/Types/Datatype/DtImage.cpp
         include/Types/Datatype/DtRegistry.cpp
+        src/Core/Log/LogManager.cpp
 )
 
 set(DEMO_SOURCES
         example/example.cpp
+        include/Core/Log/LogLevel.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_include_directories(stream PRIVATE ${INCLUDE_DIRECTORYS})
-target_link_libraries(stream ${Boost_LIBRARIES})
+# target_link_libraries(stream ${Boost_LIBRARIES})
 
 add_executable(example ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${DEMO_SOURCES})
 target_include_directories(example PRIVATE ${INCLUDE_DIRECTORYS})

@@ -6,6 +6,8 @@
 #include "Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "Core/Plan/Plan.hpp"
 #include "Core/Executor/STLExecutor.hpp"
+#include "Core/Log/LogManager.hpp"
+#include "Core/Log/ConsoleLog.hpp"
 
 #include <Expression/Compare/CompareExpression.hpp>
 #include <Expression/ToExpression/ToDtStringExpression.hpp>
@@ -15,6 +17,7 @@
 
 int main(int argc, char *argv[])
 {
+    Energyleaf::Stream::V1::Core::Log::LogManager::addLog(std::make_unique<Energyleaf::Stream::V1::Core::Log::ConsoleLog>());
     Energyleaf::Stream::V1::Expression::ToDtStringExpression* tse = new Energyleaf::Stream::V1::Expression::ToDtStringExpression();
     Energyleaf::Stream::V1::Expression::DataType::DtInt8Expression *edt = new Energyleaf::Stream::V1::Expression::DataType::DtInt8Expression("DemoString");
     Energyleaf::Stream::V1::Expression::DataType::DtInt8Expression *edtBase = new Energyleaf::Stream::V1::Expression::DataType::DtInt8Expression(2);

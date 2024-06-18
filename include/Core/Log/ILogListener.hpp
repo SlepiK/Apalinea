@@ -1,18 +1,18 @@
 //
-// Created by SlepiK on 18.06.24.
+// Created by SlepiK on 18.06.2024.
 //
 
-#ifndef STREAM_V1_CORE_LOG_ILOG_HPP
-#define STREAM_V1_CORE_LOG_ILOG_HPP
+#ifndef STREAM_V1_CORE_LOG_ILOGLISTENER_HPP
+#define STREAM_V1_CORE_LOG_ILOGLISTENER_HPP
 
 #include <string_view>
 #include "LogLevel.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Log {
-    class ILog {
+    class ILogListener {
     public:
-        ILog() = default;
-        virtual ~ILog() = default;
+        ILogListener() = default;
+        virtual ~ILogListener() = default;
 
         virtual void open() = 0;
         virtual void close() = 0;
@@ -24,4 +24,4 @@ namespace Energyleaf::Stream::V1::Core::Log {
     };
 }
 
-#endif //STREAM_V1_CORE_LOG_ILOG_HPP
+#endif //STREAM_V1_CORE_LOG_ILOGLISTENER_HPP

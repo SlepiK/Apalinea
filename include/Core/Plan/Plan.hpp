@@ -8,12 +8,15 @@
 #include <memory>
 #include <vector>
 #include <queue>
+#include "Core/Log/LogManager.hpp"
 #include "Link/ILink.hpp"
 #include "Link/PipeLink/PipeLink.hpp"
 #include "Link/SinkLink/SinkLink.hpp"
 #include "Link/SourceLink/SourceLink.hpp"
 
 #include "Core/Executor/IExecutor.hpp"
+
+#include "Core/Log/ConsoleLog.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Plan {
 
@@ -22,9 +25,11 @@ namespace Energyleaf::Stream::V1::Core::Plan {
 
         template<typename executor>
         Plan() : executor(std::make_shared<executor>()) {
+            if(!Log::LogManager::haveLog()) throw std::runtime_error("No Log was registered!");
         }
 
         explicit Plan(std::shared_ptr<Core::Executor::IExecutor> executor) : executor(std::move(executor)) {
+            if(!Log::LogManager::haveLog()) throw std::runtime_error("No Log was registered!");
         }
 
         virtual ~Plan() = default;
@@ -40,6 +45,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         template <typename PipeOperator>
         Link::PipeLinkPtr<PipeOperator> createPipe() {
             Link::PipeLinkPtr<PipeOperator> pipe = this->createPipeLinkPtr<PipeOperator>();
+            Log::LogManager::log(Log::LogLevelCategory::INFORMATION,Log::getFilename(__FILE__),__LINE__,"Creating new PipeLink");
             vLinks.push_back(pipe);
             vPipeLinks.push_back(pipe);
             return pipe;
@@ -56,6 +62,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         template <typename SinkOperator>
         Link::SinkLinkPtr<SinkOperator> createSink() {
             Link::SinkLinkPtr<SinkOperator> sink = this->createSinkLinkPtr<SinkOperator>();
+            Log::LogManager::log(Log::LogLevelCategory::INFORMATION,Log::getFilename(__FILE__),__LINE__,"Creating new SinkLink");
             vLinks.push_back(sink);
             vSinkLinks.push_back(sink);
             return sink;
@@ -73,6 +80,7 @@ namespace Energyleaf::Stream::V1::Core::Plan {
         template <typename SourceOperator>
         Link::SourceLinkPtr<SourceOperator> createSource() {
             Link::SourceLinkPtr<SourceOperator> source = this->createSourceLinkPtr<SourceOperator>();
+            Log::LogManager::log(Log::LogLevelCategory::INFORMATION,Log::getFilename(__FILE__),__LINE__,"Creating new SourceLink");
             vLinks.push_back(source);
             vSourceLinks.push_back(source);
             return source;
