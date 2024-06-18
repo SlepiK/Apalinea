@@ -20,7 +20,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::SourceOperator {
             outputTuple.clear();
             //outputTuple.addItem(std::string("DemoString"),Types::Datatype::DtString("Hello World"));
             outputTuple.addItem(std::string("DemoString"),Types::Datatype::DtInt8(2));
-            //outputTuple.addItem(std::string("DemoString"),std::string("Hello World"));
         }
     };
 } // Energyleaf::Stream::V1::Core::Operator::SourceOperator

@@ -44,7 +44,6 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         virtual IDt* operator^(const IDt& other) const = 0;
         virtual IDt* operator%(const IDt& other) const = 0;
     private:
-        //ToDo: Verify in future if multiple datatypes are needed or even possible, due to some restrictions.
         const std::unordered_set<DtRegistry::DtRegistryIdentifier> datatypes;
     };
 }

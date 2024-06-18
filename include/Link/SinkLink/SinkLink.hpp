@@ -45,8 +45,7 @@ namespace Energyleaf::Stream::V1::Link {
                     this->exec();
                 }
             } else {
-                //throw std::runtime_error("Link is processing!");
-                //ToDo: Add log functionality for this event.
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,"Link is already processing!");
                 return;
             }
         }
@@ -59,8 +58,7 @@ namespace Energyleaf::Stream::V1::Link {
                     this->exec();
                 }
             } else {
-                //throw std::runtime_error("Link is processing!");
-                //ToDo: Add log functionality for this event.
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,"Link is already processing!");
                 return;
             }
         }

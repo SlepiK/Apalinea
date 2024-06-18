@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_EXPRESSION_DATATYPE_DTUINT16EXPRESSION_HPP
 #define STREAM_V1_EXPRESSION_DATATYPE_DTUINT16EXPRESSION_HPP
 
-#include "Expression/Expression.hpp"
+#include "Expression/AbstractExpression.hpp"
 #include "Tuple/Tuple.hpp"
 #include "Types/Datatype/DtUInt16.hpp"
 

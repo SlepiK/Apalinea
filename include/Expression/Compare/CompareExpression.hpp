@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
 #define STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
 
-#include "Expression/Expression.hpp"
+#include "Expression/AbstractExpression.hpp"
 #include "Types/Datatype/DtBool.hpp"
 #include "Types/Datatype/DtString.hpp"
 #include "Types/Datatype/DtInt.hpp"
@@ -35,16 +35,16 @@ namespace Energyleaf::Stream::V1::Expression::Compare {
         GREATER_THAN_OR_EQUAL
     };
 
-    class CompareExpression : public Expression {
+    class CompareExpression : public AbstractExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Types::Datatype::DtBool::IDENTIFIER;
 
-        CompareExpression() : Expression({Types::Datatype::DtInt8::IDENTIFIER,Types::Datatype::DtInt16::IDENTIFIER,Types::Datatype::DtInt32::IDENTIFIER,
-                                          Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtString::IDENTIFIER,Types::Datatype::DtUInt8::IDENTIFIER,
-                                          Types::Datatype::DtUInt16::IDENTIFIER,Types::Datatype::DtUInt32::IDENTIFIER,
-                                          Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                          Types::Datatype::DtSizeT::IDENTIFIER, Types::Datatype::DtBool::IDENTIFIER}), compareTypes(CompareTypes::EQUAL),
-                                          first(nullptr), second(nullptr){
+        CompareExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
+                                                  Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtString::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
+                                                  Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER,
+                                                  Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
+                                                  Types::Datatype::DtSizeT::IDENTIFIER, Types::Datatype::DtBool::IDENTIFIER}), compareTypes(CompareTypes::EQUAL),
+                              first(nullptr), second(nullptr){
         }
 
         void execute() override {

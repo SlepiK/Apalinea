@@ -6,7 +6,7 @@
 #define STREAM_V1_EXPRESSION_TOEXPRESSION_TODTSTRING_HPP
 
 #include <list>
-#include <Expression/Expression.hpp>
+#include "Expression/AbstractExpression.hpp"
 #include <string>
 #include <Types/Datatype/DtString.hpp>
 #include "Types/Datatype/DtInt8.hpp"
@@ -25,20 +25,20 @@
 #include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
-    class ToDtStringExpression : public Expression {
+    class ToDtStringExpression : public AbstractExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Types::Datatype::DtString::IDENTIFIER;
 
-        ToDtStringExpression() : Expression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER,
-                                             Types::Datatype::DtInt32::IDENTIFIER,
-                                             Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                             Types::Datatype::DtUInt8::IDENTIFIER,
-                                             Types::Datatype::DtUInt16::IDENTIFIER,
-                                             Types::Datatype::DtUInt32::IDENTIFIER,
-                                             Types::Datatype::DtUInt64::IDENTIFIER,
-                                             Types::Datatype::DtSizeT::IDENTIFIER,
-                                             Types::Datatype::DtBool::IDENTIFIER,Types::Datatype::DtFloat::IDENTIFIER, Types::Datatype::DtDouble::IDENTIFIER,
-                                             Types::Datatype::DtString::IDENTIFIER}) {
+        ToDtStringExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER,
+                                                     Types::Datatype::DtInt32::IDENTIFIER,
+                                                     Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
+                                                     Types::Datatype::DtUInt8::IDENTIFIER,
+                                                     Types::Datatype::DtUInt16::IDENTIFIER,
+                                                     Types::Datatype::DtUInt32::IDENTIFIER,
+                                                     Types::Datatype::DtUInt64::IDENTIFIER,
+                                                     Types::Datatype::DtSizeT::IDENTIFIER,
+                                                     Types::Datatype::DtBool::IDENTIFIER, Types::Datatype::DtFloat::IDENTIFIER, Types::Datatype::DtDouble::IDENTIFIER,
+                                                     Types::Datatype::DtString::IDENTIFIER}) {
         }
 
         void execute() override {

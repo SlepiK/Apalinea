@@ -44,6 +44,14 @@ namespace Energyleaf::Stream::V1::Tuple {
             other.vItems.clear();
         }
 
+        void removeItem(const ItemName& name) {
+            this->vItems.erase(name);
+        }
+
+        void removeItem(ItemName&& name) {
+            this->vItems.erase(name);
+        }
+
         void addItem(const ItemName& name, Energyleaf::Stream::V1::Tuple::Entry&& item) {
             this->vItems.emplace(name,std::move(item));
         }

@@ -29,10 +29,6 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
             return this->vSender;
         }
 
-        //ToDo: not every Enrich needs to be processed in main
-        [[nodiscard]] Energyleaf::Stream::V1::Operator::OperatorMode getOperatorMode() const override {
-            return Energyleaf::Stream::V1::Operator::OperatorMode::MAIN;
-        }
     private:
         Sender vSender;
     protected:
@@ -46,6 +42,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::SinkOperator {
             } catch (std::exception& e) {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::STOP;
             }
+            inputTuple.clear();
         }
     };
 }

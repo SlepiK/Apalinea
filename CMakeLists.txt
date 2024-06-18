@@ -6,18 +6,22 @@ set(CMAKE_CXX_STANDARD 20)
 set(INCLUDE_DIRECTORYS
         include)
 
-set(BOOST_REQUIRED_COMPONENTS
+option(USE_BOOST "Use Boost Libraries" OFF)
+
+if(USE_BOOST)
+    set(BOOST_REQUIRED_COMPONENTS
         filesystem
         thread
-)
+    )
 
-set(BOOST_MIN_VERSION 1.70.0)
+    set(BOOST_MIN_VERSION 1.70.0)
 
-# Find Boost
-find_package(Boost ${BOOST_MIN_VERSION} REQUIRED COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
+    # Find Boost
+    find_package(Boost ${BOOST_MIN_VERSION} REQUIRED COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
 
-# Include Boost
-include_directories(${Boost_INCLUDE_DIRS})
+    #Include Boost
+    include_directories(${Boost_INCLUDE_DIRS})
+endif()
 
 set(PROJECT_HEADERS
         include/Operator/Type/OperatorType.hpp
@@ -59,7 +63,7 @@ set(PROJECT_HEADERS
         include/Operator/ProcessState/OperatorProcessState.hpp
         include/Types/Datatype/IDtTrait.hpp
         include/Expression/IExpression.hpp
-        include/Expression/Expression.hpp
+        include/Expression/AbstractExpression.hpp
         include/Expression/ToExpression/ToDtStringExpression.hpp
         include/Types/Datatype/DtString.hpp
         include/Types/Datatype/DtInt32.hpp
@@ -106,6 +110,11 @@ set(PROJECT_HEADERS
         include/Core/Executor/STLExecutor.hpp
         include/Link/Type/LinkType.hpp
         include/Link/IBaseLink.hpp
+        include/Core/Log/ILog.hpp
+        include/Core/Log/LogLevelCategory.hpp
+        include/Core/Log/ILogListener.hpp
+        include/Core/Log/ConsoleLog.hpp
+        include/Core/Log/LogManager.hpp
 )
 
 set(PROJECT_SOURCES
@@ -125,16 +134,22 @@ set(PROJECT_SOURCES
         include/Core/Constants/Settings.cpp
         include/Types/Datatype/DtImage.cpp
         include/Types/Datatype/DtRegistry.cpp
+        src/Core/Log/LogManager.cpp
 )
 
 set(DEMO_SOURCES
         example/example.cpp
+        include/Core/Log/LogLevel.hpp
 )
 
 add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
 target_include_directories(stream PRIVATE ${INCLUDE_DIRECTORYS})
+if(USE_BOOST)
 target_link_libraries(stream ${Boost_LIBRARIES})
+endif()
 
 add_executable(example ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${DEMO_SOURCES})
 target_include_directories(example PRIVATE ${INCLUDE_DIRECTORYS})
+if(USE_BOOST)
 target_link_libraries(example ${Boost_LIBRARIES})
+endif()
