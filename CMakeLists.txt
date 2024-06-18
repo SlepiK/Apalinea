@@ -106,6 +106,7 @@ set(PROJECT_HEADERS
         include/Core/Executor/STLExecutor.hpp
         include/Link/Type/LinkType.hpp
         include/Link/IBaseLink.hpp
+        include/Core/Log/ILog.hpp
 )
 
 set(PROJECT_SOURCES
