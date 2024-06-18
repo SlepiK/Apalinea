@@ -40,7 +40,7 @@ namespace Energyleaf::Stream::V1::Operator {
                 this->expression = exp;
                 exp->setUsed(true);
             } else {
-                throw std::runtime_error("Given Expression is already in use!");
+                throw std::runtime_error("Given AbstractExpression is already in use!");
             }
         }
 

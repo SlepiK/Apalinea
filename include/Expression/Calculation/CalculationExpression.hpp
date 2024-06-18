@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
 #define STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
 
-#include "Expression/Expression.hpp"
+#include "Expression/AbstractExpression.hpp"
 #include "Types/Datatype/DtRegistry.hpp"
 #include "Types/Datatype/DtInt.hpp"
 #include "Types/Datatype/DtInt8.hpp"
@@ -30,15 +30,15 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
         POWER
     };
 
-    class CalculationExpression : public Expression {
+    class CalculationExpression : public AbstractExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Types::Datatype::UNDEFINED;
 
-        CalculationExpression() : Expression({Types::Datatype::DtInt8::IDENTIFIER,Types::Datatype::DtInt16::IDENTIFIER,Types::Datatype::DtInt32::IDENTIFIER,
-                                          Types::Datatype::DtInt64::IDENTIFIER,Types::Datatype::DtUInt8::IDENTIFIER,
-                                          Types::Datatype::DtUInt16::IDENTIFIER,Types::Datatype::DtUInt32::IDENTIFIER,
-                                          Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                          Types::Datatype::DtSizeT::IDENTIFIER}) {
+        CalculationExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
+                                                      Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
+                                                      Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER,
+                                                      Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
+                                                      Types::Datatype::DtSizeT::IDENTIFIER}) {
         }
 
         void execute() override {

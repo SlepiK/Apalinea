@@ -59,7 +59,7 @@ set(PROJECT_HEADERS
         include/Operator/ProcessState/OperatorProcessState.hpp
         include/Types/Datatype/IDtTrait.hpp
         include/Expression/IExpression.hpp
-        include/Expression/Expression.hpp
+        include/Expression/AbstractExpression.hpp
         include/Expression/ToExpression/ToDtStringExpression.hpp
         include/Types/Datatype/DtString.hpp
         include/Types/Datatype/DtInt32.hpp

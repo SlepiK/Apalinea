@@ -5,7 +5,7 @@
 #ifndef STREAM_V1_EXPRESSION_TOEXPRESSION_TODTINT_HPP
 #define STREAM_V1_EXPRESSION_TOEXPRESSION_TODTINT_HPP
 
-#include "Expression/Expression.hpp"
+#include "Expression/AbstractExpression.hpp"
 #include "Types/Datatype/DtInt.hpp"
 #include "Types/Datatype/DtInt8.hpp"
 #include "Types/Datatype/DtInt16.hpp"
@@ -21,15 +21,15 @@
 #include <Types/Datatype/DtRegistry.hpp>
 
 namespace Energyleaf::Stream::V1::Expression {
-    class ToDtIntExpression : public Expression {
+    class ToDtIntExpression : public AbstractExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Types::Datatype::DtInt::IDENTIFIER;
 
-        ToDtIntExpression() : Expression({Types::Datatype::DtInt8::IDENTIFIER,Types::Datatype::DtInt16::IDENTIFIER,Types::Datatype::DtInt32::IDENTIFIER,
-                                          Types::Datatype::DtInt64::IDENTIFIER,Types::Datatype::DtString::IDENTIFIER,Types::Datatype::DtUInt8::IDENTIFIER,
-                                             Types::Datatype::DtUInt16::IDENTIFIER,Types::Datatype::DtUInt32::IDENTIFIER, Types::Datatype::DtUInt64::IDENTIFIER,
-                                             Types::Datatype::DtBool::IDENTIFIER, Types::Datatype::DtFloat::IDENTIFIER, Types::Datatype::DtDouble::IDENTIFIER,
-                                             Types::Datatype::DtInt::IDENTIFIER}) {
+        ToDtIntExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
+                                                  Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtString::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
+                                                  Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER, Types::Datatype::DtUInt64::IDENTIFIER,
+                                                  Types::Datatype::DtBool::IDENTIFIER, Types::Datatype::DtFloat::IDENTIFIER, Types::Datatype::DtDouble::IDENTIFIER,
+                                                  Types::Datatype::DtInt::IDENTIFIER}) {
         }
 
         void execute() override {

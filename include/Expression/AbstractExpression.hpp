@@ -9,14 +9,13 @@
 #include <utility>
 #include "IExpression.hpp"
 
-//ToDo: Rename to Abstract
 namespace Energyleaf::Stream::V1::Expression {
-    class Expression : public IExpression {
+    class AbstractExpression : public IExpression {
     public:
-        explicit Expression(std::vector<std::string_view> datatypes) : IExpression(std::move(datatypes)){
+        explicit AbstractExpression(std::vector<std::string_view> datatypes) : IExpression(std::move(datatypes)){
         }
 
-        ~Expression() override {
+        ~AbstractExpression() override {
             for(IExpression* exp : vSubExpressions) {
                 if(exp != nullptr) {
                     delete exp;
