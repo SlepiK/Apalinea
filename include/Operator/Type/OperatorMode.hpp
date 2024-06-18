@@ -9,7 +9,8 @@ namespace Energyleaf::Stream::V1::Operator {
 
     enum class OperatorMode : int {
         TASK = 0,
-        DIRECT = 1
+        DIRECT = 1,
+        MAIN = 2
     };
 
 } // Stream::V1::Operator
