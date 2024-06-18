@@ -102,38 +102,6 @@ namespace Energyleaf::Stream::V1::Types::Datatype {
         IDt* operator/(const IDt& other) const override;
         IDt* operator^(const IDt& other) const override;
         IDt* operator%(const IDt& other) const override;
-
-        /*IDt* operator*(const IDt& other) const override {
-            if(other.getIdentifier() == this->getIdentifier()) {
-                return new DtUInt64(this->toUInt64() * (static_cast<const DtUInt64&>(other)).toUInt64());
-            } else {
-                throw std::runtime_error("Not Implemented with the given types");
-            }
-        }
-
-        IDt* operator/(const IDt& other) const override {
-            if(other.getIdentifier() == this->getIdentifier()) {//ToDo: Later float to return or double better
-                return new DtUInt64(this->toUInt64() / (static_cast<const DtUInt64&>(other)).toUInt64());
-            } else {
-                throw std::runtime_error("Not Implemented with the given types");
-            }
-        }
-
-        IDt* operator^(const IDt& other) const override {
-            if(other.getIdentifier() == this->getIdentifier()) {
-                return new DtUInt64(this->toUInt64() ^ (static_cast<const DtUInt64&>(other)).toUInt64());
-            } else {
-                throw std::runtime_error("Not Implemented with the given types");
-            }
-        }
-
-        IDt* operator%(const IDt& other) const override {
-            if(other.getIdentifier() == this->getIdentifier()) { //ToDo: Later DtInt to return better
-                return new DtUInt64(this->toUInt64() * (static_cast<const DtUInt64&>(other)).toUInt64());
-            } else {
-                throw std::runtime_error("Not Implemented with the given types");
-            }
-        }*/
     protected:
         uint64_t data{};
     };
