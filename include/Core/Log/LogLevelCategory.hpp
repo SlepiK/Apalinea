@@ -6,6 +6,7 @@
 #define STREAM_V1_CORE_LOG_LOGLEVELCATEGORY_HPP
 
 #include <map>
+#include <ostream>
 #include <string_view>
 
 namespace Energyleaf::Stream::V1::Core::Log {

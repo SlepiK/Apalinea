@@ -5,6 +5,7 @@
 #ifndef STREAM_V1_CORE_LOG_LOGLEVEL_HPP
 #define STREAM_V1_CORE_LOG_LOGLEVEL_HPP
 
+#include <ostream>
 #include "LogLevelCategory.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Log {
