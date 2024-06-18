@@ -36,6 +36,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             }
             bool input = inputTuple.getItem<Types::Datatype::DtBool>("Select").toBool();
+            //ToDo: Rework later
+            int vRotationPerKWh;
+            if(inputTuple.containsItem("RotationKWH")) {
+                vRotationPerKWh = inputTuple.getItem<Types::Datatype::DtInt>("RotationKWH").toInt();
+            }
             inputTuple.clear();
             bool output;
             if(this->vReady) {
@@ -52,6 +57,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
                 outputTuple.clear();
                 outputTuple.addItem(std::string("State"),Types::Datatype::DtBool(output));
+                //ToDo: Rework later
+                outputTuple.addItem(std::string("RotationKWH"),Types::Datatype::DtInt(vRotationPerKWh));
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::BREAK;
             }

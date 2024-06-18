@@ -5,7 +5,6 @@
 #include "Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp"
 #include "Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "Core/Plan/Plan.hpp"
-#include "Core/Executor/BoostExecutor.hpp"
 #include "Core/Executor/STLExecutor.hpp"
 
 #include <Expression/Compare/CompareExpression.hpp>

@@ -21,6 +21,7 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         static constexpr float WATT_PER_MINUTE = 60.0f;
         static constexpr float WATT_PER_HOUR = 1.0f;
 
+        [[deprecated("Send rotation per kwh in stream.")]]
         void setRotationPerKWh(int&& rotation) {
             if(this->vRun) {
                 throw std::runtime_error("Operator was already used! Config before first use!");
@@ -75,6 +76,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 return;
             } else {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
+            }
+            //ToDo: Rework later
+            if(inputTuple.containsItem("RotationKWH")) {
+                vRotationPerKWh = inputTuple.getItem<Types::Datatype::DtInt>("RotationKWH").toInt();
+                this->vRotationPerKWhSet = true;
             }
             inputTuple.clear();
             if(!this->vRotationPerKWhSet) {
