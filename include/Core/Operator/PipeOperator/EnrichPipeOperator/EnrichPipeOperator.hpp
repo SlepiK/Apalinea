@@ -28,6 +28,11 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
         Enricher& getEnricher() {
             return this->vEnricher;
         }
+
+        //ToDo: not every Enrich needs to be processed in main
+        [[nodiscard]] Energyleaf::Stream::V1::Operator::OperatorMode getOperatorMode() const override {
+            return Energyleaf::Stream::V1::Operator::OperatorMode::MAIN;
+        }
     private:
         Enricher vEnricher;
     protected:

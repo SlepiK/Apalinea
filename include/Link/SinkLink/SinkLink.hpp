@@ -70,6 +70,8 @@ namespace Energyleaf::Stream::V1::Link {
             else this->vNewDataAvailable = false;
             if(this->vOperator.getOperatorMode() == Operator::OperatorMode::TASK) {
                 this->executor.get()->addTask([this] { this->exec(); });
+            } else if(this->vOperator.getOperatorMode() == Operator::OperatorMode::MAIN) {
+                this->exec();
             }
         }
 
