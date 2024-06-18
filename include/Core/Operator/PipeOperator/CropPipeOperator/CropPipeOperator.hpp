@@ -10,6 +10,7 @@
 #include "Types/Image/Image.hpp"
 #include "Tuple/Tuple.hpp"
 #include "Types/Datatype/DtImage.hpp"
+#include "Types/Datatype/DtInt.hpp"
 
 namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
     class CropPipeOperator
@@ -36,6 +37,12 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
                 vProcessState = Energyleaf::Stream::V1::Operator::OperatorProcessState::CONTINUE;
             }
             Energyleaf::Stream::V1::Types::Image img = inputTuple.getItem<Types::Datatype::DtImage>("Image").toImage();
+            //ToDo: Rework later
+            int vRotationPerKWh;
+            if(inputTuple.containsItem("RotationKWH")) {
+                vRotationPerKWh = inputTuple.getItem<Types::Datatype::DtInt>("RotationKWH").toInt();
+            }
+
             inputTuple.clear();
 
             if (this->vX < 0 || this->vWidth <= 0 || this->vX + this->vWidth > img.getWidth() ||
@@ -58,6 +65,8 @@ namespace Energyleaf::Stream::V1::Core::Operator::PipeOperator {
 
             outputTuple.clear();
             outputTuple.addItem(std::string("Image"),Types::Datatype::DtImage(outImg));
+            //ToDo: Rework later
+            outputTuple.addItem(std::string("RotationKWH"),Types::Datatype::DtInt(vRotationPerKWh));
         }
     };
 }
