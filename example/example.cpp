@@ -1,7 +1,3 @@
-//
-// Created by SlepiK on 29.01.24.
-//
-
 #include "Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp"
 #include "Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp"
 #include "Core/Plan/Plan.hpp"
