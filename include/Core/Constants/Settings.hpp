@@ -1,15 +1,11 @@
-//
-// Created by SlepiK on 13.02.24.
-//
+#ifndef APALINEA_CORE_CONSTANTS_SETTINGS_HPP
+#define APALINEA_CORE_CONSTANTS_SETTINGS_HPP
 
-#ifndef STREAM_CONSTANTS_SETTINGS_HPP
-#define STREAM_CONSTANTS_SETTINGS_HPP
-
-#include <Extras/Memory/CreatorContainer.hpp>
 #include <cstdint>
+#include "Extras/Memory/CreatorContainer.hpp"
 
-namespace Energyleaf::Stream::Constants::Settings {
-    extern Energyleaf::Stream::V1::Extras::Memory::CreatorContainer<std::uint8_t> uint8_tCreator;
-}
+namespace Apalinea::Core::Constants::Settings {
+    extern Apalinea::Extras::Memory::CreatorContainer<std::uint8_t> uint8_tCreator;
+} // Apalinea::Core::Constants::Settings
 
-#endif //STREAM_CONSTANTS_SETTINGS_HPP
+#endif //APALINEA_CORE_CONSTANTS_SETTINGS_HPP

@@ -1,13 +1,9 @@
-//
-// Created by SlepiK on 29.01.2024.
-//
+#ifndef APALINEA_CORE_CONSTANTS_VERSION_HPP
+#define APALINEA_CORE_CONSTANTS_VERSION_HPP
 
-#ifndef STREAM_VERSION_HPP
-#define STREAM_VERSION_HPP
+namespace Apalinea::Core::Constants::Version {
+    [[maybe_unused]] constexpr char VERSION[] = "V1.0.0";
+    [[maybe_unused]] constexpr char VERSIONNAME[] = "Orez";
+} // Apalinea::Core::Constants::Version
 
-namespace Energyleaf::Stream::Constants::Version {
-    constexpr char VERSION[] = "V2.1";
-    constexpr char VERSIONNAME[] = "Ivye";
-}
-
-#endif //STREAM_VERSION_HPP
+#endif //APALINEA_CORE_CONSTANTS_VERSION_HPP

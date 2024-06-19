@@ -1,25 +1,21 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
+#ifndef APALINEA_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
+#define APALINEA_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/DtString.hpp"
+#include "Expression/IExpression.hpp"
 
-#include "Expression/AbstractExpression.hpp"
-#include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtString.hpp"
-
-namespace Energyleaf::Stream::V1::Expression::DataType {
-    class DtStringExpression : public IExpression {
+namespace Apalinea::Expression::DataType {
+    class [[maybe_unused]] DtStringExpression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtString::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtString::IDENTIFIER;
 
-        explicit DtStringExpression(std::string&& entry, bool load = true) :
+        [[maybe_unused]] explicit DtStringExpression(std::string&& entry, bool load = true) :
         IExpression({IDENTIFIER}), load(load) {
             if(load) {
                 this->entry = std::move(entry);
             } else {
-                this->data = Types::Datatype::DtString(std::move(entry));
+                this->data = Core::Type::Datatype::DtString(std::move(entry));
             }
         }
 
@@ -29,13 +25,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -46,7 +42,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtString>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Type::Datatype::DtString>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -56,12 +52,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
+
     private:
-        Tuple::Tuple tuple;
+        Core::Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtString data;
+        Core::Type::Datatype::DtString data;
         bool load;
     };
-}
+} // Apalinea::Expression::DataType
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP

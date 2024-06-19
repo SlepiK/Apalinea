@@ -1,11 +1,7 @@
-//
-// Created by SlepiK on 13.02.24.
-//
+#ifndef APALINEA_EXTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
+#define APALINEA_EXTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
 
-#ifndef ENERGYLEAF_STREAM_V1_EXPTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
-#define ENERGYLEAF_STREAM_V1_EXPTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
-
-namespace Energyleaf::Stream::V1::Extras::Network {
+namespace Apalinea::Extras::Network {
     template<typename Sender>
     class AbstractWebSender {
     public:
@@ -30,6 +26,6 @@ namespace Energyleaf::Stream::V1::Extras::Network {
         Sender *vSender;
     protected:
     };
-}
+} //Apalinea::Extras::Network
 
-#endif
+#endif //APALINEA_EXTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP

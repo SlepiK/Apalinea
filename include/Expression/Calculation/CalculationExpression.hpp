@@ -1,25 +1,21 @@
-//
-// Created by SlepiK on 22.03.24.
-//
+#ifndef APALINEA_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
+#define APALINEA_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
-
+#include "Core/Type/Datatype/DtRegistry.hpp"
+#include "Core/Type/Datatype/DtInt.hpp"
+#include "Core/Type/Datatype/DtInt8.hpp"
+#include "Core/Type/Datatype/DtInt16.hpp"
+#include "Core/Type/Datatype/DtInt32.hpp"
+#include "Core/Type/Datatype/DtInt64.hpp"
+#include "Core/Type/Datatype/DtUInt8.hpp"
+#include "Core/Type/Datatype/DtUInt16.hpp"
+#include "Core/Type/Datatype/DtUInt32.hpp"
+#include "Core/Type/Datatype/DtUInt64.hpp"
+#include "Core/Type/Datatype/DtSizeT.hpp"
+#include "Core/Type/Datatype/DtNumbers.hpp"
 #include "Expression/AbstractExpression.hpp"
-#include "Types/Datatype/DtRegistry.hpp"
-#include "Types/Datatype/DtInt.hpp"
-#include "Types/Datatype/DtInt8.hpp"
-#include "Types/Datatype/DtInt16.hpp"
-#include "Types/Datatype/DtInt32.hpp"
-#include "Types/Datatype/DtInt64.hpp"
-#include "Types/Datatype/DtUInt8.hpp"
-#include "Types/Datatype/DtUInt16.hpp"
-#include "Types/Datatype/DtUInt32.hpp"
-#include "Types/Datatype/DtUInt64.hpp"
-#include "Types/Datatype/DtSizeT.hpp"
-#include "Types/Datatype/DtNumbers.hpp"
 
-namespace Energyleaf::Stream::V1::Expression::Calculation {
+namespace Apalinea::Expression::Calculation {
 
     enum class CalculationTypes {
         ADDITION,
@@ -27,26 +23,23 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
         MULTIPLICATION,
         DIVISION,
         MODULO,
-        POWER
+        POWER,
+
+        NOT_DEFINED
     };
 
     class CalculationExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::UNDEFINED;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::UNDEFINED;
 
-        CalculationExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
-                                                      Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
-                                                      Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER,
-                                                      Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                                      Types::Datatype::DtSizeT::IDENTIFIER}) {
+        CalculationExpression() : AbstractExpression({Core::Type::Datatype::DtInt8::IDENTIFIER, Core::Type::Datatype::DtInt16::IDENTIFIER, Core::Type::Datatype::DtInt32::IDENTIFIER,
+                                                      Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
+                                                      Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
+                                                      Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
+                                                      Core::Type::Datatype::DtSizeT::IDENTIFIER}), data(nullptr), first(nullptr), second(nullptr), calculationType(CalculationTypes::NOT_DEFINED) {
         }
 
         void execute() override {
-            //Strings are not allowed.
-            //We can use normal calculation forms, but we need to respect the used types.
-            //If same type, then no problem, if different types, it will be funny.
-            //different types mean checking if possible and use the greatest type of them to return the data,
-            //or if one of them is float or double force to use one of them as return.
             if(first == nullptr && second == nullptr) {
                 if(vSubExpressions.size() != 2) {
                     throw std::runtime_error("A expression for a single sub expression, cant be executed on less or more then two sub-expression!");
@@ -94,8 +87,8 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
 
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
-            if(first == nullptr && second == nullptr) {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
+            if(first == nullptr || second == nullptr) {
                 for (IExpression *exp: vSubExpressions) {
                     exp->setTuple(tuple);
                 }
@@ -105,7 +98,7 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return *this->data;
         }
 
@@ -117,15 +110,15 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
             this->calculationType = type;
         }
 
-        CalculationTypes getCalculationType() {
+        [[maybe_unused]] CalculationTypes getCalculationType() {
             return this->calculationType;
         }
 
     private:
-        Types::Datatype::IDt* data;
+        Core::Type::Datatype::IDt* data;
         CalculationTypes calculationType;
         IExpression *first, *second;
     };
-}
+} // Apalinea::Expression::Calculation
 
-#endif //STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP

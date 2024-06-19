@@ -1,14 +1,10 @@
-//
-// Created by SlepiK on 13.02.24.
-//
+#ifndef APALINEA_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
+#define APALINEA_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
 
-#ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
-#define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
-
-#include <Extras/Memory/ICreator.hpp>
 #include <new>
+#include "Extras/Memory/ICreator.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Memory {
+namespace Apalinea::Extras::Memory {
     template <typename Type>
     class DefaultCreator : public ICreator<Type> {
     public:
@@ -27,7 +23,7 @@ namespace Energyleaf::Stream::V1::Extras::Memory {
             throw std::bad_alloc();
         }
 
-        void destroy(Type* ptr, CreatorArgument arg = CreatorArgument::SINGLE) override {
+        void destroy(Type* ptr, CreatorArgument arg) override {
             if(arg == CreatorArgument::SINGLE) {
                 delete ptr;
             } else {
@@ -35,6 +31,6 @@ namespace Energyleaf::Stream::V1::Extras::Memory {
             }
         }
     };
-}
+} // Apalinea::Extras::Memory
 
-#endif // ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
+#endif //APALINEA_EXTRAS_MEMORY_DEFAULTCREATOR_HPP

@@ -1,35 +1,31 @@
-//
-// Created by SlepiK on 26.03.24.
-//
+#ifndef APALINEA_EXPRESSION_TOEXPRESSION_TODTBOOLEXPRESSION_HPP
+#define APALINEA_EXPRESSION_TOEXPRESSION_TODTBOOLEXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_TODTBOOLEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_TODTBOOLEXPRESSION_HPP
-
+#include "Core/Type/Datatype/DtRegistry.hpp"
+#include "Core/Type/Datatype/DtInt.hpp"
+#include "Core/Type/Datatype/DtInt8.hpp"
+#include "Core/Type/Datatype/DtInt16.hpp"
+#include "Core/Type/Datatype/DtInt32.hpp"
+#include "Core/Type/Datatype/DtInt64.hpp"
+#include "Core/Type/Datatype/DtUInt8.hpp"
+#include "Core/Type/Datatype/DtUInt16.hpp"
+#include "Core/Type/Datatype/DtBool.hpp"
+#include "Core/Type/Datatype/DtFloat.hpp"
+#include "Core/Type/Datatype/DtDouble.hpp"
+#include "Core/Type/Datatype/DtSizeT.hpp"
 #include "Expression/AbstractExpression.hpp"
-#include "Types/Datatype/DtInt.hpp"
-#include "Types/Datatype/DtInt8.hpp"
-#include "Types/Datatype/DtInt16.hpp"
-#include "Types/Datatype/DtInt32.hpp"
-#include "Types/Datatype/DtInt64.hpp"
-#include "Types/Datatype/DtUInt8.hpp"
-#include "Types/Datatype/DtUInt16.hpp"
-#include "Types/Datatype/DtBool.hpp"
-#include "Types/Datatype/DtFloat.hpp"
-#include "Types/Datatype/DtDouble.hpp"
-#include "Types/Datatype/DtSizeT.hpp"
-#include <Types/Datatype/DtRegistry.hpp>
 
-namespace Energyleaf::Stream::V1::Expression {
-    class ToDtBoolExpression : public AbstractExpression {
+namespace Apalinea::Expression {
+    class [[maybe_unused]] ToDtBoolExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtBool::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtBool::IDENTIFIER;
 
-        ToDtBoolExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
-                                                   Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
-                                                   Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER,
-                                                   Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtDouble::IDENTIFIER,
-                                                   Types::Datatype::DtFloat::IDENTIFIER, Types::Datatype::DtBool::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                                   Types::Datatype::DtSizeT::IDENTIFIER}) {
+        ToDtBoolExpression() : AbstractExpression({Core::Type::Datatype::DtInt8::IDENTIFIER, Core::Type::Datatype::DtInt16::IDENTIFIER, Core::Type::Datatype::DtInt32::IDENTIFIER,
+                                                   Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
+                                                   Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
+                                                   Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtDouble::IDENTIFIER,
+                                                   Core::Type::Datatype::DtFloat::IDENTIFIER, Core::Type::Datatype::DtBool::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
+                                                   Core::Type::Datatype::DtSizeT::IDENTIFIER}) {
         }
 
         void execute() override {
@@ -49,74 +45,75 @@ namespace Energyleaf::Stream::V1::Expression {
 
             exp->execute();
 
-            const Types::Datatype::IDt &expData = exp->getData();
-            Types::Datatype::DtRegistry::DtRegistryIndex tmpDataIndex = Types::Datatype::DtRegistry::get(
+            const Core::Type::Datatype::IDt &expData = exp->getData();
+            Core::Type::Datatype::DtRegistry::DtRegistryIndex tmpDataIndex = Core::Type::Datatype::DtRegistry::get(
                     expData.getIdentifier());
-            if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt8::IDENTIFIER) &&
-                tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt8::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool((static_cast<const Types::Datatype::DtInt8 &>(expData)).toInt8());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt16::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt16::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtInt16 &>(expData)).toInt16());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt32::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt32::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtInt32 &>(expData)).toInt32());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt64::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt64::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtInt64 &>(expData)).toInt64());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt8::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt8::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtUInt8 &>(expData)).toUInt8());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt16::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt16::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtUInt16 &>(expData)).toUInt16());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt32::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt32::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtUInt32 &>(expData)).toUInt32());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtUInt64::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtUInt64::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        (static_cast<const Types::Datatype::DtUInt64 &>(expData)).toUInt64());
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtFloat::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtFloat::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        static_cast<bool>((static_cast<const Types::Datatype::DtFloat &>(expData)).toFloat()));
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtDouble::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtDouble::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        static_cast<bool>((static_cast<const Types::Datatype::DtDouble &>(expData)).toDouble()));
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtSizeT::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtSizeT::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        static_cast<bool>((static_cast<const Types::Datatype::DtSizeT &>(expData)).toSizeT()));
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtInt::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtInt::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool(
-                        static_cast<bool>((static_cast<const Types::Datatype::DtInt &>(expData)).toInt()));
-            } else if (Types::Datatype::DtRegistry::isRegistered(Types::Datatype::DtBool::IDENTIFIER) &&
-                       tmpDataIndex == Types::Datatype::DtRegistry::get(Types::Datatype::DtBool::IDENTIFIER)) {
-                this->data = Types::Datatype::DtBool((static_cast<const Types::Datatype::DtBool &>(expData)).toBool());
+            if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt8::IDENTIFIER) &&
+                tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt8::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool((static_cast<const Core::Type::Datatype::DtInt8 &>(expData)).toInt8());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt16::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt16::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtInt16 &>(expData)).toInt16());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt32::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt32::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtInt32 &>(expData)).toInt32());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt64::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt64::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtInt64 &>(expData)).toInt64());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt8::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt8::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtUInt8 &>(expData)).toUInt8());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt16::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt16::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtUInt16 &>(expData)).toUInt16());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt32::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt32::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtUInt32 &>(expData)).toUInt32());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt64::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt64::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        (static_cast<const Core::Type::Datatype::DtUInt64 &>(expData)).toUInt64());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtFloat::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtFloat::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        static_cast<bool>((static_cast<const Core::Type::Datatype::DtFloat &>(expData)).toFloat()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtDouble::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtDouble::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        static_cast<bool>((static_cast<const Core::Type::Datatype::DtDouble &>(expData)).toDouble()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtSizeT::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtSizeT::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        static_cast<bool>((static_cast<const Core::Type::Datatype::DtSizeT &>(expData)).toSizeT()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool(
+                        static_cast<bool>((static_cast<const Core::Type::Datatype::DtInt &>(expData)).toInt()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtBool::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtBool::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtBool((static_cast<const Core::Type::Datatype::DtBool &>(expData)).toBool());
             } else {
                 throw std::runtime_error("Cant convert given type to string!");
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
-    private:
-        Types::Datatype::DtBool data;
-    };
-}
 
-#endif //STREAM_V1_EXPRESSION_TODTBOOLEXPRESSION_HPP
+    private:
+        Core::Type::Datatype::DtBool data;
+    };
+} // Apalinea::Expression
+
+#endif //APALINEA_EXPRESSION_TOEXPRESSION_TODTBOOLEXPRESSION_HPP

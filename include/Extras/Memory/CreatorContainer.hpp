@@ -1,24 +1,19 @@
-//
-// Created by SlepiK on 13.02.24.
-//
+#ifndef APALINEA_EXTRAS_MEMORY_CREATORCONTAINER_HPP
+#define APALINEA_EXTRAS_MEMORY_CREATORCONTAINER_HPP
 
-#ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
-#define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
-
-#include <Extras/Memory/ICreator.hpp>
-#include <Extras/Memory/DefaultCreator.hpp>
 #include <memory>
 #include <stdexcept>
+#include "Extras/Memory/ICreator.hpp"
+#include "Extras/Memory/DefaultCreator.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Memory {
+namespace Apalinea::Extras::Memory {
     template <typename CreatorType>
     class CreatorContainer {
     public:
         CreatorContainer() : vCreator(std::make_unique<DefaultCreator<CreatorType>>()) {
         }
 
-        ~CreatorContainer() {
-        }
+        ~CreatorContainer() = default;
 
         ICreator<CreatorType>& getCreator() {
             if (!this->vCreator) {
@@ -27,13 +22,13 @@ namespace Energyleaf::Stream::V1::Extras::Memory {
             return *this->vCreator;
         }
 
-        void setCreator(std::unique_ptr<ICreator<CreatorType>>&& creator) {
+        [[maybe_unused]] void setCreator(std::unique_ptr<ICreator<CreatorType>>&& creator) {
             this->vCreator = std::move(creator);
         }
 
     private:
         std::unique_ptr<ICreator<CreatorType>> vCreator;
     };
-}
+} // Apalinea::Extras::Memory
 
-#endif // ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
+#endif //APALINEA_EXTRAS_MEMORY_CREATORCONTAINER_HPP

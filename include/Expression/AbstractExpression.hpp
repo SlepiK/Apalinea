@@ -1,15 +1,11 @@
-//
-// Created by SlepiK on 19.02.24.
-//
-
-#ifndef STREAM_V1_EXPRESSION_EXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_EXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_EXPRESSION_HPP
+#define APALINEA_EXPRESSION_EXPRESSION_HPP
 
 #include <list>
 #include <utility>
-#include "IExpression.hpp"
+#include "Expression/IExpression.hpp"
 
-namespace Energyleaf::Stream::V1::Expression {
+namespace Apalinea::Expression {
     class AbstractExpression : public IExpression {
     public:
         explicit AbstractExpression(std::vector<std::string_view> datatypes) : IExpression(std::move(datatypes)){
@@ -44,21 +40,23 @@ namespace Energyleaf::Stream::V1::Expression {
             return true;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
             for(IExpression* exp : vSubExpressions) {
                 exp->setTuple(tuple);
             }
         }
+
     private:
         unsigned int vMax = 1;
+
     protected:
         std::list<IExpression*> vSubExpressions;
 
-        void setMax(unsigned int max) {
+        [[maybe_unused]] void setMax(unsigned int max) {
             if(max > 0) this->vMax = max;
             else throw std::runtime_error("Cant set max below 1!");
         }
     };
-}
+} // Apalinea::Expression
 
-#endif //STREAM_V1_EXPRESSION_EXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_EXPRESSION_HPP

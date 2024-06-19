@@ -1,14 +1,10 @@
-//
-// Created by SlepiK on 18.06.2024.
-//
-
-#ifndef STREAM_V1_CORE_LOG_LOGLEVEL_HPP
-#define STREAM_V1_CORE_LOG_LOGLEVEL_HPP
+#ifndef APALINEA_CORE_LOG_LOGLEVEL_HPP
+#define APALINEA_CORE_LOG_LOGLEVEL_HPP
 
 #include <ostream>
-#include "LogLevelCategory.hpp"
+#include "Core/Log/LogLevelCategory.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
     class LogLevel {
     public:
         LogLevel() {
@@ -48,18 +44,17 @@ namespace Energyleaf::Stream::V1::Core::Log {
             return os;
         }
 
-        [[nodiscard]] std::string_view print() const {
+        [[maybe_unused]] [[nodiscard]] std::string_view print() const {
             return toString(vLogLevelCategory);
         }
 
-        LogLevelCategory getLogLevelCategory() {
+        [[maybe_unused]] LogLevelCategory getLogLevelCategory() {
             return vLogLevelCategory;
         }
 
     private:
         LogLevelCategory vLogLevelCategory;
-    protected:
     };
-}
+} // Apalinea::Core::Log
 
-#endif //STREAM_V1_CORE_LOG_LOGLEVEL_HPP
+#endif //APALINEA_CORE_LOG_LOGLEVEL_HPP

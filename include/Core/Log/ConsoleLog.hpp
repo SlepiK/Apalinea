@@ -1,19 +1,15 @@
-//
-// Created by SlepiK on 18.06.2024.
-//
+#ifndef APALINEA_CORE_LOG_CONSOLELOG_HPP
+#define APALINEA_CORE_LOG_CONSOLELOG_HPP
 
-#ifndef STREAM_V1_CORE_LOG_CONSOLELOG_HPP
-#define STREAM_V1_CORE_LOG_CONSOLELOG_HPP
-
-#include "ILog.hpp"
 #include <iostream>
+#include "Core/Log/ILog.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
     class ConsoleLog : public ILog {
     public:
         ConsoleLog() = default;
-        ~ConsoleLog() override = default;
 
+        ~ConsoleLog() override = default;
 
         void open() final {
         }
@@ -25,16 +21,18 @@ namespace Energyleaf::Stream::V1::Core::Log {
             std::cout << std::flush;
         }
 
-        void log(LogLevel level, const struct tm* time, std::string_view file, int line, std::string_view message) final {
+        void log(LogLevel level, std::tm* time, std::string_view file, int line, std::string_view message) final {
             if(line >= 0) {
-                std::cout << "STREAM_LOG][" << level << "][" << file << ":" << line << "]:" << message << std::endl;
+                std::cout << "APALINEA_LOG][" << time->tm_mday << "." << time->tm_mon + 1 << "." << time->tm_year + + 1900
+                << "-" << time->tm_hour << ":" << time->tm_min << ":" << time->tm_sec << "][" << level << "]["
+                << file << ":" << line << "]:" << message << std::endl;
             } else {
-                std::cout << "STREAM_LOG][" << level << "][" << file << "]:" << message << std::endl;
+                std::cout << "APALINEA_LOG][" << time->tm_mday << "." << time->tm_mon + 1 << "." << time->tm_year + + 1900
+                << "-" << time->tm_hour << ":" << time->tm_min << ":" << time->tm_sec << "][" << level << "]["
+                << file << "]:" << message << std::endl;
             }
         }
-    private:
-    protected:
     };
-}
+} // Apalinea::Core::Log
 
-#endif //STREAM_V1_CORE_LOG_CONSOLELOG_HPP
+#endif //APALINEA_CORE_LOG_CONSOLELOG_HPP

@@ -1,18 +1,14 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
+#ifndef APALINEA_EXPRESSION_DATATYPE_DTINT8EXPRESSION_HPP
+#define APALINEA_EXPRESSION_DATATYPE_DTINT8EXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTINT8EXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTINT8EXPRESSION_HPP
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/DtInt8.hpp"
+#include "Expression/IExpression.hpp"
 
-#include "Expression/AbstractExpression.hpp"
-#include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtInt8.hpp"
-
-namespace Energyleaf::Stream::V1::Expression::DataType {
+namespace Apalinea::Expression::DataType {
     class DtInt8Expression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtInt8::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtInt8::IDENTIFIER;
 
         explicit DtInt8Expression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
@@ -26,13 +22,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -43,7 +39,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtInt8>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Type::Datatype::DtInt8>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -53,12 +49,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
+
     private:
-        Tuple::Tuple tuple;
+        Core::Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtInt8 data;
+        Core::Type::Datatype::DtInt8 data;
         bool load;
     };
-}
+} // Apalinea::Expression::DataType
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTINT8EXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_DATATYPE_DTINT8EXPRESSION_HPP

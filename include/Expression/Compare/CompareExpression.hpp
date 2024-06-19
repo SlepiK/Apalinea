@@ -1,25 +1,21 @@
-//
-// Created by SlepiK on 19.03.24.
-//
+#ifndef APALINEA_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
+#define APALINEA_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
-
+#include "Core/Type/Datatype/DtBool.hpp"
+#include "Core/Type/Datatype/DtString.hpp"
+#include "Core/Type/Datatype/DtInt.hpp"
+#include "Core/Type/Datatype/DtInt8.hpp"
+#include "Core/Type/Datatype/DtInt16.hpp"
+#include "Core/Type/Datatype/DtInt32.hpp"
+#include "Core/Type/Datatype/DtInt64.hpp"
+#include "Core/Type/Datatype/DtUInt8.hpp"
+#include "Core/Type/Datatype/DtUInt16.hpp"
+#include "Core/Type/Datatype/DtUInt32.hpp"
+#include "Core/Type/Datatype/DtUInt64.hpp"
+#include "Core/Type/Datatype/DtSizeT.hpp"
 #include "Expression/AbstractExpression.hpp"
-#include "Types/Datatype/DtBool.hpp"
-#include "Types/Datatype/DtString.hpp"
-#include "Types/Datatype/DtInt.hpp"
-#include "Types/Datatype/DtInt8.hpp"
-#include "Types/Datatype/DtInt16.hpp"
-#include "Types/Datatype/DtInt32.hpp"
-#include "Types/Datatype/DtInt64.hpp"
-#include "Types/Datatype/DtUInt8.hpp"
-#include "Types/Datatype/DtUInt16.hpp"
-#include "Types/Datatype/DtUInt32.hpp"
-#include "Types/Datatype/DtUInt64.hpp"
-#include "Types/Datatype/DtSizeT.hpp"
 
-namespace Energyleaf::Stream::V1::Expression::Compare {
+namespace Apalinea::Expression::Compare {
     //A > #
     //# < A
     //A > B
@@ -37,13 +33,13 @@ namespace Energyleaf::Stream::V1::Expression::Compare {
 
     class CompareExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtBool::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtBool::IDENTIFIER;
 
-        CompareExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
-                                                  Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtString::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
-                                                  Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER,
-                                                  Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                                  Types::Datatype::DtSizeT::IDENTIFIER, Types::Datatype::DtBool::IDENTIFIER}), compareTypes(CompareTypes::EQUAL),
+        CompareExpression() : AbstractExpression({Core::Type::Datatype::DtInt8::IDENTIFIER, Core::Type::Datatype::DtInt16::IDENTIFIER, Core::Type::Datatype::DtInt32::IDENTIFIER,
+                                                  Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtString::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
+                                                  Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
+                                                  Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
+                                                  Core::Type::Datatype::DtSizeT::IDENTIFIER, Core::Type::Datatype::DtBool::IDENTIFIER}), compareTypes(CompareTypes::EQUAL),
                               first(nullptr), second(nullptr){
         }
 
@@ -77,28 +73,28 @@ namespace Energyleaf::Stream::V1::Expression::Compare {
             switch (this->compareTypes) {
                 default:
                 case CompareTypes::EQUAL:
-                    this->data = Types::Datatype::DtBool(first->getData() == second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() == second->getData());
                     break;
                 case CompareTypes::NOT_EQUAL:
-                    this->data = Types::Datatype::DtBool(first->getData() != second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() != second->getData());
                     break;
                 case CompareTypes::LESS_THAN:
-                    this->data = Types::Datatype::DtBool(first->getData() < second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() < second->getData());
                     break;
                 case CompareTypes::GREATER_THAN:
-                    this->data = Types::Datatype::DtBool(first->getData() > second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() > second->getData());
                     break;
                 case CompareTypes::LESS_THAN_OR_EQUAL:
-                    this->data = Types::Datatype::DtBool(first->getData() <= second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() <= second->getData());
                     break;
                 case CompareTypes::GREATER_THAN_OR_EQUAL:
-                    this->data = Types::Datatype::DtBool(first->getData() >= second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() >= second->getData());
                     break;
             }
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
-            if(first == nullptr && second == nullptr) {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
+            if(first == nullptr || second == nullptr) {
                 for (IExpression *exp: vSubExpressions) {
                     exp->setTuple(tuple);
                 }
@@ -108,7 +104,7 @@ namespace Energyleaf::Stream::V1::Expression::Compare {
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -120,15 +116,15 @@ namespace Energyleaf::Stream::V1::Expression::Compare {
             this->compareTypes = type;
         }
 
-        CompareTypes getCompareType() {
+        [[maybe_unused]] CompareTypes getCompareType() {
             return this->compareTypes;
         }
 
     private:
-        Types::Datatype::DtBool data;
+        Core::Type::Datatype::DtBool data;
         CompareTypes compareTypes;
         IExpression *first, *second;
     };
-}
+} // Apalinea::Expression::Compare
 
-#endif //STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP

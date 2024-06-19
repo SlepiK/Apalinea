@@ -1,14 +1,10 @@
-//
-// Created by SlepiK on 01.02.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
-#define ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
+#ifndef APALINEA_EXTRAS_VISION_ABSTRACTCAMERA_HPP
+#define APALINEA_EXTRAS_VISION_ABSTRACTCAMERA_HPP
 
 #include <stdexcept>
-#include "Types/Image/Image.hpp"
+#include "Core/Type/Image/Image.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Vision {
+namespace Apalinea::Extras::Vision {
     template<typename Config>
     class AbstractCamera {
     public:
@@ -27,7 +23,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
             this->vStarted = true;
         };
 
-        virtual void stop() final {
+        [[maybe_unused]] virtual void stop() final {
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }
@@ -37,11 +33,11 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
             this->vStarted = false;
         }
 
-        [[nodiscard]] virtual bool isStarted() const final{
+        [[maybe_unused]] [[nodiscard]] virtual bool isStarted() const final{
             return this->vStarted;
         }
 
-        [[nodiscard]] virtual Energyleaf::Stream::V1::Types::Image getImage() const final{
+        [[nodiscard]] virtual Core::Type::Image getImage() const final{
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }
@@ -55,13 +51,15 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
 
         virtual void setConfig(Config& config) = 0;
 
-    private:
     protected:
         bool vStarted;
-        virtual void internalStart() = 0;
-        virtual void internalStop() = 0;
-        [[nodiscard]] virtual Energyleaf::Stream::V1::Types::Image getInternalImage() const = 0;
-    };
-}
 
-#endif //ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
+        virtual void internalStart() = 0;
+
+        virtual void internalStop() = 0;
+
+        [[nodiscard]] virtual Core::Type::Image getInternalImage() const = 0;
+    };
+} // Apalinea::Extras::Vision
+
+#endif //APALINEA_EXTRAS_VISION_ABSTRACTCAMERA_HPP

@@ -1,23 +1,19 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
+#ifndef APALINEA_EXPRESSION_DATATYPE_DTUINT32EXPRESSION_HPP
+#define APALINEA_EXPRESSION_DATATYPE_DTUINT32EXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTUINT32EXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTUINT32EXPRESSION_HPP
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/DtUInt32.hpp"
+#include "Expression/IExpression.hpp"
 
-#include "Expression/AbstractExpression.hpp"
-#include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtUInt32.hpp"
-
-namespace Energyleaf::Stream::V1::Expression::DataType {
-    class DtUInt32Expression : public IExpression {
+namespace Apalinea::Expression::DataType {
+    class [[maybe_unused]] DtUInt32Expression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtUInt32::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtUInt32::IDENTIFIER;
 
-        explicit DtUInt32Expression(std::string&& entry, bool load = true) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(load) {
+        [[maybe_unused]] explicit DtUInt32Expression(std::string&& entry, bool load = true) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(load) {
         }
 
-        explicit DtUInt32Expression(uint32_t&& value) : IExpression({IDENTIFIER}), load(false), data(value) {
+        [[maybe_unused]] explicit DtUInt32Expression(uint32_t&& value) : IExpression({IDENTIFIER}), load(false), data(value) {
         }
 
         ~DtUInt32Expression() override = default;
@@ -26,13 +22,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -42,7 +38,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             }
 
             if(this->tuple.containsItem(this->entry)) {
-                this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtUInt32>();
+                this->data = this->tuple.getEntry(this->entry).get<Core::Type::Datatype::DtUInt32>();
             } else {
                 throw std::runtime_error("Entry was not found in the given tuple!");
             }
@@ -51,12 +47,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
+
     private:
-        Tuple::Tuple tuple;
+        Core::Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtUInt32 data;
+        Core::Type::Datatype::DtUInt32 data;
         bool load;
     };
-}
+} // Apalinea::Expression::DataType
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTUINT32EXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_DATATYPE_DTUINT32EXPRESSION_HPP

@@ -1,22 +1,17 @@
-//
-// Created by SlepiK on 06.06.24.
-//
+#ifndef APALINEA_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
+#define APALINEA_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
+#ifdef APALINEA_USE_BOOST
 
-#ifndef STREAM_V1_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
-#define STREAM_V1_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
-
-#include <boost/asio/thread_pool.hpp>
-#include <boost/asio/post.hpp>
-
-#include "IExecutor.hpp"
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
+#include <boost/asio/thread_pool.hpp>
+#include <boost/asio/post.hpp>
+#include "Core/Executor/IExecutor.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Executor {
+namespace Apalinea::Core::Executor {
     class BoostExecutor : public IExecutor {
     public:
-
         BoostExecutor() : BoostExecutor(2) {
         }
 
@@ -44,8 +39,9 @@ namespace Energyleaf::Stream::V1::Core::Executor {
         void shutdown() override {
             this->excPool.join();
         }
+
     private:
-        boost::asio::thread_pool excPool;
+        boost::asio::thread_pool excPool{};
         std::atomic<int> numTasksInProgress;
         std::mutex mutex;
         std::condition_variable cv;
@@ -54,8 +50,8 @@ namespace Energyleaf::Stream::V1::Core::Executor {
             std::unique_lock<std::mutex> lock(this->mutex);
             if(--this->numTasksInProgress == 0) this->cv.notify_all();
         }
-
     };
-}
+} // Apalinea::Core::Executor
 
-#endif //STREAM_V1_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
+#endif //APALINEA_USE_BOOST
+#endif //APALINEA_CORE_EXECUTOR_BOOSTEXECUTOR_HPP

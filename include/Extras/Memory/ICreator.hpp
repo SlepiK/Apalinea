@@ -1,21 +1,17 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_ICREATOR_HPP
-#define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_ICREATOR_HPP
+#ifndef APALINEA_EXTRAS_MEMORY_ICREATOR_HPP
+#define APALINEA_EXTRAS_MEMORY_ICREATOR_HPP
 
 #include <cstddef>
-#include <Extras/Memory/CreatorArgument.hpp>
+#include "Extras/Memory/CreatorArgument.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Memory {
+namespace Apalinea::Extras::Memory {
     template <typename Type>
     class ICreator {
     public:
         virtual ~ICreator() = default;
         virtual Type* create(std::size_t size) = 0;
-        virtual void destroy(Type* ptr, CreatorArgument arg = CreatorArgument::SINGLE) = 0;
+        virtual void destroy(Type* ptr, CreatorArgument arg) = 0;
     };
-}
+} // Apalinea::Extras::Memory
 
-#endif // ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_ICREATOR_HPP
+#endif //APALINEA_EXTRAS_MEMORY_ICREATOR_HPP

@@ -1,18 +1,14 @@
-//
-// Created by SlepiK on 18.06.2024.
-//
-
-#ifndef STREAM_V1_CORE_LOG_LOGMANAGER_HPP
-#define STREAM_V1_CORE_LOG_LOGMANAGER_HPP
+#ifndef APALINEA_CORE_LOG_LOGMANAGER_HPP
+#define APALINEA_CORE_LOG_LOGMANAGER_HPP
 
 #include <string_view>
 #include <vector>
 #include <memory>
-#include "LogLevel.hpp"
-#include "ILog.hpp"
+#include <ctime>
+#include "Core/Log/ILog.hpp"
+#include "Core/Log/LogLevel.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
-
+namespace Apalinea::Core::Log {
     inline std::string getFilename(const std::string& file) {
         size_t seperator = file.find_last_of("/\\");
         return seperator != std::string::npos ? file.substr(seperator + 1) : file;
@@ -21,12 +17,11 @@ namespace Energyleaf::Stream::V1::Core::Log {
     class LogManager {
     public:
         static void log(LogLevel level, std::string_view file, int line, std::string_view message) {
-            time_t tTime;
-            time(&tTime);
-            struct tm* logTime = localtime(&tTime);
+            std::time_t tTime = std::time(nullptr);
+            std::tm* logTime = std::localtime(&tTime);
 
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->log(level,logTime,file,line,message);
+            for(auto & log : logs) {
+                log->log(level,logTime,file,line,message);
             }
         }
 
@@ -39,8 +34,8 @@ namespace Energyleaf::Stream::V1::Core::Log {
             time(&tTime);
             struct tm* logTime = localtime(&tTime);
 
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->log(LogLevel(level),logTime,file,line,message);
+            for(auto & log : logs) {
+                log->log(LogLevel(level),logTime,file,line,message);
             }
         }
 
@@ -49,24 +44,22 @@ namespace Energyleaf::Stream::V1::Core::Log {
             logs.push_back(std::move(log));
         }
 
-        static void close() {
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->close();
+        [[maybe_unused]] static void close() {
+            for(auto & log : logs) {
+                log->close();
             }
         }
 
-        static void flush() {
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->flush();
+        [[maybe_unused]] static void flush() {
+            for(auto & log : logs) {
+                log->flush();
             }
         }
-
 
     private:
         using LogVector = typename std::vector<std::unique_ptr<ILog>>;
         static LogVector logs;
-    protected:
     };
-}
+} // Apalinea::Core::Log
 
-#endif //STREAM_V1_CORE_LOG_LOGMANAGER_HPP
+#endif //APALINEA_CORE_LOG_LOGMANAGER_HPP

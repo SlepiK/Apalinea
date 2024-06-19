@@ -1,16 +1,11 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
+#ifndef APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP
+#define APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP
 
-#ifndef STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
-#define STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
-
-//Future use!
-namespace Energyleaf::Stream::V1::Expression {
-    class IExpressionUnit {
+namespace Apalinea::Expression {
+    class [[maybe_unused]] IExpressionUnit {
     public:
         virtual ~IExpressionUnit() = default;
     };
-}
+} // Apalinea::Expression
 
-#endif //STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
+#endif //APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP

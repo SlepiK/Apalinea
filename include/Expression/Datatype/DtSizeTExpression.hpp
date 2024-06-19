@@ -1,23 +1,19 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
+#ifndef APALINEA_EXPRESSION_DATATYPE_DTSIZETEXPRESSION_HPP
+#define APALINEA_EXPRESSION_DATATYPE_DTSIZETEXPRESSION_HPP
 
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTSIZETEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTSIZETEXPRESSION_HPP
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/DtSizeT.hpp"
+#include "Expression/IExpression.hpp"
 
-#include "Expression/AbstractExpression.hpp"
-#include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtSizeT.hpp"
-
-namespace Energyleaf::Stream::V1::Expression::DataType {
-    class DtSizeTExpression : public IExpression {
+namespace Apalinea::Expression::DataType {
+    class [[maybe_unused]] DtSizeTExpression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtSizeT::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtSizeT::IDENTIFIER;
 
-        explicit DtSizeTExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
+        [[maybe_unused]] explicit DtSizeTExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
 
-        explicit DtSizeTExpression(std::size_t&& value) : IExpression({IDENTIFIER}), load(false), data(std::move(value)) {
+        [[maybe_unused]] explicit DtSizeTExpression(std::size_t&& value) : IExpression({IDENTIFIER}), load(false), data(value) {
         }
 
         ~DtSizeTExpression() override = default;
@@ -26,13 +22,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -43,7 +39,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtSizeT>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Type::Datatype::DtSizeT>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -53,12 +49,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
+
     private:
-        Tuple::Tuple tuple;
+        Core::Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtSizeT data;
+        Core::Type::Datatype::DtSizeT data;
         bool load;
     };
-}
+} // Apalinea::Expression::DataType
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTSIZETEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_DATATYPE_DTSIZETEXPRESSION_HPP
