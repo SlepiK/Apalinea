@@ -5,7 +5,7 @@
 #ifndef ENERGYLEAF_STREAM_V1_EXPTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
 #define ENERGYLEAF_STREAM_V1_EXPTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
 
-namespace Energyleaf::Stream::V1::Extras::Network {
+namespace Apalinea::Extras::Network {
     template<typename Sender>
     class AbstractWebSender {
     public:

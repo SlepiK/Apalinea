@@ -6,9 +6,9 @@
 #define STREAM_V1_CORE_LOG_ILOG_HPP
 
 #include <string_view>
-#include "LogLevel.hpp"
+#include "Core/Log/LogLevel.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
     class ILog {
     public:
         ILog() = default;

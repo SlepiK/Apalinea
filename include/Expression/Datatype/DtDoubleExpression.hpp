@@ -5,14 +5,14 @@
 #ifndef STREAM_V1_EXPRESSION_DATATYPE_DTDOUBLEEXPRESSION_HPP
 #define STREAM_V1_EXPRESSION_DATATYPE_DTDOUBLEEXPRESSION_HPP
 
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/DtDouble.hpp"
 #include "Expression/IExpression.hpp"
-#include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtDouble.hpp"
 
-namespace Energyleaf::Stream::V1::Expression::DataType {
+namespace Apalinea::Expression::DataType {
     class DtDoubleExpression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtFloat::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::DtFloat::IDENTIFIER;
 
         explicit DtDoubleExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
@@ -26,13 +26,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
             if(load) {
                 this->tuple = tuple;
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -43,7 +43,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtDouble>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Types::Datatype::DtDouble>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -54,9 +54,9 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return IDENTIFIER;
         }
     private:
-        Tuple::Tuple tuple;
+        Core::Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtDouble data;
+        Core::Types::Datatype::DtDouble data;
         bool load;
     };
 }

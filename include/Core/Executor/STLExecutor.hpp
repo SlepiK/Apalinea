@@ -5,7 +5,6 @@
 #ifndef STREAM_V1_CORE_EXECUTOR_STLEXECUTOR_HPP
 #define STREAM_V1_CORE_EXECUTOR_STLEXECUTOR_HPP
 
-#include "IExecutor.hpp"
 #include <vector>
 #include <thread>
 #include <queue>
@@ -13,8 +12,9 @@
 #include <mutex>
 #include <atomic>
 #include <condition_variable>
+#include "Core/Executor/IExecutor.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Executor {
+namespace Apalinea::Core::Executor {
     class STLExecutor : public IExecutor {
     public:
         STLExecutor() : STLExecutor(2) {

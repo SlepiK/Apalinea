@@ -6,11 +6,11 @@
 #define STREAM_V1_EXPRESSION_IEXPRESSION_HPP
 
 #include <stdexcept>
-#include <Types/Datatype/IDt.hpp>
-#include "Tuple/Tuple.hpp"
-#include <Types/Datatype/DtRegistry.hpp>
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/IDt.hpp"
+#include "Core/Type/Datatype/DtRegistry.hpp"
 
-namespace Energyleaf::Stream::V1::Expression {
+namespace Apalinea::Expression {
     class IExpression {
     public:
         explicit IExpression(std::vector<std::string_view> datatypes) : datatypes(datatypes.begin(),datatypes.end()), used(false){
@@ -31,15 +31,15 @@ namespace Energyleaf::Stream::V1::Expression {
         virtual void execute() = 0;
 
         [[nodiscard]] bool isDatatypeAllowed(std::string_view datatype) const {
-            if(datatype == Types::Datatype::UNDEFINED) return true;
+            if(datatype == Core::Types::Datatype::UNDEFINED) return true;
             return this->datatypes.find(datatype) != this->datatypes.end();
         }
 
-        [[nodiscard]] virtual const Types::Datatype::IDt& getData() const = 0;
+        [[nodiscard]] virtual const Core::Types::Datatype::IDt& getData() const = 0;
 
         [[nodiscard]] virtual std::string_view getIdentifier() const = 0;
 
-        virtual void setTuple(Tuple::Tuple& tuple) = 0;
+        virtual void setTuple(Core::Tuple::Tuple& tuple) = 0;
 
         void setUsed(bool use) {
             this->used = use;

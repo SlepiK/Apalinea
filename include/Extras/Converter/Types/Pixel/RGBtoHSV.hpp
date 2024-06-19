@@ -5,15 +5,14 @@
 #ifndef ENERGYLEAF_STREAM_V1_EXTRAS_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
 #define ENERGYLEAF_STREAM_V1_EXTRAS_CONVERTER_TYPES_PIXEL_RGBTOHSV_HPP
 
-#include "Types/Pixel/RGB.hpp"
-#include "Types/Pixel/HSV.hpp"
-
 #include <algorithm>
+#include "Core/Type/Pixel/RGB.hpp"
+#include "Core/Type/Pixel/HSV.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Converter::Types::Pixel {
+namespace Apalinea::Extras::Converter::Types::Pixel {
     class RGBtoHSV {
     public:
-        static void convert(const Energyleaf::Stream::V1::Types::Pixel::RGB& rgb, Energyleaf::Stream::V1::Types::Pixel::HSV& hsv) {
+        static void convert(const Core::Types::Pixel::RGB& rgb, Core::Types::Pixel::HSV& hsv) {
             float maxColor = (float)std::max(std::max(rgb.getR(), rgb.getG()), rgb.getB());
             float minColor = (float)std::min(std::min(rgb.getR(), rgb.getG()), rgb.getB());
             float delta = maxColor - minColor;

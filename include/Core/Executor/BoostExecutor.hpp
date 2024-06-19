@@ -8,12 +8,12 @@
 #include <boost/asio/thread_pool.hpp>
 #include <boost/asio/post.hpp>
 
-#include "IExecutor.hpp"
 #include <atomic>
 #include <mutex>
 #include <condition_variable>
+#include "Core/Executor/IExecutor.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Executor {
+namespace Apalinea::Core::Executor {
     class BoostExecutor : public IExecutor {
     public:
 

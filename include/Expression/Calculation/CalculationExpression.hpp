@@ -5,21 +5,21 @@
 #ifndef STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
 #define STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
 
+#include "Core/Type/Datatype/DtRegistry.hpp"
+#include "Core/Type/Datatype/DtInt.hpp"
+#include "Core/Type/Datatype/DtInt8.hpp"
+#include "Core/Type/Datatype/DtInt16.hpp"
+#include "Core/Type/Datatype/DtInt32.hpp"
+#include "Core/Type/Datatype/DtInt64.hpp"
+#include "Core/Type/Datatype/DtUInt8.hpp"
+#include "Core/Type/Datatype/DtUInt16.hpp"
+#include "Core/Type/Datatype/DtUInt32.hpp"
+#include "Core/Type/Datatype/DtUInt64.hpp"
+#include "Core/Type/Datatype/DtSizeT.hpp"
+#include "Core/Type/Datatype/DtNumbers.hpp"
 #include "Expression/AbstractExpression.hpp"
-#include "Types/Datatype/DtRegistry.hpp"
-#include "Types/Datatype/DtInt.hpp"
-#include "Types/Datatype/DtInt8.hpp"
-#include "Types/Datatype/DtInt16.hpp"
-#include "Types/Datatype/DtInt32.hpp"
-#include "Types/Datatype/DtInt64.hpp"
-#include "Types/Datatype/DtUInt8.hpp"
-#include "Types/Datatype/DtUInt16.hpp"
-#include "Types/Datatype/DtUInt32.hpp"
-#include "Types/Datatype/DtUInt64.hpp"
-#include "Types/Datatype/DtSizeT.hpp"
-#include "Types/Datatype/DtNumbers.hpp"
 
-namespace Energyleaf::Stream::V1::Expression::Calculation {
+namespace Apalinea::Expression::Calculation {
 
     enum class CalculationTypes {
         ADDITION,
@@ -32,13 +32,13 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
 
     class CalculationExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::UNDEFINED;
+        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::UNDEFINED;
 
-        CalculationExpression() : AbstractExpression({Types::Datatype::DtInt8::IDENTIFIER, Types::Datatype::DtInt16::IDENTIFIER, Types::Datatype::DtInt32::IDENTIFIER,
-                                                      Types::Datatype::DtInt64::IDENTIFIER, Types::Datatype::DtUInt8::IDENTIFIER,
-                                                      Types::Datatype::DtUInt16::IDENTIFIER, Types::Datatype::DtUInt32::IDENTIFIER,
-                                                      Types::Datatype::DtUInt64::IDENTIFIER, Types::Datatype::DtInt::IDENTIFIER,
-                                                      Types::Datatype::DtSizeT::IDENTIFIER}) {
+        CalculationExpression() : AbstractExpression({Core::Types::Datatype::DtInt8::IDENTIFIER, Core::Types::Datatype::DtInt16::IDENTIFIER, Core::Types::Datatype::DtInt32::IDENTIFIER,
+                                                      Core::Types::Datatype::DtInt64::IDENTIFIER, Core::Types::Datatype::DtUInt8::IDENTIFIER,
+                                                      Core::Types::Datatype::DtUInt16::IDENTIFIER, Core::Types::Datatype::DtUInt32::IDENTIFIER,
+                                                      Core::Types::Datatype::DtUInt64::IDENTIFIER, Core::Types::Datatype::DtInt::IDENTIFIER,
+                                                      Core::Types::Datatype::DtSizeT::IDENTIFIER}) {
         }
 
         void execute() override {
@@ -94,7 +94,7 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
 
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
             if(first == nullptr && second == nullptr) {
                 for (IExpression *exp: vSubExpressions) {
                     exp->setTuple(tuple);
@@ -105,7 +105,7 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
             return *this->data;
         }
 
@@ -122,7 +122,7 @@ namespace Energyleaf::Stream::V1::Expression::Calculation {
         }
 
     private:
-        Types::Datatype::IDt* data;
+        Core::Types::Datatype::IDt* data;
         CalculationTypes calculationType;
         IExpression *first, *second;
     };

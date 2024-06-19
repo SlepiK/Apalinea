@@ -5,9 +5,9 @@
 #ifndef STREAM_VERSION_HPP
 #define STREAM_VERSION_HPP
 
-namespace Energyleaf::Stream::Constants::Version {
-    constexpr char VERSION[] = "V2.1";
-    constexpr char VERSIONNAME[] = "Ivye";
+namespace Apalinea::Core::Constants::Version {
+    constexpr char VERSION[] = "V1.0.0";
+    constexpr char VERSIONNAME[] = "Orez";
 }
 
 #endif //STREAM_VERSION_HPP

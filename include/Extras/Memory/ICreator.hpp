@@ -6,9 +6,9 @@
 #define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_ICREATOR_HPP
 
 #include <cstddef>
-#include <Extras/Memory/CreatorArgument.hpp>
+#include "Extras/Memory/CreatorArgument.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Memory {
+namespace Apalinea::Extras::Memory {
     template <typename Type>
     class ICreator {
     public:

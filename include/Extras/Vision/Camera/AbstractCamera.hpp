@@ -6,9 +6,9 @@
 #define ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
 
 #include <stdexcept>
-#include "Types/Image/Image.hpp"
+#include "Core/Type/Image/Image.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Vision {
+namespace Apalinea::Extras::Vision {
     template<typename Config>
     class AbstractCamera {
     public:
@@ -41,7 +41,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
             return this->vStarted;
         }
 
-        [[nodiscard]] virtual Energyleaf::Stream::V1::Types::Image getImage() const final{
+        [[nodiscard]] virtual Core::Types::Image getImage() const final{
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }
@@ -60,7 +60,7 @@ namespace Energyleaf::Stream::V1::Extras::Vision {
         bool vStarted;
         virtual void internalStart() = 0;
         virtual void internalStop() = 0;
-        [[nodiscard]] virtual Energyleaf::Stream::V1::Types::Image getInternalImage() const = 0;
+        [[nodiscard]] virtual Core::Types::Image getInternalImage() const = 0;
     };
 }
 

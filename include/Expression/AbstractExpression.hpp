@@ -7,9 +7,9 @@
 
 #include <list>
 #include <utility>
-#include "IExpression.hpp"
+#include "Expression/IExpression.hpp"
 
-namespace Energyleaf::Stream::V1::Expression {
+namespace Apalinea::Expression {
     class AbstractExpression : public IExpression {
     public:
         explicit AbstractExpression(std::vector<std::string_view> datatypes) : IExpression(std::move(datatypes)){
@@ -44,7 +44,7 @@ namespace Energyleaf::Stream::V1::Expression {
             return true;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
             for(IExpression* exp : vSubExpressions) {
                 exp->setTuple(tuple);
             }

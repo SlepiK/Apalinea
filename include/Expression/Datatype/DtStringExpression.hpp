@@ -5,21 +5,21 @@
 #ifndef STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
 #define STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
 
-#include "Expression/AbstractExpression.hpp"
-#include "Tuple/Tuple.hpp"
-#include "Types/Datatype/DtString.hpp"
+#include "Core/Tuple/Tuple.hpp"
+#include "Core/Type/Datatype/DtString.hpp"
+#include "Expression/IExpression.hpp"
 
-namespace Energyleaf::Stream::V1::Expression::DataType {
+namespace Apalinea::Expression::DataType {
     class DtStringExpression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Types::Datatype::DtString::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::DtString::IDENTIFIER;
 
         explicit DtStringExpression(std::string&& entry, bool load = true) :
         IExpression({IDENTIFIER}), load(load) {
             if(load) {
                 this->entry = std::move(entry);
             } else {
-                this->data = Types::Datatype::DtString(std::move(entry));
+                this->data = Core::Types::Datatype::DtString(std::move(entry));
             }
         }
 
@@ -29,13 +29,13 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return false;
         }
 
-        void setTuple(Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& tuple) override {
             if(load) {
                 this->tuple = tuple;
             }
         }
 
-        [[nodiscard]] const Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -46,7 +46,7 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Types::Datatype::DtString>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Types::Datatype::DtString>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -57,9 +57,9 @@ namespace Energyleaf::Stream::V1::Expression::DataType {
             return IDENTIFIER;
         }
     private:
-        Tuple::Tuple tuple;
+        Core::Tuple::Tuple tuple;
         std::string entry;
-        Types::Datatype::DtString data;
+        Core::Types::Datatype::DtString data;
         bool load;
     };
 }

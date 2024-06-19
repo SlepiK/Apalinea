@@ -5,10 +5,10 @@
 #ifndef STREAM_V1_CORE_LOG_CONSOLELOG_HPP
 #define STREAM_V1_CORE_LOG_CONSOLELOG_HPP
 
-#include "ILog.hpp"
 #include <iostream>
+#include "Core/Log/ILog.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
     class ConsoleLog : public ILog {
     public:
         ConsoleLog() = default;

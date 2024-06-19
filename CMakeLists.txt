@@ -24,60 +24,60 @@ if(USE_BOOST)
 endif()
 
 set(PROJECT_HEADERS
-        include/Operator/Type/OperatorType.hpp
-        include/Types/Datatype/DtRegistry.hpp
-        include/Operator/PipeOperator/AbstractPipeOperator.hpp
-        include/Operator/SinkOperator/AbstractSinkOperator.hpp
-        include/Operator/SourceOperator/AbstractSourceOperator.hpp
-        include/Operator/AbstractOperator.hpp
-        include/Operator/IOperator.hpp
-        include/Tuple/Entry/Entry.hpp
-        include/Tuple/Tuple.hpp
-        include/Core/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
-        include/Link/ILink.hpp
-        include/Link/AbstractLink.hpp
-        include/Link/PipeLink/PipeLink.hpp
-        include/Link/SinkLink/SinkLink.hpp
-        include/Link/SourceLink/SourceLink.hpp
-        include/Link/Trait/LinkTrait.hpp
-        include/Link/Wrapper/LinkWrapper.hpp
+        include/Core/Operator/Type/OperatorType.hpp
+        include/Core/Type/Datatype/DtRegistry.hpp
+        include/Core/Operator/PipeOperator/AbstractPipeOperator.hpp
+        include/Core/Operator/SinkOperator/AbstractSinkOperator.hpp
+        include/Core/Operator/SourceOperator/AbstractSourceOperator.hpp
+        include/Core/Operator/AbstractOperator.hpp
+        include/Core/Operator/IOperator.hpp
+        include/Core/Tuple/Entry/Entry.hpp
+        include/Core/Tuple/Tuple.hpp
+        include/Operator/SinkOperator/CoutSinkOperator/CoutSinkOperator.hpp
+        include/Core/Link/ILink.hpp
+        include/Core/Link/AbstractLink.hpp
+        include/Core/Link/PipeLink/PipeLink.hpp
+        include/Core/Link/SinkLink/SinkLink.hpp
+        include/Core/Link/SourceLink/SourceLink.hpp
+        include/Core/Link/Trait/LinkTrait.hpp
+        include/Core/Link/Wrapper/LinkWrapper.hpp
         include/Core/Plan/Plan.hpp
-        include/Core/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
+        include/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
         include/Core/Constants/Version.hpp
-        include/Core/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
-        include/Types/Power/Power.hpp
-        include/Types/Image/Image.hpp
-        include/Types/Image/ImageFormat.hpp
-        include/Core/Operator/PipeOperator/CropPipeOperator/CropPipeOperator.hpp
-        include/Types/Pixel/HSV.hpp
-        include/Types/Pixel/RGB.hpp
+        include/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
+        include/Core/Type/Power/Power.hpp
+        include/Core/Type/Image/Image.hpp
+        include/Core/Type/Image/ImageFormat.hpp
+        include/Operator/PipeOperator/CropPipeOperator/CropPipeOperator.hpp
+        include/Core/Type/Pixel/HSV.hpp
+        include/Core/Type/Pixel/RGB.hpp
         include/Extras/Converter/Types/Pixel/RGBtoHSV.hpp
-        include/Core/Operator/PipeOperator/StatePipeOperator/StatePipeOperator.hpp
-        include/Core/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp
-        include/Core/Operator/PipeOperator/SelectPipeOperator/SelectPipeOperator.hpp
-        include/Core/Operator/PipeOperator/DetectorPipeOperator/DetectorPipeOperator.hpp
+        include/Operator/PipeOperator/StatePipeOperator/StatePipeOperator.hpp
+        include/Operator/PipeOperator/WindowPipeOperator/WindowPipeOperator.hpp
+        include/Operator/PipeOperator/SelectPipeOperator/SelectPipeOperator.hpp
+        include/Operator/PipeOperator/DetectorPipeOperator/DetectorPipeOperator.hpp
         include/Extras/Vision/Camera/AbstractCamera.hpp
-        include/Types/Window/WindowId.hpp
-        include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
-        include/Core/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
-        include/Operator/ProcessState/OperatorProcessState.hpp
-        include/Types/Datatype/IDtTrait.hpp
+        include/Core/Type/Window/WindowId.hpp
+        include/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
+        include/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
+        include/Core/Operator/ProcessState/OperatorProcessState.hpp
+        include/Core/Type/Datatype/IDtTrait.hpp
         include/Expression/IExpression.hpp
         include/Expression/AbstractExpression.hpp
         include/Expression/ToExpression/ToDtStringExpression.hpp
-        include/Types/Datatype/DtString.hpp
-        include/Types/Datatype/DtInt32.hpp
-        include/Types/Datatype/DtInt8.hpp
-        include/Types/Datatype/DtInt16.hpp
-        include/Types/Datatype/DtUInt8.hpp
-        include/Types/Datatype/DtUInt16.hpp
-        include/Types/Datatype/DtUInt32.hpp
-        include/Types/Datatype/DtInt64.hpp
-        include/Types/Datatype/DtUInt64.hpp
-        include/Types/Datatype/DtInt.hpp
-        include/Types/Datatype/DtSizeT.hpp
-        include/Exception/NotImplementedException.hpp
-        include/Types/Datatype/IDt.hpp
+        include/Core/Type/Datatype/DtString.hpp
+        include/Core/Type/Datatype/DtInt32.hpp
+        include/Core/Type/Datatype/DtInt8.hpp
+        include/Core/Type/Datatype/DtInt16.hpp
+        include/Core/Type/Datatype/DtUInt8.hpp
+        include/Core/Type/Datatype/DtUInt16.hpp
+        include/Core/Type/Datatype/DtUInt32.hpp
+        include/Core/Type/Datatype/DtInt64.hpp
+        include/Core/Type/Datatype/DtUInt64.hpp
+        include/Core/Type/Datatype/DtInt.hpp
+        include/Core/Type/Datatype/DtSizeT.hpp
+        include/Core/Exception/NotImplementedException.hpp
+        include/Core/Type/Datatype/IDt.hpp
         include/Expression/Datatype/DtIntExpression.hpp
         include/Expression/Datatype/DtInt16Expression.hpp
         include/Expression/Datatype/DtInt32Expression.hpp
@@ -92,48 +92,47 @@ set(PROJECT_HEADERS
         include/Expression/ToExpression/ToDtIntExpression.hpp
         include/Expression/IExpressionUnit.hpp
         include/Expression/Compare/CompareExpression.hpp
-        include/Types/Datatype/DtBool.hpp
+        include/Core/Type/Datatype/DtBool.hpp
         include/Expression/Datatype/DtBoolExpression.hpp
         include/Expression/Calculation/CalculationExpression.hpp
-        include/Types/Datatype/DtNumbers.hpp
-        include/Types/Datatype/DtFloat.hpp
-        include/Types/Datatype/DtDouble.hpp
+        include/Core/Type/Datatype/DtNumbers.hpp
+        include/Core/Type/Datatype/DtFloat.hpp
+        include/Core/Type/Datatype/DtDouble.hpp
         include/Expression/Datatype/DtFloatExpression.hpp
         include/Expression/Datatype/DtDoubleExpression.hpp
         include/Expression/ToExpression/ToDtFloatExpression.hpp
         include/Expression/ToExpression/ToDtDoubleExpression.hpp
         include/Expression/ToExpression/ToDtBoolExpression.hpp
-        include/Types/Datatype/DtImage.hpp
+        include/Core/Type/Datatype/DtImage.hpp
         include/Core/Executor/IExecutor.hpp
         include/Core/Executor/BoostExecutor.hpp
-        include/Operator/Type/OperatorMode.hpp
+        include/Core/Operator/Type/OperatorMode.hpp
         include/Core/Executor/STLExecutor.hpp
-        include/Link/Type/LinkType.hpp
-        include/Link/IBaseLink.hpp
+        include/Core/Link/Type/LinkType.hpp
+        include/Core/Link/IBaseLink.hpp
         include/Core/Log/ILog.hpp
         include/Core/Log/LogLevelCategory.hpp
-        include/Core/Log/ILogListener.hpp
         include/Core/Log/ConsoleLog.hpp
         include/Core/Log/LogManager.hpp
 )
 
 set(PROJECT_SOURCES
-        include/Types/Datatype/DtUInt64.cpp
-        include/Types/Datatype/DtInt64.cpp
-        include/Types/Datatype/DtInt8.cpp
-        include/Types/Datatype/DtInt16.cpp
-        include/Types/Datatype/DtInt32.cpp
-        include/Types/Datatype/DtSizeT.cpp
-        include/Types/Datatype/DtUInt8.cpp
-        include/Types/Datatype/DtUInt16.cpp
-        include/Types/Datatype/DtUInt32.cpp
-        include/Types/Datatype/DtInt.cpp
-        include/Types/Datatype/DtBool.cpp
-        include/Types/Datatype/DtFloat.cpp
-        include/Types/Datatype/DtDouble.cpp
-        include/Core/Constants/Settings.cpp
-        include/Types/Datatype/DtImage.cpp
-        include/Types/Datatype/DtRegistry.cpp
+        src/Core/Constants/Settings.cpp
+        src/Core/Type/Datatype/DtUInt64.cpp
+        src/Core/Type/Datatype/DtInt64.cpp
+        src/Core/Type/Datatype/DtInt8.cpp
+        src/Core/Type/Datatype/DtInt16.cpp
+        src/Core/Type/Datatype/DtInt32.cpp
+        src/Core/Type/Datatype/DtSizeT.cpp
+        src/Core/Type/Datatype/DtUInt8.cpp
+        src/Core/Type/Datatype/DtUInt16.cpp
+        src/Core/Type/Datatype/DtUInt32.cpp
+        src/Core/Type/Datatype/DtInt.cpp
+        src/Core/Type/Datatype/DtBool.cpp
+        src/Core/Type/Datatype/DtFloat.cpp
+        src/Core/Type/Datatype/DtDouble.cpp
+        src/Core/Type/Datatype/DtImage.cpp
+        src/Core/Type/Datatype/DtRegistry.cpp
         src/Core/Log/LogManager.cpp
 )
 

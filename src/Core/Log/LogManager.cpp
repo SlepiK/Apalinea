@@ -4,4 +4,4 @@
 
 #include "Core/Log/LogManager.hpp"
 
-typename Energyleaf::Stream::V1::Core::Log::LogManager::LogVector Energyleaf::Stream::V1::Core::Log::LogManager::logs;
+typename Apalinea::Core::Log::LogManager::LogVector Apalinea::Core::Log::LogManager::logs;

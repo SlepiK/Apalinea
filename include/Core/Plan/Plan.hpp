@@ -8,17 +8,14 @@
 #include <memory>
 #include <vector>
 #include <queue>
-#include "Core/Log/LogManager.hpp"
-#include "Link/ILink.hpp"
-#include "Link/PipeLink/PipeLink.hpp"
-#include "Link/SinkLink/SinkLink.hpp"
-#include "Link/SourceLink/SourceLink.hpp"
-
 #include "Core/Executor/IExecutor.hpp"
+#include "Core/Log/LogManager.hpp"
+#include "Core/Link/ILink.hpp"
+#include "Core/Link/PipeLink/PipeLink.hpp"
+#include "Core/Link/SinkLink/SinkLink.hpp"
+#include "Core/Link/SourceLink/SourceLink.hpp"
 
-#include "Core/Log/ConsoleLog.hpp"
-
-namespace Energyleaf::Stream::V1::Core::Plan {
+namespace Apalinea::Core::Plan {
 
     class Plan {
     public:

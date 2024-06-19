@@ -5,20 +5,19 @@
 #ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
 #define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
 
-#include <Extras/Memory/ICreator.hpp>
-#include <Extras/Memory/DefaultCreator.hpp>
 #include <memory>
 #include <stdexcept>
+#include "Extras/Memory/ICreator.hpp"
+#include "Extras/Memory/DefaultCreator.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Memory {
+namespace Apalinea::Extras::Memory {
     template <typename CreatorType>
     class CreatorContainer {
     public:
         CreatorContainer() : vCreator(std::make_unique<DefaultCreator<CreatorType>>()) {
         }
 
-        ~CreatorContainer() {
-        }
+        ~CreatorContainer() = default;
 
         ICreator<CreatorType>& getCreator() {
             if (!this->vCreator) {

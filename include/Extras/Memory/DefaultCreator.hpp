@@ -5,10 +5,10 @@
 #ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
 #define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
 
-#include <Extras/Memory/ICreator.hpp>
 #include <new>
+#include "Extras/Memory/ICreator.hpp"
 
-namespace Energyleaf::Stream::V1::Extras::Memory {
+namespace Apalinea::Extras::Memory {
     template <typename Type>
     class DefaultCreator : public ICreator<Type> {
     public:

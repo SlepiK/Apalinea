@@ -9,7 +9,7 @@
 #include <ostream>
 #include <string_view>
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
     enum class LogLevelCategory {
         INFORMATION,
         WARNING,

@@ -7,7 +7,7 @@
 
 #include <functional>
 
-namespace Energyleaf::Stream::V1::Core::Executor {
+namespace Apalinea::Core::Executor {
     class IExecutor {
     public:
         virtual ~IExecutor() = default;

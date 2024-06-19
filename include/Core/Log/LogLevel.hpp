@@ -6,9 +6,9 @@
 #define STREAM_V1_CORE_LOG_LOGLEVEL_HPP
 
 #include <ostream>
-#include "LogLevelCategory.hpp"
+#include "Core/Log/LogLevelCategory.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
     class LogLevel {
     public:
         LogLevel() {

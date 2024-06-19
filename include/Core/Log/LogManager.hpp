@@ -8,10 +8,10 @@
 #include <string_view>
 #include <vector>
 #include <memory>
-#include "LogLevel.hpp"
-#include "ILog.hpp"
+#include "Core/Log/ILog.hpp"
+#include "Core/Log/LogLevel.hpp"
 
-namespace Energyleaf::Stream::V1::Core::Log {
+namespace Apalinea::Core::Log {
 
     inline std::string getFilename(const std::string& file) {
         size_t seperator = file.find_last_of("/\\");

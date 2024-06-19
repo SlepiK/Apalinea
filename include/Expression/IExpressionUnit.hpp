@@ -5,8 +5,7 @@
 #ifndef STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
 #define STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
 
-//Future use!
-namespace Energyleaf::Stream::V1::Expression {
+namespace Apalinea::Expression {
     class IExpressionUnit {
     public:
         virtual ~IExpressionUnit() = default;
