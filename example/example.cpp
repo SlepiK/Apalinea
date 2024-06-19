@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
     tse->add(tfe);
 
     Apalinea::Core::Plan::Plan plan(std::make_shared<Apalinea::Core::Executor::STLExecutor>(3));
-    //auto sourcelink = plan.createLink(Energyleaf::Stream::V1::Link::make_SourceLinkUPtr<Energyleaf::Stream::V1::Core::Operator::SourceOperator::StringDemoSourceOperator>());
     auto sourcelink = plan.createSource<Apalinea::Operator::SourceOperator::StringDemoSourceOperator>();
     auto sinklink = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
     sinklink.get()->getOperator().setExpression(tse);
@@ -45,12 +44,6 @@ int main(int argc, char *argv[])
     auto sourcelink2 = plan.createSource<Apalinea::Operator::SourceOperator::StringDemoSourceOperator>();
     auto sinklink3 = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
     plan.connect(sourcelink2,sinklink3);
-    /*plan.process();
-    plan.join();
-    plan.process();
-    plan.join();
-    plan.process();
-    plan.join();*/
     plan.order();
     plan.processOrdered();
     plan.join();
