@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(stream)
+project(apalinea)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -21,6 +21,8 @@ if(USE_BOOST)
 
     #Include Boost
     include_directories(${Boost_INCLUDE_DIRS})
+
+    add_definitions(-DAPALINEA_USE_BOOST_USE_BOOST)
 endif()
 
 set(PROJECT_HEADERS
@@ -134,6 +136,7 @@ set(PROJECT_SOURCES
         src/Core/Type/Datatype/DtImage.cpp
         src/Core/Type/Datatype/DtRegistry.cpp
         src/Core/Log/LogManager.cpp
+        src/Core/Type/Datatype/DtNumbers.cpp
 )
 
 set(DEMO_SOURCES
@@ -141,10 +144,10 @@ set(DEMO_SOURCES
         include/Core/Log/LogLevel.hpp
 )
 
-add_executable(stream main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
-target_include_directories(stream PRIVATE ${INCLUDE_DIRECTORYS})
+add_executable(apalinea main.cpp ${PROJECT_SOURCES} ${PROJECT_HEADERS})
+target_include_directories(apalinea PRIVATE ${INCLUDE_DIRECTORYS})
 if(USE_BOOST)
-target_link_libraries(stream ${Boost_LIBRARIES})
+target_link_libraries(apalinea ${Boost_LIBRARIES})
 endif()
 
 add_executable(example ${PROJECT_SOURCES} ${PROJECT_HEADERS} ${DEMO_SOURCES})

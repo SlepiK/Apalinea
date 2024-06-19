@@ -52,7 +52,7 @@ namespace Apalinea::Expression {
     protected:
         std::list<IExpression*> vSubExpressions;
 
-        void setMax(unsigned int max) {
+        [[maybe_unused]] void setMax(unsigned int max) {
             if(max > 0) this->vMax = max;
             else throw std::runtime_error("Cant set max below 1!");
         }

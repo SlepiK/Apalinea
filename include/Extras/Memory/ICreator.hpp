@@ -10,7 +10,7 @@ namespace Apalinea::Extras::Memory {
     public:
         virtual ~ICreator() = default;
         virtual Type* create(std::size_t size) = 0;
-        virtual void destroy(Type* ptr, CreatorArgument arg = CreatorArgument::SINGLE) = 0;
+        virtual void destroy(Type* ptr, CreatorArgument arg) = 0;
     };
 } // Apalinea::Extras::Memory
 

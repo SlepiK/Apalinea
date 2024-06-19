@@ -6,14 +6,14 @@
 #include "Expression/IExpression.hpp"
 
 namespace Apalinea::Expression::DataType {
-    class DtBoolExpression : public IExpression {
+    class [[maybe_unused]] DtBoolExpression : public IExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtBool::IDENTIFIER;
 
-        explicit DtBoolExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
+        [[maybe_unused]] explicit DtBoolExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
 
-        explicit DtBoolExpression(bool&& value) : IExpression({IDENTIFIER}), load(false), data(std::move(value)) {
+        [[maybe_unused]] explicit DtBoolExpression(bool&& value) : IExpression({IDENTIFIER}), load(false), data(value) {
         }
 
         ~DtBoolExpression() override = default;
@@ -22,9 +22,9 @@ namespace Apalinea::Expression::DataType {
             return false;
         }
 
-        void setTuple(Core::Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 

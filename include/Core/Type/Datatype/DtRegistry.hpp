@@ -32,7 +32,7 @@ namespace Apalinea::Core::Type::Datatype {
             }
         }
 
-        static void unreg(DtRegistryIdentifier identifier) {
+        [[maybe_unused]] static void unreg(DtRegistryIdentifier identifier) {
             auto it = dtMap.find(identifier);
             if(it != dtMap.end()) {
                 dtMap.erase(it);

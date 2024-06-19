@@ -6,11 +6,11 @@
 #include "Expression/IExpression.hpp"
 
 namespace Apalinea::Expression::DataType {
-    class DtStringExpression : public IExpression {
+    class [[maybe_unused]] DtStringExpression : public IExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtString::IDENTIFIER;
 
-        explicit DtStringExpression(std::string&& entry, bool load = true) :
+        [[maybe_unused]] explicit DtStringExpression(std::string&& entry, bool load = true) :
         IExpression({IDENTIFIER}), load(load) {
             if(load) {
                 this->entry = std::move(entry);
@@ -25,9 +25,9 @@ namespace Apalinea::Expression::DataType {
             return false;
         }
 
-        void setTuple(Core::Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 

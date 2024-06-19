@@ -6,18 +6,17 @@
 #include "Core/Tuple/Tuple.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
-    template<typename Input, typename Output>
-    class WindowPipeOperator : Core::Operator::AbstractPipeOperator {
+    class [[maybe_unused]] WindowPipeOperator : Core::Operator::AbstractPipeOperator {
     public:
-        void setSize(std::size_t&& size) {
+        [[maybe_unused]] void setSize(std::size_t&& size) {
             this->vWindowSize = size;
         }
 
-        [[nodiscard]] const std::size_t& getSize() const {
+        [[maybe_unused]] [[nodiscard]] const std::size_t& getSize() const {
             return this->vWindowSize;
         }
 
-        const std::size_t& getCurrentSize() {
+        [[maybe_unused]] [[nodiscard]] const std::size_t& getCurrentSize() const {
             return this->vWindowCurrent;
         }
 

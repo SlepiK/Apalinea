@@ -17,11 +17,11 @@ namespace Apalinea::Core::Log {
     class LogManager {
     public:
         static void log(LogLevel level, std::string_view file, int line, std::string_view message) {
-            std::time_t tTime = std::time(0);
+            std::time_t tTime = std::time(nullptr);
             std::tm* logTime = std::localtime(&tTime);
 
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->log(level,logTime,file,line,message);
+            for(auto & log : logs) {
+                log->log(level,logTime,file,line,message);
             }
         }
 
@@ -34,8 +34,8 @@ namespace Apalinea::Core::Log {
             time(&tTime);
             struct tm* logTime = localtime(&tTime);
 
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->log(LogLevel(level),logTime,file,line,message);
+            for(auto & log : logs) {
+                log->log(LogLevel(level),logTime,file,line,message);
             }
         }
 
@@ -44,15 +44,15 @@ namespace Apalinea::Core::Log {
             logs.push_back(std::move(log));
         }
 
-        static void close() {
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->close();
+        [[maybe_unused]] static void close() {
+            for(auto & log : logs) {
+                log->close();
             }
         }
 
-        static void flush() {
-            for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
-                iterator->get()->flush();
+        [[maybe_unused]] static void flush() {
+            for(auto & log : logs) {
+                log->flush();
             }
         }
 

@@ -13,7 +13,7 @@ namespace Apalinea::Core::Type {
                 : vWidth(0), vHeight(0), vBytesPerPixel(0), vFormat(ImageFormat::FB_RGB888), vData(nullptr){
         };
 
-        Image(int width, int height, int bytesPerPixel, ImageFormat format, std::uint8_t* data)
+        [[maybe_unused]] Image(int width, int height, int bytesPerPixel, ImageFormat format, std::uint8_t* data)
                 : vWidth(width), vHeight(height), vBytesPerPixel(bytesPerPixel), vFormat(format) {
             size_t arraySize = this->vWidth * this->vHeight * this->vBytesPerPixel;
             this->vData = Core::Constants::Settings::uint8_tCreator.getCreator().create(arraySize);
@@ -33,7 +33,7 @@ namespace Apalinea::Core::Type {
         }
 
         Image(Image &&other)
-        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(std::move(other.vData)){
+        noexcept: vWidth(other.vWidth), vHeight(other.vHeight), vBytesPerPixel(other.vBytesPerPixel), vFormat(other.vFormat), vData(other.vData){
             other.vWidth = 0;
             other.vHeight = 0;
             other.vBytesPerPixel = 0;
@@ -72,6 +72,7 @@ namespace Apalinea::Core::Type {
         }
 
         Image& operator=(const Image& other) {
+            if(this == &other) return *this;
             this->vWidth = other.vWidth;
             this->vHeight = other.vHeight;
             this->vBytesPerPixel = other.vBytesPerPixel;
@@ -112,23 +113,23 @@ namespace Apalinea::Core::Type {
             return this->vData;
         }
 
-        void setWidth(int width) {
+        [[maybe_unused]] void setWidth(int width) {
             this->vWidth = width;
         }
 
-        void setHeight(int height) {
+        [[maybe_unused]] void setHeight(int height) {
             this->vHeight = height;
         }
 
-        void setBytesPerPixel(int bytesPerPixel) {
+        [[maybe_unused]] void setBytesPerPixel(int bytesPerPixel) {
             this->vBytesPerPixel = bytesPerPixel;
         }
 
-        void setFormat(ImageFormat format) {
+        [[maybe_unused]] void setFormat(ImageFormat format) {
             this->vFormat = format;
         }
 
-        void initData() {
+        [[maybe_unused]] void initData() {
             if(this->vData != nullptr) {
                 Core::Constants::Settings::uint8_tCreator.getCreator().destroy(vData,Extras::Memory::CreatorArgument::MULTI);
             }

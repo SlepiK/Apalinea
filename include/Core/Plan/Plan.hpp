@@ -26,7 +26,7 @@ namespace Apalinea::Core::Plan {
         virtual ~Plan() = default;
 
         template <typename PipeOperator>
-        Link::PipeLinkPtr<PipeOperator> createPipe() {
+        [[maybe_unused]] Link::PipeLinkPtr<PipeOperator> createPipe() {
             Link::PipeLinkPtr<PipeOperator> pipe = this->createPipeLinkPtr<PipeOperator>();
             Log::LogManager::log(Log::LogLevelCategory::INFORMATION,Log::getFilename(__FILE__),__LINE__,"Creating new PipeLink");
             vLinks.push_back(pipe);
@@ -58,29 +58,29 @@ namespace Apalinea::Core::Plan {
         }
 
         template <typename T1, typename T2>
-        void connect(Link::SourceLinkPtr<T1> source, Link::PipeLinkPtr<T2> target) {
+        [[maybe_unused]]void connect(Link::SourceLinkPtr<T1> source, Link::PipeLinkPtr<T2> target) {
             source->connect(target);
         }
 
         template <typename T1, typename T2>
-        void connect(Link::PipeLinkPtr<T1> source, Link::PipeLinkPtr<T2> target) {
+        [[maybe_unused]] void connect(Link::PipeLinkPtr<T1> source, Link::PipeLinkPtr<T2> target) {
             source->connect(target);
         }
 
         template <typename T1, typename T2>
-        void connect(Link::PipeLinkPtr<T1> source, Link::SinkLinkPtr<T2> target) {
+        [[maybe_unused]] void connect(Link::PipeLinkPtr<T1> source, Link::SinkLinkPtr<T2> target) {
             source->connect(target);
         }
 
         void process() {
-            for(LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                (*iterator)->process();
+            for(auto & vLink : this->vLinks) {
+                vLink->process();
             }
         }
 
-        bool isProcessed() {
-            for(LinkIterator iterator = this->vSinkLinks.begin(); iterator != this->vSinkLinks.end(); ++iterator) {
-                if(!(*iterator)->isProcessed()) {
+        [[maybe_unused]] bool isProcessed() {
+            for(auto & vSinkLink : this->vSinkLinks) {
+                if(!vSinkLink->isProcessed()) {
                     return false;
                 }
             }
@@ -91,7 +91,7 @@ namespace Apalinea::Core::Plan {
             this->executor->joinTasks();
         }
 
-        Core::Executor::IExecutor& getExecutor() {
+        [[maybe_unused]] Core::Executor::IExecutor& getExecutor() {
             if(!executor) {
                 throw std::runtime_error("Executor is not initialized");
             }
@@ -110,8 +110,8 @@ namespace Apalinea::Core::Plan {
 
         void processOrdered() {
             if(vOrderedLinks.empty()) throw std::runtime_error("Need ordered plan to run!");
-            for(LinkIterator iterator = this->vOrderedLinks.begin(); iterator != this->vOrderedLinks.end(); ++iterator) {
-                (*iterator)->process();
+            for(auto & vOrderedLink : this->vOrderedLinks) {
+                vOrderedLink->process();
             }
         }
 
@@ -120,7 +120,7 @@ namespace Apalinea::Core::Plan {
         std::vector<std::shared_ptr<Link::ILink>> vSourceLinks;
         std::vector<std::shared_ptr<Link::ILink>> vPipeLinks;
         std::vector<std::shared_ptr<Link::ILink>> vSinkLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<Link::ILink>>::iterator;
+        using LinkIterator [[maybe_unused]] = typename std::vector<std::shared_ptr<Link::ILink>>::iterator;
         std::shared_ptr<Core::Executor::IExecutor> executor;
         std::vector<std::shared_ptr<Link::ILink>> vOrderedLinks;
 
@@ -154,7 +154,7 @@ namespace Apalinea::Core::Plan {
                     std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<Link::LinkWrapper>>>> connectedLinks = currentLink->getLinks();
                     if (connectedLinks.has_value()) {
                         for (const auto& connectedLink : connectedLinks.value().get()) {
-                            Link::IBaseLink* tmp = static_cast<Link::IBaseLink*>(connectedLink.get());
+                            auto* tmp = static_cast<Link::IBaseLink*>(connectedLink.get());
                             for (auto& vLink : this->vLinks) {
                                 if (vLink->getType() == Link::LinkType::SOURCE)
                                     continue;

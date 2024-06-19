@@ -6,7 +6,7 @@
 #include "Core/Type/Datatype/DtBool.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
-    class SelectPipeOperator
+    class [[maybe_unused]] SelectPipeOperator
             : public Core::Operator::AbstractPipeOperator {
     protected:
         void work(Core::Tuple::Tuple &inputTuple,

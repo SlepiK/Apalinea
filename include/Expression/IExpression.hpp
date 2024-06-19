@@ -18,7 +18,7 @@ namespace Apalinea::Expression {
             throw std::runtime_error("Operation is not direct supported!");
         }
 
-        virtual void remove(IExpression *component) {
+        [[maybe_unused]] virtual void remove(IExpression *component) {
             throw std::runtime_error("Operation is not direct supported!");
         }
 
@@ -35,7 +35,7 @@ namespace Apalinea::Expression {
 
         [[nodiscard]] virtual std::string_view getIdentifier() const = 0;
 
-        virtual void setTuple(Core::Tuple::Tuple& tuple) = 0;
+        virtual void setTuple(Core::Tuple::Tuple& inputTupel) = 0;
 
         void setUsed(bool use) {
             this->used = use;

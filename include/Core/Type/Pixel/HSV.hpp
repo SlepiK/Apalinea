@@ -9,14 +9,13 @@ namespace Apalinea::Core::Type::Pixel {
         HSV() : vH(0.f), vS(0.f), vV(0.f){
         }
 
-        HSV(const float& h, const float& s, const float& v) : vH(h), vS(s), vV(v) {
+        [[maybe_unused]] HSV(const float& h, const float& s, const float& v) : vH(h), vS(s), vV(v) {
         }
 
         HSV(float&& h, float&& s, float&& v) : vH(h), vS(s), vV(v) {
         }
 
-        HSV(const HSV& other) : vH(other.vH), vS(other.vS), vV(other.vV){
-        }
+        HSV(const HSV& other) = default;
 
         HSV(HSV&& other)  noexcept : vH(other.vH), vS(other.vS), vV(other.vV){
         }
@@ -28,12 +27,7 @@ namespace Apalinea::Core::Type::Pixel {
             return *this;
         }
 
-        HSV& operator=(const HSV& other) {
-            this->vH = other.vH;
-            this->vS = other.vS;
-            this->vV = other.vV;
-            return *this;
-        }
+        HSV& operator=(const HSV& other) = default;
 
         bool operator == (const HSV& other) const {
             return ((this->vH == other.vH) && (this->vS == other.vS) && (this->vV == other.vV));
@@ -43,7 +37,7 @@ namespace Apalinea::Core::Type::Pixel {
             return ((this->vH != other.vH) || (this->vS != other.vS) || (this->vV != other.vV));
         }
 
-        void set(float h, float s, float v) {
+        [[maybe_unused]] void set(float h, float s, float v) {
             this->vH = h;
             this->vS = s;
             this->vV = v;
@@ -55,15 +49,15 @@ namespace Apalinea::Core::Type::Pixel {
             this->vV = 0.f;
         }
 
-        [[nodiscard]] bool isEmpty() const {
+        [[maybe_unused]] [[nodiscard]] bool isEmpty() const {
             return ((this->vH == 0.f) && (this->vS == 0.f) && (this->vV == 0.f));
         }
 
-        void setH(float&& h) {
+        [[maybe_unused]] void setH(float&& h) {
             this->vH = std::forward<float>(h);
         }
 
-        void setH(const float& h) {
+        [[maybe_unused]] void setH(const float& h) {
             this->vH = h;
         }
 
@@ -71,11 +65,11 @@ namespace Apalinea::Core::Type::Pixel {
             return this->vH;
         }
 
-        void setS(float&& s) {
+        [[maybe_unused]] void setS(float&& s) {
             this->vS = std::forward<float>(s);
         }
 
-        void setS(const float& s) {
+        [[maybe_unused]] void setS(const float& s) {
             this->vS = s;
         }
 
@@ -83,11 +77,11 @@ namespace Apalinea::Core::Type::Pixel {
             return this->vS;
         }
 
-        void setV(float&& v) {
+        [[maybe_unused]] void setV(float&& v) {
             this->vV = std::forward<float>(v);
         }
 
-        void setV(const float& v) {
+        [[maybe_unused]] void setV(const float& v) {
             this->vV = v;
         }
 

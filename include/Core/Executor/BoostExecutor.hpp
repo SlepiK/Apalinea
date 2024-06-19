@@ -1,5 +1,6 @@
 #ifndef APALINEA_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
 #define APALINEA_CORE_EXECUTOR_BOOSTEXECUTOR_HPP
+#ifdef APALINEA_USE_BOOST
 
 #include <atomic>
 #include <mutex>
@@ -52,4 +53,5 @@ namespace Apalinea::Core::Executor {
     };
 } // Apalinea::Core::Executor
 
+#endif //APALINEA_USE_BOOST
 #endif //APALINEA_CORE_EXECUTOR_BOOSTEXECUTOR_HPP

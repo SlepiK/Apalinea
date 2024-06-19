@@ -31,7 +31,7 @@ namespace Apalinea::Operator::SinkOperator {
         }
 
         template<typename... Args>
-        void printf(const std::string& format, const Args&... args) {
+        [[maybe_unused]] void printf(const std::string& format, const Args&... args) {
             formatString(format, args...);
         }
 

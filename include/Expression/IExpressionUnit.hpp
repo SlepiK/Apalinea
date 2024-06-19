@@ -2,7 +2,7 @@
 #define APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP
 
 namespace Apalinea::Expression {
-    class IExpressionUnit {
+    class [[maybe_unused]] IExpressionUnit {
     public:
         virtual ~IExpressionUnit() = default;
     };

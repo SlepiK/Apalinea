@@ -29,7 +29,7 @@ namespace Apalinea::Core::Link {
 
         ~SourceLink() override = default;
 
-        SourceOperator& getOperator() {
+        [[maybe_unused]] SourceOperator& getOperator() {
             return this->vOperator;
         }
 
@@ -62,7 +62,7 @@ namespace Apalinea::Core::Link {
     private:
         SourceOperator vOperator;
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
+        using LinkIterator [[maybe_unused]] = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
 
     protected:
         void exec() {
@@ -75,7 +75,7 @@ namespace Apalinea::Core::Link {
                 this->vOperator.process(outputTuple);
                 this->vState = this->vOperator.getOperatorProcessState();
 
-                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                     if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
                         (*iterator)->setInputTuple(outputTuple);
                         (*iterator)->setOperatorProcessState(this->vState);
@@ -95,7 +95,7 @@ namespace Apalinea::Core::Link {
     template<typename SourceOperator>
     using SourceLinkPtr = std::shared_ptr<SourceLink<SourceOperator>>;
     template<typename SourceOperator>
-    using SourceLinkUPtr = std::unique_ptr<SourceLink<SourceOperator>>;
+    using SourceLinkUPtr [[maybe_unused]] = std::unique_ptr<SourceLink<SourceOperator>>;
 } // Apalinea::Core::Link
 
 #endif //APALINEA_CORE_LINK_SOURCELINK_HPP

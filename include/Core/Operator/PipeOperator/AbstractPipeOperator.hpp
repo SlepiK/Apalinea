@@ -30,7 +30,7 @@ namespace Apalinea::Core::Operator {
             this->vProcessed = true;
         }
 
-        void setExpression(Expression::IExpression* exp) {
+        [[maybe_unused]] void setExpression(Expression::IExpression* exp) {
             if(!exp->isUsed()) {
                 this->expression = exp;
                 exp->setUsed(true);
@@ -39,7 +39,7 @@ namespace Apalinea::Core::Operator {
             }
         }
 
-        Expression::IExpression* getExpression() {
+        [[maybe_unused]] Expression::IExpression* getExpression() {
             return this->expression;
         }
 

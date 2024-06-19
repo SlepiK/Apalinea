@@ -9,10 +9,10 @@
 #include "Core/Type/Datatype/DtInt.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
-    class CropPipeOperator
+    class [[maybe_unused]] CropPipeOperator
             : public Core::Operator::AbstractPipeOperator {
     public:
-        void setSize(int x, int width, int y, int height) {
+        [[maybe_unused]] void setSize(int x, int width, int y, int height) {
             this->vX = x;
             this->vWidth = width;
             this->vY = y;

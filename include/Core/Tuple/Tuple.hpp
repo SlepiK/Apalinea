@@ -28,10 +28,7 @@ namespace Apalinea::Core::Tuple {
             return *this;
         }
 
-        Tuple& operator=(const Tuple& other) {
-            vItems = other.vItems;
-            return *this;
-        }
+        Tuple& operator=(const Tuple& other) = default;
 
         void moveItems(Tuple &&other) {
             this->vItems.merge(other.vItems);
@@ -46,7 +43,7 @@ namespace Apalinea::Core::Tuple {
             this->vItems.erase(name);
         }
 
-        void addItem(const ItemName& name, Core::Tuple::Entry&& item) {
+        [[maybe_unused]] void addItem(const ItemName& name, Core::Tuple::Entry&& item) {
             this->vItems.emplace(name,std::move(item));
         }
 
@@ -54,22 +51,22 @@ namespace Apalinea::Core::Tuple {
             this->vItems.emplace(std::move(name),std::move(item));
         }
 
-        void updateItem(const ItemName& name, Core::Tuple::Entry&& item) {
+        [[maybe_unused]] void updateItem(const ItemName& name, Core::Tuple::Entry&& item) {
             this->vItems.insert_or_assign(name,std::move(item));
         }
 
-        void updateItem(ItemName&& name, Core::Tuple::Entry&& item) {
+        [[maybe_unused]] void updateItem(ItemName&& name, Core::Tuple::Entry&& item) {
             this->vItems.insert_or_assign(std::move(name),std::move(item));
         }
 
-        void updateItemName(const ItemName& oldName, const ItemName& newName) {
+        [[maybe_unused]] void updateItemName(const ItemName& oldName, const ItemName& newName) {
             if(this->vItems.find(oldName) != this->vItems.end() && this->vItems.find(newName) == this->vItems.end()/*this->vItems.contains(oldName) && !this->vItems.contains(newName)*/){
                 this->vItems.insert({newName,std::move(this->vItems.at(oldName))});
                 this->vItems.erase(oldName);
             }
         }
 
-        void updateItemName(ItemName&& oldName, ItemName&& newName) {
+        [[maybe_unused]] void updateItemName(ItemName&& oldName, ItemName&& newName) {
             if(this->vItems.find(oldName) != this->vItems.end() && this->vItems.find(newName) == this->vItems.end()/*this->vItems.contains(oldName) && !this->vItems.contains(newName)*/){
                 this->vItems.insert({std::move(newName),std::move(this->vItems.at(oldName))});
                 this->vItems.erase(oldName);

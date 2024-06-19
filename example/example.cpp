@@ -11,19 +11,19 @@
 #include "Expression/Calculation/CalculationExpression.hpp"
 #include "Expression/ToExpression/ToDtFloatExpression.hpp"
 
-int main(int argc, char *argv[])
+int main()
 {
     Apalinea::Core::Log::LogManager::addLog(std::make_unique<Apalinea::Core::Log::ConsoleLog>());
-    Apalinea::Expression::ToDtStringExpression* tse = new Apalinea::Expression::ToDtStringExpression();
-    Apalinea::Expression::DataType::DtInt8Expression *edt = new Apalinea::Expression::DataType::DtInt8Expression("DemoString");
-    Apalinea::Expression::DataType::DtInt8Expression *edtBase = new Apalinea::Expression::DataType::DtInt8Expression(2);
-    Apalinea::Expression::DataType::DtInt8Expression *edtBase2 = new Apalinea::Expression::DataType::DtInt8Expression(4);
-    Apalinea::Expression::Calculation::CalculationExpression *calc = new Apalinea::Expression::Calculation::CalculationExpression();
-    Apalinea::Expression::ToDtFloatExpression* tfe = new Apalinea::Expression::ToDtFloatExpression();
+    auto* tse = new Apalinea::Expression::ToDtStringExpression();
+    auto *edt = new Apalinea::Expression::DataType::DtInt8Expression("DemoString");
+    auto *edtBase = new Apalinea::Expression::DataType::DtInt8Expression(2);
+    auto *edtBase2 = new Apalinea::Expression::DataType::DtInt8Expression(4);
+    auto *calc = new Apalinea::Expression::Calculation::CalculationExpression();
+    auto* tfe = new Apalinea::Expression::ToDtFloatExpression();
     calc->setCalculationType(Apalinea::Expression::Calculation::CalculationTypes::DIVISION);
     calc->add(edtBase);
     calc->add(edtBase2);
-    Apalinea::Expression::Compare::CompareExpression *comp = new Apalinea::Expression::Compare::CompareExpression();
+    auto *comp = new Apalinea::Expression::Compare::CompareExpression();
     comp->add(edt);
     comp->add(edtBase);
     comp->setCompareType(Apalinea::Expression::Compare::CompareTypes::EQUAL);
@@ -31,15 +31,12 @@ int main(int argc, char *argv[])
     tse->add(tfe);
 
     Apalinea::Core::Plan::Plan plan(std::make_shared<Apalinea::Core::Executor::STLExecutor>(3));
-    auto sourcelink = plan.createSource<Apalinea::Operator::SourceOperator::StringDemoSourceOperator>();
-    auto sinklink = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
-    sinklink.get()->getOperator().setExpression(tse);
-    auto sinklink2 = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
-    plan.connect(sourcelink,sinklink);
-    plan.connect(sourcelink,sinklink2);
-    auto sourcelink2 = plan.createSource<Apalinea::Operator::SourceOperator::StringDemoSourceOperator>();
-    auto sinklink3 = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
-    plan.connect(sourcelink2,sinklink3);
+    auto demoSource = plan.createSource<Apalinea::Operator::SourceOperator::StringDemoSourceOperator>();
+    auto demoCoutSink = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
+    demoCoutSink.get()->getOperator().setExpression(tse);
+    auto DemoCoutSinkNOP = plan.createSink<Apalinea::Operator::SinkOperator::CoutSinkOperator>();
+    plan.connect(demoSource, demoCoutSink);
+    plan.connect(demoSource, DemoCoutSinkNOP);
     plan.order();
     plan.processOrdered();
     plan.join();

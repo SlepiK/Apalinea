@@ -94,7 +94,7 @@ namespace Apalinea::Expression::Compare {
         }
 
         void setTuple(Core::Tuple::Tuple& tuple) override {
-            if(first == nullptr && second == nullptr) {
+            if(first == nullptr || second == nullptr) {
                 for (IExpression *exp: vSubExpressions) {
                     exp->setTuple(tuple);
                 }
@@ -116,7 +116,7 @@ namespace Apalinea::Expression::Compare {
             this->compareTypes = type;
         }
 
-        CompareTypes getCompareType() {
+        [[maybe_unused]] CompareTypes getCompareType() {
             return this->compareTypes;
         }
 

@@ -23,7 +23,7 @@ namespace Apalinea::Extras::Vision {
             this->vStarted = true;
         };
 
-        virtual void stop() final {
+        [[maybe_unused]] virtual void stop() final {
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }
@@ -33,7 +33,7 @@ namespace Apalinea::Extras::Vision {
             this->vStarted = false;
         }
 
-        [[nodiscard]] virtual bool isStarted() const final{
+        [[maybe_unused]] [[nodiscard]] virtual bool isStarted() const final{
             return this->vStarted;
         }
 

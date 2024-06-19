@@ -7,16 +7,16 @@
 #include "Core/Type/Datatype/DtBool.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
-    class StatePipeOperator
+    class [[maybe_unused]] StatePipeOperator
             : public Core::Operator::AbstractPipeOperator {
     public:
-        void setState(bool&& state) {
+        [[maybe_unused]] void setState(bool&& state) {
             if(!this->vReady) {
                 this->vState = state;
             }
         }
 
-        [[nodiscard]] const bool& getState() const {
+        [[maybe_unused]] [[nodiscard]] const bool& getState() const {
             return this->vState;
         }
 

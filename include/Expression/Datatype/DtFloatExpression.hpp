@@ -6,14 +6,14 @@
 #include "Expression/IExpression.hpp"
 
 namespace Apalinea::Expression::DataType {
-    class DtFloatExpression : public IExpression {
+    class [[maybe_unused]] DtFloatExpression : public IExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtFloat::IDENTIFIER;
 
-        explicit DtFloatExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
+        [[maybe_unused]] explicit DtFloatExpression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
 
-        explicit DtFloatExpression(float&& value) : IExpression({IDENTIFIER}), load(false), data(std::move(value)) {
+        [[maybe_unused]] explicit DtFloatExpression(float&& value) : IExpression({IDENTIFIER}), load(false), data(value) {
         }
 
         ~DtFloatExpression() override = default;
@@ -22,9 +22,9 @@ namespace Apalinea::Expression::DataType {
             return false;
         }
 
-        void setTuple(Core::Tuple::Tuple& tuple) override {
+        void setTuple(Core::Tuple::Tuple& inputTupel) override {
             if(load) {
-                this->tuple = tuple;
+                this->tuple = inputTupel;
             }
         }
 

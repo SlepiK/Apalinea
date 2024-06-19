@@ -10,13 +10,13 @@ namespace Apalinea::Core::Operator {
     public:
         virtual ~IOperator() = default;
 
-        [[nodiscard]] virtual Core::Operator::OperatorType getOperatorType() const = 0;
+        [[maybe_unused]] [[nodiscard]] virtual Core::Operator::OperatorType getOperatorType() const = 0;
 
         [[nodiscard]] virtual Core::Operator::OperatorProcessState getOperatorProcessState() const = 0;
 
-        [[nodiscard]] virtual bool isProcessing() const = 0;
+        [[maybe_unused]] [[nodiscard]] virtual bool isProcessing() const = 0;
 
-        [[nodiscard]] virtual bool isProcessed() const = 0;
+        [[maybe_unused]] [[nodiscard]] virtual bool isProcessed() const = 0;
 
         [[nodiscard]] virtual Core::Operator::OperatorMode getOperatorMode() const = 0;
     };

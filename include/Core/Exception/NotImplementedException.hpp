@@ -6,7 +6,7 @@
 namespace Apalinea::Core::Exception {
     class NotImplementedException : public std::logic_error {
     public:
-        explicit NotImplementedException(const std::string& err) : std::logic_error(err) {}
+        [[maybe_unused]] explicit NotImplementedException(const std::string& err) : std::logic_error(err) {}
         explicit NotImplementedException(const char* err) : std::logic_error(err) {}
     };
 } // Apalinea::Core::Exception

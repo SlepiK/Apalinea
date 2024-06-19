@@ -32,7 +32,7 @@ namespace Apalinea::Core::Link {
 
         ~PipeLink() override = default;
 
-        PipeOperator &getOperator() {
+        [[maybe_unused]] PipeOperator &getOperator() {
             return this->vOperator;
         }
 
@@ -84,7 +84,7 @@ namespace Apalinea::Core::Link {
 
         void setOperatorProcessState(Core::Operator::OperatorProcessState state) override {
             this->vState = state;
-            for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+            for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                 (*iterator)->setOperatorProcessState(state);
             }
         }
@@ -101,7 +101,7 @@ namespace Apalinea::Core::Link {
         PipeOperator vOperator;
         Core::Tuple::Tuple inputTuple;
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;
-        using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
+        using LinkIterator [[maybe_unused]] = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
 
     protected:
         void exec() {
@@ -115,7 +115,7 @@ namespace Apalinea::Core::Link {
                 this->inputTuple.clear();
                 this->vState = this->vOperator.getOperatorProcessState();
 
-                for (LinkIterator iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
                     if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
                         (*iterator)->setInputTuple(outputTuple);
                     } else {
@@ -135,7 +135,7 @@ namespace Apalinea::Core::Link {
     template<typename PipeOperator>
     using PipeLinkPtr = std::shared_ptr<PipeLink<PipeOperator>>;
     template<typename PipeOperator>
-    using PipeLinkUPtr = std::unique_ptr<PipeLink<PipeOperator>>;
+    using PipeLinkUPtr [[maybe_unused]] = std::unique_ptr<PipeLink<PipeOperator>>;
 } // Apalinea::Core::Link
 
 #endif //APALINEA_CORE_LINK_PIPELINK_HPP

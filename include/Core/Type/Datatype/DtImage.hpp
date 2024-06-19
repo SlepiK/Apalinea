@@ -1,6 +1,8 @@
 #ifndef APALINEA_CORE_TYPE_DATATYPE_DTIMAGE_HPP
 #define APALINEA_CORE_TYPE_DATATYPE_DTIMAGE_HPP
 
+#include <utility>
+
 #include "Core/Type/Datatype/IDt.hpp"
 #include "Core/Exception/NotImplementedException.hpp"
 #include "Core/Type/Image/Image.hpp"
@@ -13,7 +15,7 @@ namespace Apalinea::Core::Type::Datatype {
         DtImage() : IDt(IDENTIFIER,{IDENTIFIER}) {
         }
 
-        explicit DtImage(Image data) : IDt({IDENTIFIER}), data(data) {
+        explicit DtImage(Image data) : IDt({IDENTIFIER}), data(std::move(data)) {
         }
 
         [[nodiscard]] DtRegistry::DtRegistryIdentifier getIdentifier() const override {

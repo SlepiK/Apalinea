@@ -44,11 +44,11 @@ namespace Apalinea::Core::Log {
             return os;
         }
 
-        [[nodiscard]] std::string_view print() const {
+        [[maybe_unused]] [[nodiscard]] std::string_view print() const {
             return toString(vLogLevelCategory);
         }
 
-        LogLevelCategory getLogLevelCategory() {
+        [[maybe_unused]] LogLevelCategory getLogLevelCategory() {
             return vLogLevelCategory;
         }
 

@@ -12,22 +12,22 @@
 #include "Extras/Converter/Types/Pixel/RGBtoHSV.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
-    class DetectorPipeOperator
+    class [[maybe_unused]] DetectorPipeOperator
             : public Core::Operator::AbstractPipeOperator {
     public:
-        void setLowerBorder(Core::Type::Pixel::HSV&& hsv) {
+        [[maybe_unused]] void setLowerBorder(Core::Type::Pixel::HSV&& hsv) {
             this->vLowerBorder = hsv;
         }
 
-        void setHigherBorder(Core::Type::Pixel::HSV&& hsv) {
+        [[maybe_unused]] void setHigherBorder(Core::Type::Pixel::HSV&& hsv) {
             this->vHigherBorder = hsv;
         }
 
-        const Core::Type::Pixel::HSV& getLowerBorder() {
+        [[maybe_unused]] const Core::Type::Pixel::HSV& getLowerBorder() {
             return this->vLowerBorder;
         }
 
-        const Core::Type::Pixel::HSV& getHigherBorder() {
+        [[maybe_unused]] const Core::Type::Pixel::HSV& getHigherBorder() {
             return this->vHigherBorder;
         }
 

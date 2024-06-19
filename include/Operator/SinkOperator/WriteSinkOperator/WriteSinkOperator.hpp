@@ -34,7 +34,7 @@ namespace Apalinea::Operator::SinkOperator {
             return Core::Operator::OperatorMode::DIRECT;
         }
 
-        Writer& getWriter() {
+        [[maybe_unused]] Writer& getWriter() {
             return this->vWriter;
         }
 

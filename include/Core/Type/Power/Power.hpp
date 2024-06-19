@@ -4,18 +4,18 @@
 #include <utility>
 
 namespace Apalinea::Core::Type {
-    class Power {
+    class [[maybe_unused]] Power {
     public:
 
         explicit Power()
             : watt(0) {
         }
 
-        explicit Power(float watt)
+        [[maybe_unused]] explicit Power(float watt)
             : watt(watt) {
         }
 
-        explicit Power(float&& watt)
+        [[maybe_unused]] explicit Power(float&& watt)
             : watt(watt){
         }
 
@@ -34,10 +34,7 @@ namespace Apalinea::Core::Type {
             return *this;
         }
 
-        Power& operator=(const Power& other) {
-            this->watt = other.watt;
-            return *this;
-        }
+        Power& operator=(const Power& other) = default;
 
         Power& operator=(float&& other) noexcept {
             this->watt = other;
@@ -49,7 +46,7 @@ namespace Apalinea::Core::Type {
             return *this;
         }
 
-        [[nodiscard]] float getPower() const {
+        [[maybe_unused]] [[nodiscard]] float getPower() const {
             return this->watt;
         }
 

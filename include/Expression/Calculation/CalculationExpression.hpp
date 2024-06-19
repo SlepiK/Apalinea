@@ -23,7 +23,9 @@ namespace Apalinea::Expression::Calculation {
         MULTIPLICATION,
         DIVISION,
         MODULO,
-        POWER
+        POWER,
+
+        NOT_DEFINED
     };
 
     class CalculationExpression : public AbstractExpression {
@@ -34,7 +36,7 @@ namespace Apalinea::Expression::Calculation {
                                                       Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
                                                       Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
                                                       Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
-                                                      Core::Type::Datatype::DtSizeT::IDENTIFIER}) {
+                                                      Core::Type::Datatype::DtSizeT::IDENTIFIER}), data(nullptr), first(nullptr), second(nullptr), calculationType(CalculationTypes::NOT_DEFINED) {
         }
 
         void execute() override {
@@ -86,7 +88,7 @@ namespace Apalinea::Expression::Calculation {
         }
 
         void setTuple(Core::Tuple::Tuple& tuple) override {
-            if(first == nullptr && second == nullptr) {
+            if(first == nullptr || second == nullptr) {
                 for (IExpression *exp: vSubExpressions) {
                     exp->setTuple(tuple);
                 }
@@ -108,7 +110,7 @@ namespace Apalinea::Expression::Calculation {
             this->calculationType = type;
         }
 
-        CalculationTypes getCalculationType() {
+        [[maybe_unused]] CalculationTypes getCalculationType() {
             return this->calculationType;
         }
 

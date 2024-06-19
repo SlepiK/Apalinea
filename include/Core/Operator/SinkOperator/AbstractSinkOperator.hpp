@@ -39,7 +39,7 @@ namespace Apalinea::Core::Operator {
             }
         }
 
-        Expression::IExpression* getExpression() {
+        [[maybe_unused]] Expression::IExpression* getExpression() {
             return this->expression;
         }
 

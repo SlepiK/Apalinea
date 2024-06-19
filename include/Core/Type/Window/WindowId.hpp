@@ -5,18 +5,18 @@
 #include <cstddef>
 
 namespace Apalinea::Core::Type {
-    class WindowId {
+    class [[maybe_unused]] WindowId {
     public:
 
         explicit WindowId()
                 : id(0) {
         }
 
-        explicit WindowId(std::size_t id)
+        [[maybe_unused]] explicit WindowId(std::size_t id)
                 : id(id) {
         }
 
-        explicit WindowId(std::size_t&& id)
+        [[maybe_unused]] explicit WindowId(std::size_t&& id)
                 : id(id){
         }
 
@@ -45,10 +45,7 @@ namespace Apalinea::Core::Type {
             return *this;
         }
 
-        WindowId& operator=(const WindowId& other) {
-            this->id = other.id;
-            return *this;
-        }
+        WindowId& operator=(const WindowId& other) = default;
 
         WindowId& operator=(std::size_t&& other) noexcept {
             this->id = other;
@@ -60,7 +57,7 @@ namespace Apalinea::Core::Type {
             return *this;
         }
 
-        [[nodiscard]] std::size_t getWindowId() const {
+        [[maybe_unused]] [[nodiscard]] std::size_t getWindowId() const {
             return this->id;
         }
 

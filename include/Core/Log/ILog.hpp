@@ -9,6 +9,7 @@ namespace Apalinea::Core::Log {
     class ILog {
     public:
         ILog() = default;
+
         virtual ~ILog() = default;
 
         virtual void open() = 0;

@@ -103,7 +103,7 @@ namespace Apalinea::Core::Link {
     template<typename SinkOperator>
     using SinkLinkPtr = std::shared_ptr<SinkLink<SinkOperator>>;
     template<typename SinkOperator>
-    using SinkLinkUPtr = std::unique_ptr<SinkLink<SinkOperator>>;
+    using SinkLinkUPtr [[maybe_unused]] = std::unique_ptr<SinkLink<SinkOperator>>;
 } // Apalinea::Core::Link
 
 #endif //APALINEA_CORE_LINK_SINKLINK_HPP

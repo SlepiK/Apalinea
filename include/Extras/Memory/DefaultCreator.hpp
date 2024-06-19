@@ -23,7 +23,7 @@ namespace Apalinea::Extras::Memory {
             throw std::bad_alloc();
         }
 
-        void destroy(Type* ptr, CreatorArgument arg = CreatorArgument::SINGLE) override {
+        void destroy(Type* ptr, CreatorArgument arg) override {
             if(arg == CreatorArgument::SINGLE) {
                 delete ptr;
             } else {

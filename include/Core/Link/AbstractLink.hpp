@@ -13,7 +13,8 @@ namespace Apalinea::Core::Link {
     public:
         explicit AbstractLink(std::shared_ptr<Core::Executor::IExecutor> executor) :
             vProcessed(false),
-            vProcessing(false) ,
+            vProcessing(false),
+            vNewDataAvailable(false),
             vState(Operator::OperatorProcessState::CONTINUE),
             executor(std::move(executor)) {
         }

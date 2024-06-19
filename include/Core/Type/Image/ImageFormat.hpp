@@ -4,10 +4,10 @@
 namespace Apalinea::Core::Type {
     enum class ImageFormat : int {
         FB_RGB888 = 0,
-        FB_BGR888 = 1,
-        FB_RGB565 = 2,
-        FB_BGR565 = 3,
-        FB_GRAY = 4
+        FB_BGR888 [[maybe_unused]] = 1,
+        FB_RGB565 [[maybe_unused]] = 2,
+        FB_BGR565 [[maybe_unused]] = 3,
+        FB_GRAY [[maybe_unused]] = 4
     };
 } // Apalinea::Core::Type
 

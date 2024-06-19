@@ -22,7 +22,7 @@ namespace Apalinea::Extras::Memory {
             return *this->vCreator;
         }
 
-        void setCreator(std::unique_ptr<ICreator<CreatorType>>&& creator) {
+        [[maybe_unused]] void setCreator(std::unique_ptr<ICreator<CreatorType>>&& creator) {
             this->vCreator = std::move(creator);
         }
 

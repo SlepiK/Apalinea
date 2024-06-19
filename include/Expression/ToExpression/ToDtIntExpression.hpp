@@ -17,7 +17,7 @@
 #include "Expression/AbstractExpression.hpp"
 
 namespace Apalinea::Expression {
-    class ToDtIntExpression : public AbstractExpression {
+    class [[maybe_unused]] ToDtIntExpression : public AbstractExpression {
     public:
         static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtInt::IDENTIFIER;
 

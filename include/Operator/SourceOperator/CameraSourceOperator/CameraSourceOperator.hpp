@@ -9,7 +9,7 @@
 
 namespace Apalinea::Operator::SourceOperator {
     template<typename Camera>
-    class CameraSourceOperator
+    class [[maybe_unused]] CameraSourceOperator
             : public Core::Operator::AbstractSourceOperator {
         static_assert(Trait::IsBasedOnAbstractCamera<Camera>::value,"Camera needs to be derived from AbstractCamera!");
     public:
@@ -18,21 +18,21 @@ namespace Apalinea::Operator::SourceOperator {
         CameraSourceOperator() : vCamera() {
         }
 
-        ~CameraSourceOperator() = default;
+        ~CameraSourceOperator() override = default;
 
-        const Camera& getCamera() const{
+        [[maybe_unused]] const Camera& getCamera() const{
             return this->vCamera;
         }
 
-        void setCameraConfig(CameraConfig& config) {
+        [[maybe_unused]] void setCameraConfig(CameraConfig& config) {
             this->vCamera.setConfig(config);
         }
 
-        void setCameraConfig(CameraConfig&& config) {
+        [[maybe_unused]] void setCameraConfig(CameraConfig&& config) {
             this->vCamera.setConfig(config);
         }
 
-        const CameraConfig& getCameraConfig() const {
+        [[maybe_unused]] const CameraConfig& getCameraConfig() const {
             this->vCamera.getConfig();
         }
 

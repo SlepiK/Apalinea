@@ -13,7 +13,7 @@ namespace Apalinea::Core::Link {
 
         virtual void process() = 0;
 
-        [[nodiscard]] virtual bool isProcessing() const = 0;
+        [[maybe_unused]] [[nodiscard]] virtual bool isProcessing() const = 0;
 
         [[nodiscard]] virtual bool isProcessed() const = 0;
 

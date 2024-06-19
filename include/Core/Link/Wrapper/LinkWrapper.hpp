@@ -12,7 +12,7 @@ namespace Apalinea::Core::Link {
 
         virtual void setInputTuple(Core::Tuple::Tuple tuple) = 0;
 
-        virtual void setInputTupleR(Core::Tuple::Tuple& tuple) = 0;
+        [[maybe_unused]] virtual void setInputTupleR(Core::Tuple::Tuple& tuple) = 0;
 
         virtual void setOperatorProcessState(Core::Operator::OperatorProcessState state) = 0;
     };
