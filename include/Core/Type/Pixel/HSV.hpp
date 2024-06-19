@@ -1,13 +1,9 @@
-//
-// Created by Slepik on 30.01.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_TYPES_PIXEL_HSV_HPP
-#define ENERGYLEAF_STREAM_V1_TYPES_PIXEL_HSV_HPP
+#ifndef APALINEA_CORE_TYPE_PIXEL_HSV_HPP
+#define APALINEA_CORE_TYPE_PIXEL_HSV_HPP
 
 #include <utility>
 
-namespace Apalinea::Core::Types::Pixel {
+namespace Apalinea::Core::Type::Pixel {
     class HSV {
     public:
         HSV() : vH(0.f), vS(0.f), vV(0.f){
@@ -98,11 +94,12 @@ namespace Apalinea::Core::Types::Pixel {
         [[nodiscard]] float getV() const {
             return this->vV;
         }
+
     private:
         float vH;
         float vS;
         float vV;
     };
-}
+} // Apalinea::Core::Type::Pixel
 
-#endif //ENERGYLEAF_STREAM_V1_TYPES_PIXEL_HSV_HPP
+#endif //APALINEA_CORE_TYPE_PIXEL_HSV_HPP

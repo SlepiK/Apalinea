@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 19.02.24.
-//
-
-#ifndef STREAM_V1_EXPRESSION_IEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_IEXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_IEXPRESSION_HPP
+#define APALINEA_EXPRESSION_IEXPRESSION_HPP
 
 #include <stdexcept>
 #include "Core/Tuple/Tuple.hpp"
@@ -31,11 +27,11 @@ namespace Apalinea::Expression {
         virtual void execute() = 0;
 
         [[nodiscard]] bool isDatatypeAllowed(std::string_view datatype) const {
-            if(datatype == Core::Types::Datatype::UNDEFINED) return true;
+            if(datatype == Core::Type::Datatype::UNDEFINED) return true;
             return this->datatypes.find(datatype) != this->datatypes.end();
         }
 
-        [[nodiscard]] virtual const Core::Types::Datatype::IDt& getData() const = 0;
+        [[nodiscard]] virtual const Core::Type::Datatype::IDt& getData() const = 0;
 
         [[nodiscard]] virtual std::string_view getIdentifier() const = 0;
 
@@ -48,7 +44,7 @@ namespace Apalinea::Expression {
         [[nodiscard]] bool isUsed() const {
             return this->used;
         }
-    protected:
+
     private:
         bool used;
         const std::unordered_set<std::string_view> datatypes;
@@ -62,6 +58,6 @@ namespace Apalinea::Expression {
             throw std::runtime_error("Not allowed!");
         }
     }
-}
+} // Apalinea::Expression
 
-#endif //STREAM_V1_EXPRESSION_IEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_IEXPRESSION_HPP

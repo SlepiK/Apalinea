@@ -1,15 +1,10 @@
-//
-// Created by SlepiK on 27.01.2024.
-//
-
-#ifndef STREAM_V1_OPERATOR_SINKOPERATOR_HPP
-#define STREAM_V1_OPERATOR_SINKOPERATOR_HPP
+#ifndef APALINEA_CORE_OPERATOR_SINKOPERATOR_HPP
+#define APALINEA_CORE_OPERATOR_SINKOPERATOR_HPP
 
 #include "Core/Operator/AbstractOperator.hpp"
 #include "Expression/IExpression.hpp"
 
 namespace Apalinea::Core::Operator {
-
     class AbstractSinkOperator : public AbstractOperator {
     public:
         AbstractSinkOperator() = default;
@@ -48,12 +43,11 @@ namespace Apalinea::Core::Operator {
             return this->expression;
         }
 
-    private:
     protected:
         Expression::IExpression* expression{nullptr};
+
         virtual void work(Core::Tuple::Tuple& inputTuple) = 0;
     };
+} // Apalinea::Core::Operator
 
-} // Stream::V1::Operator
-
-#endif //STREAM_V1_OPERATOR_SINKOPERATOR_HPP
+#endif //APALINEA_CORE_OPERATOR_SINKOPERATOR_HPP

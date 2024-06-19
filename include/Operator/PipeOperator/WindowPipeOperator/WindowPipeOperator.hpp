@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 30.01.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
+#define APALINEA_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
 
 #include <cstddef>
 #include "Core/Operator/PipeOperator/AbstractPipeOperator.hpp"
@@ -24,10 +20,12 @@ namespace Apalinea::Operator::PipeOperator {
         const std::size_t& getCurrentSize() {
             return this->vWindowCurrent;
         }
+
     private:
         std::size_t vWindowCurrent = 0;
         std::size_t vWindowSize = 1;
         std::size_t vWindowSizeActual = 0;
+
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple &outputTuple) override {
@@ -38,6 +36,6 @@ namespace Apalinea::Operator::PipeOperator {
             }
         }
     };
-}
+} // Apalinea::Operator::PipeOperator
 
-#endif //STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP
+#endif //APALINEA_OPERATOR_PIPEOPERATOR_WINDOWPIPEOPERATOR_HPP

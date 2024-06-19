@@ -1,15 +1,11 @@
-//
-// Created by SlepiK on 15.03.2024.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_DTREGISTRY_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTREGISTRY_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_DTREGISTRY_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_DTREGISTRY_HPP
 
 #include <unordered_map>
 #include <string_view>
 #include <stdexcept>
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     class DtRegistry {
     public:
         using DtRegistryIndex = unsigned int;
@@ -48,6 +44,7 @@ namespace Apalinea::Core::Types::Datatype {
         static bool isRegistered(DtRegistryIdentifier identifier) {
             return dtMap.find(identifier) != dtMap.end();
         }
+
     private:
         static std::unordered_map<DtRegistryIdentifier, DtRegistryIndex> dtMap;
         static DtRegistryIndex dtCurrentIndex;
@@ -55,7 +52,6 @@ namespace Apalinea::Core::Types::Datatype {
 
     //Special identifier, when a type cant be set directly and will be set during runtime!
     static constexpr DtRegistry::DtRegistryIdentifier UNDEFINED{"UNDEFINED"};
+} // Apalinea::Core::Type::Datatype
 
-}
-
-#endif //STREAM_V1_TYPES_DATATYPE_DTREGISTRY_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_DTREGISTRY_HPP

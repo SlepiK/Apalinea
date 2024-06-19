@@ -1,15 +1,11 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
-
-#ifndef STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
-#define STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
+#ifndef APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP
+#define APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP
 
 namespace Apalinea::Expression {
     class IExpressionUnit {
     public:
         virtual ~IExpressionUnit() = default;
     };
-}
+} // Apalinea::Expression
 
-#endif //STREAM_V1_EXPRESSION_IEXPRESSIONUNIT_HPP
+#endif //APALINEA_EXPRESSION_IEXPRESSIONUNIT_HPP

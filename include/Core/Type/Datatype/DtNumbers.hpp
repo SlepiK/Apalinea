@@ -1,9 +1,5 @@
-//
-// Created by Simon Stahmer on 24.03.24.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_DTNUMBERS_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTNUMBERS_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_DTNUMBERS_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_DTNUMBERS_HPP
 
 #include "Core/Type/Datatype/DtRegistry.hpp"
 #include "Core/Type/Datatype/DtInt.hpp"
@@ -20,7 +16,7 @@
 #include "Core/Type/Datatype/DtFloat.hpp"
 #include "Core/Type/Datatype/DtDouble.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     class Numbers {
     public:
         static const std::unordered_set<DtRegistry::DtRegistryIdentifier>& getBaseNumberDatatypes() {
@@ -60,7 +56,6 @@ namespace Apalinea::Core::Types::Datatype {
 
     std::unordered_set<DtRegistry::DtRegistryIdentifier> Numbers::sintegernumbers{DtInt::IDENTIFIER,DtInt8::IDENTIFIER,DtInt16::IDENTIFIER,
                                                                                  DtInt32::IDENTIFIER, DtInt64::IDENTIFIER};
+} // Apalinea::Core::Type::Datatype
 
-}
-
-#endif //STREAM_V1_TYPES_DATATYPE_DTNUMBERS_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_DTNUMBERS_HPP

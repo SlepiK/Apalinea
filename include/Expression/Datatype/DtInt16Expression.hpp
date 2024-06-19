@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
-
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTINT16EXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTINT16EXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_DATATYPE_DTINT16EXPRESSION_HPP
+#define APALINEA_EXPRESSION_DATATYPE_DTINT16EXPRESSION_HPP
 
 #include "Core/Tuple/Tuple.hpp"
 #include "Core/Type/Datatype/DtInt16.hpp"
@@ -12,7 +8,7 @@
 namespace Apalinea::Expression::DataType {
     class DtInt16Expression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::DtInt16::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtInt16::IDENTIFIER;
 
         explicit DtInt16Expression(std::string&& entry) : IExpression({IDENTIFIER}), entry(std::move(entry)), load(true) {
         }
@@ -32,7 +28,7 @@ namespace Apalinea::Expression::DataType {
             }
         }
 
-        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -43,7 +39,7 @@ namespace Apalinea::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Core::Types::Datatype::DtInt16>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Type::Datatype::DtInt16>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -53,12 +49,13 @@ namespace Apalinea::Expression::DataType {
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
+
     private:
         Core::Tuple::Tuple tuple;
         std::string entry;
-        Core::Types::Datatype::DtInt16 data;
+        Core::Type::Datatype::DtInt16 data;
         bool load;
     };
-}
+} // Apalinea::Expression::DataType
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTINT16EXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_DATATYPE_DTINT16EXPRESSION_HPP

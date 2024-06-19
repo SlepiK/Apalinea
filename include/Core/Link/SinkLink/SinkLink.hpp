@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 28.01.24.
-//
-
-#ifndef STREAM_V1_LINK_SINKLINK_HPP
-#define STREAM_V1_LINK_SINKLINK_HPP
+#ifndef APALINEA_CORE_LINK_SINKLINK_HPP
+#define APALINEA_CORE_LINK_SINKLINK_HPP
 
 #include <utility>
 #include <memory>
@@ -11,12 +7,10 @@
 #include "Core/Link/Wrapper/LinkWrapper.hpp"
 
 namespace Apalinea::Core::Link {
-
     template<typename SinkOperator>
     class SinkLink : public AbstractLink, public LinkWrapper {
         static_assert(IsBasedOnAbstractSinkOperator<SinkOperator>::value,"SinkOperator must be based on AbstractSinkOperator!");
     public:
-
         explicit SinkLink(SinkOperator&& sinkOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
                 AbstractLink(executor),
                 vOperator(std::forward<SinkOperator>(sinkOperator)), inputTuple() {
@@ -88,6 +82,7 @@ namespace Apalinea::Core::Link {
     private:
         SinkOperator vOperator;
         Core::Tuple::Tuple inputTuple;
+
     protected:
         void exec() {
             if (this->vProcessing) throw std::runtime_error("(Sink-)Link is already processing!");
@@ -97,6 +92,7 @@ namespace Apalinea::Core::Link {
             if(this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
                 this->vOperator.process(this->inputTuple);
             }
+
             this->inputTuple.clear();
 
             this->vProcessing = false;
@@ -108,12 +104,6 @@ namespace Apalinea::Core::Link {
     using SinkLinkPtr = std::shared_ptr<SinkLink<SinkOperator>>;
     template<typename SinkOperator>
     using SinkLinkUPtr = std::unique_ptr<SinkLink<SinkOperator>>;
-    template <typename SinkOperator>
-    [[deprecated("Use Plan::createSink() instead. Look for usage in the demo.")]]
-    SinkLinkUPtr<SinkOperator> make_SinkLinkUPtr() {
-        return std::make_unique<SinkLink<SinkOperator>>(std::forward<SinkOperator>(SinkOperator()),nullptr);
-    }
+} // Apalinea::Core::Link
 
-} // Stream::V1::Link
-
-#endif //STREAM_V1_LINK_SINKLINK_HPP
+#endif //APALINEA_CORE_LINK_SINKLINK_HPP

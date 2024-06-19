@@ -1,15 +1,11 @@
-//
-// Created by SlepiK on 01.04.2024.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_DTIMAGE_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTIMAGE_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_DTIMAGE_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_DTIMAGE_HPP
 
 #include "Core/Type/Datatype/IDt.hpp"
 #include "Core/Exception/NotImplementedException.hpp"
 #include "Core/Type/Image/Image.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     class DtImage : public IDt {
     public:
         static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtImage"};
@@ -31,7 +27,7 @@ namespace Apalinea::Core::Types::Datatype {
             return *this;
         }
 
-        [[nodiscard]] std::unique_ptr<Core::Types::Datatype::IDt> copy() const override {
+        [[nodiscard]] std::unique_ptr<Core::Type::Datatype::IDt> copy() const override {
             return std::make_unique<DtImage>(*this);
         }
 
@@ -69,10 +65,11 @@ namespace Apalinea::Core::Types::Datatype {
         IDt* operator/(const IDt& other) const override;
         IDt* operator^(const IDt& other) const override;
         IDt* operator%(const IDt& other) const override;
+
     protected:
         Image data{};
     };
-}
+} // Apalinea::Core::Type::Datatype
 
 
-#endif //STREAM_V1_TYPES_DATATYPE_DTIMAGE_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_DTIMAGE_HPP

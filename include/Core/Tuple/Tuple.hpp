@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 27.01.2024.
-//
-
-#ifndef STREAM_V1_TUPLE_TUPLE_HPP
-#define STREAM_V1_TUPLE_TUPLE_HPP
+#ifndef APALINEA_CORE_TUPLE_TUPLE_HPP
+#define APALINEA_CORE_TUPLE_TUPLE_HPP
 
 #include <string>
 #include <unordered_map>
@@ -11,7 +7,6 @@
 #include "Core/Tuple/Entry/Entry.hpp"
 
 namespace Apalinea::Core::Tuple {
-
     class Tuple {
     public:
         using ItemName = std::string;
@@ -111,7 +106,6 @@ namespace Apalinea::Core::Tuple {
     private:
         std::unordered_map<ItemName, Core::Tuple::Entry> vItems;
     };
+} // Apalinea::Core::Tuple
 
-} // Stream
-
-#endif //STREAM_V1_TUPLE_TUPLE_HPP
+#endif //APALINEA_CORE_TUPLE_TUPLE_HPP

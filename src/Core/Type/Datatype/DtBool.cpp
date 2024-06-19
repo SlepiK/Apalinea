@@ -1,10 +1,6 @@
-//
-// Created by SlepiK on 24.03.24.
-//
-
 #include "Core/Type/Datatype/DtBool.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     IDt *DtBool::operator+(const IDt &other) const {
         bool tmpData = this->toBool();
 
@@ -140,4 +136,4 @@ namespace Apalinea::Core::Types::Datatype {
     IDt *DtBool::operator%(const IDt &other) const {
         throw Exception::NotImplementedException("Method not supported here!");
     }
-}
+} // Apalinea::Core::Type::Datatype

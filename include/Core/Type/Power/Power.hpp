@@ -1,13 +1,9 @@
-//
-// Created by SlepiK on 29.01.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_TYPES_POWERTYPE_HPP
-#define ENERGYLEAF_STREAM_V1_TYPES_POWERTYPE_HPP
+#ifndef APALINEA_CORE_TYPE_POWERTYPE_HPP
+#define APALINEA_CORE_TYPE_POWERTYPE_HPP
 
 #include <utility>
 
-namespace Apalinea::Core::Types {
+namespace Apalinea::Core::Type {
     class Power {
     public:
 
@@ -56,9 +52,10 @@ namespace Apalinea::Core::Types {
         [[nodiscard]] float getPower() const {
             return this->watt;
         }
+
     private:
         float watt;
     };
-}
+} // Apalinea::Core::Type
 
-#endif //ENERGYLEAF_STREAM_V1_TYPES_POWERTYPE_HPP
+#endif //APALINEA_CORE_TYPE_POWERTYPE_HPP

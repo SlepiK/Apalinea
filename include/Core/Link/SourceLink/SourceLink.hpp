@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 28.01.24.
-//
-
-#ifndef STREAM_V1_LINK_SOURCELINK_HPP
-#define STREAM_V1_LINK_SOURCELINK_HPP
+#ifndef APALINEA_CORE_LINK_SOURCELINK_HPP
+#define APALINEA_CORE_LINK_SOURCELINK_HPP
 
 #include <utility>
 #include <vector>
@@ -13,12 +9,10 @@
 #include "Core/Link/SourceLink/SourceLink.hpp"
 
 namespace Apalinea::Core::Link {
-
     template<typename SourceOperator>
     class SourceLink : public AbstractLink {
         static_assert(IsBasedOnAbstractSourceOperator<SourceOperator>::value,"SourceOperator must be based on AbstractSourceOperator!");
     public:
-
         explicit SourceLink(SourceOperator&& sourceOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
             AbstractLink(executor),
             vOperator(std::forward<SourceOperator>(sourceOperator)) {
@@ -69,6 +63,7 @@ namespace Apalinea::Core::Link {
         SourceOperator vOperator;
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
+
     protected:
         void exec() {
             if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
@@ -88,6 +83,7 @@ namespace Apalinea::Core::Link {
                         (*iterator)->setOperatorProcessState(this->vState);
                     }
                 }
+
                 outputTuple.clear();
             }
 
@@ -100,12 +96,6 @@ namespace Apalinea::Core::Link {
     using SourceLinkPtr = std::shared_ptr<SourceLink<SourceOperator>>;
     template<typename SourceOperator>
     using SourceLinkUPtr = std::unique_ptr<SourceLink<SourceOperator>>;
-    template <typename SourceOperator>
-    [[deprecated("Use Plan::createSource() instead. Look for usage in the demo.")]]
-    SourceLinkUPtr<SourceOperator> make_SourceLinkUPtr() {
-        return std::make_unique<SourceLink<SourceOperator>>(std::forward<SourceOperator>(SourceOperator()),nullptr);
-    }
+} // Apalinea::Core::Link
 
-} // Stream::V1::Link
-
-#endif //STREAM_V1_LINK_SOURCELINK_HPP
+#endif //APALINEA_CORE_LINK_SOURCELINK_HPP

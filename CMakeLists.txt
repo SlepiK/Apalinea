@@ -61,7 +61,7 @@ set(PROJECT_HEADERS
         include/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperator.hpp
         include/Operator/SourceOperator/CameraSourceOperator/CameraSourceOperatorTrait.hpp
         include/Core/Operator/ProcessState/OperatorProcessState.hpp
-        include/Core/Type/Datatype/IDtTrait.hpp
+        include/Core/Tuple/Trait/TupleTrait.hpp
         include/Expression/IExpression.hpp
         include/Expression/AbstractExpression.hpp
         include/Expression/ToExpression/ToDtStringExpression.hpp

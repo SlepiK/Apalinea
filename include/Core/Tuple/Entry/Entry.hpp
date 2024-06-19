@@ -1,16 +1,11 @@
-//
-// Created by simon on 27.01.2024.
-//
-
-#ifndef STREAM_V1_TUPLE_TUPLEDATA_HPP
-#define STREAM_V1_TUPLE_TUPLEDATA_HPP
+#ifndef APALINEA_CORE_TUPLE_ENTRY_HPP
+#define APALINEA_CORE_TUPLE_ENTRY_HPP
 
 #include <memory>
 #include "Core/Type/Datatype/IDt.hpp"
-#include "Core/Type/Datatype/IDtTrait.hpp"
+#include "Core/Tuple/Trait/TupleTrait.hpp"
 
 namespace Apalinea::Core::Tuple {
-
     class Entry {
     public:
         Entry() = default;
@@ -30,7 +25,6 @@ namespace Apalinea::Core::Tuple {
 
         Entry& operator=(Entry&&) noexcept = default;
 
-
         template<typename T>
         const T& get() const {
             static_assert(HasTypeAnIdentifier<T>::value, "Wanted Type did not have a static identifier specifier!");
@@ -42,9 +36,8 @@ namespace Apalinea::Core::Tuple {
         }
 
     private:
-        std::unique_ptr<Types::Datatype::IDt> vItem;
+        std::unique_ptr<Type::Datatype::IDt> vItem;
     };
+} // Apalinea::Core::Tuple
 
-} // Stream::V1::Tuple
-
-#endif //STREAM_V1_TUPLE_TUPLEDATA_HPP
+#endif //APALINEA_CORE_TUPLE_ENTRY_HPP

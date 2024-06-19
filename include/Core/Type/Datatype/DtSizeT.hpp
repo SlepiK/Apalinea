@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 11.03.2024.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_DTSIZET_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTSIZET_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_DTSIZET_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_DTSIZET_HPP
 
 #include <cstddef>
 #include <string_view>
@@ -22,7 +18,7 @@
 #include "Core/Type/Datatype/DtDouble.hpp"
 #include "Core/Type/Datatype/DtBool.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     class DtSizeT : public IDt {
     public:
         static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtSizeT"};
@@ -44,7 +40,7 @@ namespace Apalinea::Core::Types::Datatype {
             return *this;
         }
 
-        [[nodiscard]] std::unique_ptr<Core::Types::Datatype::IDt> copy() const override {
+        [[nodiscard]] std::unique_ptr<Core::Type::Datatype::IDt> copy() const override {
             return std::make_unique<DtSizeT>(*this);
         }
 
@@ -100,9 +96,10 @@ namespace Apalinea::Core::Types::Datatype {
         IDt* operator/(const IDt& other) const override;
         IDt* operator^(const IDt& other) const override;
         IDt* operator%(const IDt& other) const override;
+
     protected:
         std::size_t data{};
     };
-}
+} // Apalinea::Core::Type::Datatype
 
-#endif //STREAM_V1_TYPES_DATATYPE_DTSIZET_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_DTSIZET_HPP

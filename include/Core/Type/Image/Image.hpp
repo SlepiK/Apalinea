@@ -1,17 +1,12 @@
-//
-// Created by SlepiK on 29.01.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_TYPES_IMAGE_HPP
-#define ENERGYLEAF_STREAM_V1_TYPES_IMAGE_HPP
+#ifndef APALINEA_CORE_TYPE_IMAGE_HPP
+#define APALINEA_CORE_TYPE_IMAGE_HPP
 
 #include <cstdint>
 #include <utility>
 #include "Core/Constants/Settings.hpp"
 #include "Core/Type/Image/ImageFormat.hpp"
 
-namespace Apalinea::Core::Types {
-
+namespace Apalinea::Core::Type {
     class Image {
     public:
         Image()
@@ -150,5 +145,6 @@ namespace Apalinea::Core::Types {
         ImageFormat vFormat;
         std::uint8_t* vData;
     };
-}
-#endif //ENERGYLEAF_STREAM_V1_TYPES_IMAGE_HPP
+} // Apalinea::Core::Type
+
+#endif //APALINEA_CORE_TYPE_IMAGE_HPP

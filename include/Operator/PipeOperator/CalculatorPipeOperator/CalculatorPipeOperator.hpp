@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 29.01.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
+#define APALINEA_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
 
 #include <chrono>
 #include <optional>
@@ -62,12 +58,13 @@ namespace Apalinea::Operator::PipeOperator {
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
         float wattPer = WATT_PER_SECOND;
-        Core::Types::Datatype::DtFloat power;
+        Core::Type::Datatype::DtFloat power;
         bool vRun = false;
 
         std::chrono::steady_clock::time_point getCurrentTimePoint() {
             return std::chrono::steady_clock::now();
         }
+
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple &outputTuple) override {
@@ -79,7 +76,7 @@ namespace Apalinea::Operator::PipeOperator {
             }
 
             if(inputTuple.containsItem("RotationKWH")) {
-                vRotationPerKWh = inputTuple.getItem<Core::Types::Datatype::DtInt>("RotationKWH").toInt();
+                vRotationPerKWh = inputTuple.getItem<Core::Type::Datatype::DtInt>("RotationKWH").toInt();
                 this->vRotationPerKWhSet = true;
             }
             inputTuple.clear();
@@ -92,19 +89,19 @@ namespace Apalinea::Operator::PipeOperator {
                 std::chrono::steady_clock::time_point current = getCurrentTimePoint();
                 std::chrono::milliseconds  rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
                 if(rotationTime.count() > 30) {
-                    power = Core::Types::Datatype::DtFloat((this->wattPer / rotationTime.count() / this->vRotationPerKWh) * 1000.0f);
+                    power = Core::Type::Datatype::DtFloat((this->wattPer / rotationTime.count() / this->vRotationPerKWh) * 1000.0f);
                     this->vLast = current;
                 } else {
-                    power = Core::Types::Datatype::DtFloat(0.0f);
+                    power = Core::Type::Datatype::DtFloat(0.0f);
                 }
             } else {
                 //initial process, no red mark was detected before this event.
                 this->vLast = getCurrentTimePoint();
             }
             outputTuple.clear();
-            outputTuple.addItem(std::string("Power"),Core::Types::Datatype::DtFloat(power));
+            outputTuple.addItem(std::string("Power"),Core::Type::Datatype::DtFloat(power));
         }
     };
-} // Energyleaf::Stream::V1::Core::Operator::PipeOperator
+} // Apalinea::Operator::PipeOperator
 
-#endif //STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP
+#endif //APALINEA_OPERATOR_PIPEOPERATOR_CALCULATORPIPEOPERATOR_HPP

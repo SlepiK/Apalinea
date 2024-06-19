@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 17.06.24.
-//
-
-#ifndef STREAM_V1_LINK_IBASELINK_HPP
-#define STREAM_V1_LINK_IBASELINK_HPP
+#ifndef APALINEA_CORE_LINK_IBASELINK_HPP
+#define APALINEA_CORE_LINK_IBASELINK_HPP
 
 #include "Core/Link/Type/LinkType.hpp"
 
@@ -14,6 +10,6 @@ namespace Apalinea::Core::Link {
 
         [[nodiscard]] virtual LinkType getType() const = 0;
     };
-} // Stream::V1::Link
+} // Apalinea::Core::Link
 
-#endif //STREAM_V1_LINK_IBASELINK_HPP
+#endif //APALINEA_CORE_LINK_IBASELINK_HPP

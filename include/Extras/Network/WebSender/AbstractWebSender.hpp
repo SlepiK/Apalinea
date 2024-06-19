@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_EXPTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
-#define ENERGYLEAF_STREAM_V1_EXPTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
+#ifndef APALINEA_EXTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
+#define APALINEA_EXTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP
 
 namespace Apalinea::Extras::Network {
     template<typename Sender>
@@ -30,6 +26,6 @@ namespace Apalinea::Extras::Network {
         Sender *vSender;
     protected:
     };
-}
+} //Apalinea::Extras::Network
 
-#endif
+#endif //APALINEA_EXTRAS_NETWORK_ESP_ABSTRACTWEBSENDER_HPP

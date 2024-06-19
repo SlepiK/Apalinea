@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 30.01.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_SELECTPIPEOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_SELECTPIPEOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_PIPEOPERATOR_SELECTPIPEOPERATOR_HPP
+#define APALINEA_OPERATOR_PIPEOPERATOR_SELECTPIPEOPERATOR_HPP
 
 #include "Core/Operator/PipeOperator/AbstractPipeOperator.hpp"
 #include "Core/Tuple/Tuple.hpp"
@@ -12,8 +8,6 @@
 namespace Apalinea::Operator::PipeOperator {
     class SelectPipeOperator
             : public Core::Operator::AbstractPipeOperator {
-    public:
-    private:
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple &outputTuple) override {
@@ -22,14 +16,14 @@ namespace Apalinea::Operator::PipeOperator {
                 if (this->expression) {
                     this->expression->setTuple(inputTuple);
                     this->expression->execute();
-                    if (Core::Types::Datatype::DtRegistry::get(this->expression->getIdentifier()) ==
-                            Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtBool::IDENTIFIER)) {
+                    if (Core::Type::Datatype::DtRegistry::get(this->expression->getIdentifier()) ==
+                        Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtBool::IDENTIFIER)) {
 
-                        bool eval = static_cast<const Core::Types::Datatype::DtBool&>(this->expression->getData()).toBool();
+                        bool eval = static_cast<const Core::Type::Datatype::DtBool&>(this->expression->getData()).toBool();
 
                         outputTuple.clear();
                         outputTuple.moveItems(std::move(inputTuple));
-                        outputTuple.addItem(std::string("Select"),Core::Types::Datatype::DtBool(eval));
+                        outputTuple.addItem(std::string("Select"),Core::Type::Datatype::DtBool(eval));
                         vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
                     } else {
                         vProcessState = Core::Operator::OperatorProcessState::BREAK;
@@ -42,6 +36,6 @@ namespace Apalinea::Operator::PipeOperator {
             }
         }
     };
-}
+} // Apalinea::Operator::PipeOperator
 
-#endif //STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_SELECTPIPEOPERATOR_HPP
+#endif //APALINEA_OPERATOR_PIPEOPERATOR_SELECTPIPEOPERATOR_HPP

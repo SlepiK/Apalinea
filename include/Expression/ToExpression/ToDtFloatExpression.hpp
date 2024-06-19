@@ -1,10 +1,5 @@
-//
-// Created by SlepiK on 26.03.24.
-//
-
-#ifndef STREAM_V1_EXPRESSION_TODTFLOATEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_TODTFLOATEXPRESSION_HPP
-
+#ifndef APALINEA_EXPRESSION_TOEXPRESSION_TODTFLOATEXPRESSION_HPP
+#define APALINEA_EXPRESSION_TOEXPRESSION_TODTFLOATEXPRESSION_HPP
 
 #include "Core/Type/Datatype/DtRegistry.hpp"
 #include "Core/Type/Datatype/DtInt.hpp"
@@ -23,14 +18,14 @@
 namespace Apalinea::Expression {
     class ToDtFloatExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::DtFloat::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtFloat::IDENTIFIER;
 
-        ToDtFloatExpression() : AbstractExpression({Core::Types::Datatype::DtInt8::IDENTIFIER, Core::Types::Datatype::DtInt16::IDENTIFIER, Core::Types::Datatype::DtInt32::IDENTIFIER,
-                                                    Core::Types::Datatype::DtInt64::IDENTIFIER, Core::Types::Datatype::DtUInt8::IDENTIFIER,
-                                                    Core::Types::Datatype::DtUInt16::IDENTIFIER, Core::Types::Datatype::DtUInt32::IDENTIFIER,
-                                                    Core::Types::Datatype::DtUInt64::IDENTIFIER, Core::Types::Datatype::DtDouble::IDENTIFIER,
-                                                    Core::Types::Datatype::DtFloat::IDENTIFIER, Core::Types::Datatype::DtBool::IDENTIFIER, Core::Types::Datatype::DtInt::IDENTIFIER,
-                                                    Core::Types::Datatype::DtSizeT::IDENTIFIER}) {
+        ToDtFloatExpression() : AbstractExpression({Core::Type::Datatype::DtInt8::IDENTIFIER, Core::Type::Datatype::DtInt16::IDENTIFIER, Core::Type::Datatype::DtInt32::IDENTIFIER,
+                                                    Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
+                                                    Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
+                                                    Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtDouble::IDENTIFIER,
+                                                    Core::Type::Datatype::DtFloat::IDENTIFIER, Core::Type::Datatype::DtBool::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
+                                                    Core::Type::Datatype::DtSizeT::IDENTIFIER}) {
         }
 
         void execute() override {
@@ -50,74 +45,75 @@ namespace Apalinea::Expression {
 
             exp->execute();
 
-            const Core::Types::Datatype::IDt &expData = exp->getData();
-            Core::Types::Datatype::DtRegistry::DtRegistryIndex tmpDataIndex = Core::Types::Datatype::DtRegistry::get(
+            const Core::Type::Datatype::IDt &expData = exp->getData();
+            Core::Type::Datatype::DtRegistry::DtRegistryIndex tmpDataIndex = Core::Type::Datatype::DtRegistry::get(
                     expData.getIdentifier());
-            if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtInt8::IDENTIFIER) &&
-                tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtInt8::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat((static_cast<const Core::Types::Datatype::DtInt8 &>(expData)).toInt8());
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtInt16::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtInt16::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        (static_cast<const Core::Types::Datatype::DtInt16 &>(expData)).toInt16());
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtInt32::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtInt32::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtInt32 &>(expData)).toInt32()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtInt64::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtInt64::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtInt64 &>(expData)).toInt64()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtUInt8::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtUInt8::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        (static_cast<const Core::Types::Datatype::DtUInt8 &>(expData)).toUInt8());
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtUInt16::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtUInt16::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        (static_cast<const Core::Types::Datatype::DtUInt16 &>(expData)).toUInt16());
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtUInt32::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtUInt32::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtUInt32 &>(expData)).toUInt32()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtUInt64::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtUInt64::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtUInt64 &>(expData)).toUInt64()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtFloat::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtFloat::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtFloat &>(expData)).toFloat()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtDouble::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtDouble::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtDouble &>(expData)).toDouble()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtSizeT::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtSizeT::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtSizeT &>(expData)).toSizeT()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtInt::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtInt::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(
-                        static_cast<float>((static_cast<const Core::Types::Datatype::DtInt &>(expData)).toInt()));
-            } else if (Core::Types::Datatype::DtRegistry::isRegistered(Core::Types::Datatype::DtBool::IDENTIFIER) &&
-                       tmpDataIndex == Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtBool::IDENTIFIER)) {
-                this->data = Core::Types::Datatype::DtFloat(static_cast<float>((static_cast<const Core::Types::Datatype::DtBool &>(expData)).toBool()));
+            if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt8::IDENTIFIER) &&
+                tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt8::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat((static_cast<const Core::Type::Datatype::DtInt8 &>(expData)).toInt8());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt16::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt16::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        (static_cast<const Core::Type::Datatype::DtInt16 &>(expData)).toInt16());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt32::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt32::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtInt32 &>(expData)).toInt32()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt64::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt64::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtInt64 &>(expData)).toInt64()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt8::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt8::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        (static_cast<const Core::Type::Datatype::DtUInt8 &>(expData)).toUInt8());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt16::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt16::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        (static_cast<const Core::Type::Datatype::DtUInt16 &>(expData)).toUInt16());
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt32::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt32::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtUInt32 &>(expData)).toUInt32()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtUInt64::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtUInt64::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtUInt64 &>(expData)).toUInt64()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtFloat::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtFloat::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtFloat &>(expData)).toFloat()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtDouble::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtDouble::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtDouble &>(expData)).toDouble()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtSizeT::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtSizeT::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtSizeT &>(expData)).toSizeT()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtInt::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtInt::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(
+                        static_cast<float>((static_cast<const Core::Type::Datatype::DtInt &>(expData)).toInt()));
+            } else if (Core::Type::Datatype::DtRegistry::isRegistered(Core::Type::Datatype::DtBool::IDENTIFIER) &&
+                       tmpDataIndex == Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtBool::IDENTIFIER)) {
+                this->data = Core::Type::Datatype::DtFloat(static_cast<float>((static_cast<const Core::Type::Datatype::DtBool &>(expData)).toBool()));
             } else {
                 throw std::runtime_error("Cant convert given type to string!");
             }
         }
 
-        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
-    private:
-        Core::Types::Datatype::DtFloat data;
-    };
-}
 
-#endif //STREAM_V1_EXPRESSION_TODTFLOATEXPRESSION_HPP
+    private:
+        Core::Type::Datatype::DtFloat data;
+    };
+} // Apalinea::Expression
+
+#endif //APALINEA_EXPRESSION_TOEXPRESSION_TODTFLOATEXPRESSION_HPP

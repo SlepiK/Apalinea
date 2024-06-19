@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_SINKOPERATORCONSOLEWRITER_HPP
-#define STREAM_V1_CORE_OPERATOR_SINKOPERATORCONSOLEWRITER_HPP
+#ifndef APALINEA_OPERATOR_SINKOPERATORCONSOLEWRITER_HPP
+#define APALINEA_OPERATOR_SINKOPERATORCONSOLEWRITER_HPP
 
 #include <iostream>
 #include "Operator/SinkOperator/WriteSinkOperator/AbstractWriter.hpp"
@@ -19,6 +15,6 @@ namespace Apalinea::Operator::SinkOperator {
             std::cout << std::endl;
         }
     };
-}
+} // Apalinea::Operator::SinkOperator
 
-#endif //STREAM_V1_CORE_OPERATOR_SINKOPERATORCONSOLEWRITER_HPP
+#endif //APALINEA_OPERATOR_SINKOPERATORCONSOLEWRITER_HPP

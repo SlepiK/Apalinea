@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
-#define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
+#ifndef APALINEA_EXTRAS_MEMORY_CREATORCONTAINER_HPP
+#define APALINEA_EXTRAS_MEMORY_CREATORCONTAINER_HPP
 
 #include <memory>
 #include <stdexcept>
@@ -33,6 +29,6 @@ namespace Apalinea::Extras::Memory {
     private:
         std::unique_ptr<ICreator<CreatorType>> vCreator;
     };
-}
+} // Apalinea::Extras::Memory
 
-#endif // ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_CREATORCONTAINER_HPP
+#endif //APALINEA_EXTRAS_MEMORY_CREATORCONTAINER_HPP

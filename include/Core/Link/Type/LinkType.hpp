@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 17.06.24.
-//
-
-#ifndef STREAM_V1_LINK_LINKTYPE_HPP
-#define STREAM_V1_LINK_LINKTYPE_HPP
+#ifndef APALINEA_CORE_LINK_LINKTYPE_HPP
+#define APALINEA_CORE_LINK_LINKTYPE_HPP
 
 namespace Apalinea::Core::Link {
     enum class LinkType : int {
@@ -11,6 +7,6 @@ namespace Apalinea::Core::Link {
         PIPE = 1,
         SINK = 2
     };
-}
+} // Apalinea::Core::Link
 
-#endif //STREAM_V1_LINK_LINKTYPE_HPP
+#endif //APALINEA_CORE_LINK_LINKTYPE_HPP

@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 29.01.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CROPPIPEOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CROPPIPEOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_PIPEOPERATOR_CROPPIPEOPERATOR_HPP
+#define APALINEA_OPERATOR_PIPEOPERATOR_CROPPIPEOPERATOR_HPP
 
 #include <algorithm>
 #include "Core/Operator/PipeOperator/AbstractPipeOperator.hpp"
@@ -22,11 +18,13 @@ namespace Apalinea::Operator::PipeOperator {
             this->vY = y;
             this->vHeight = height;
         }
+
     private:
         int vX = 0;
         int vWidth = 0;
         int vY = 0;
         int vHeight = 0;
+
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple &outputTuple) override {
@@ -36,7 +34,7 @@ namespace Apalinea::Operator::PipeOperator {
             } else {
                 vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
             }
-            Core::Types::Image img = inputTuple.getItem<Core::Types::Datatype::DtImage>("Image").toImage();
+            Core::Type::Image img = inputTuple.getItem<Core::Type::Datatype::DtImage>("Image").toImage();
             inputTuple.removeItem("Image");
 
             if (this->vX < 0 || this->vWidth <= 0 || this->vX + this->vWidth > img.getWidth() ||
@@ -44,7 +42,7 @@ namespace Apalinea::Operator::PipeOperator {
                 return;
             }
 
-            Core::Types::Image outImg(this->vWidth,this->vHeight,img.getBytesPerPixel(),img.getFormat());
+            Core::Type::Image outImg(this->vWidth, this->vHeight, img.getBytesPerPixel(), img.getFormat());
 
             int startIdxX = this->vX * img.getBytesPerPixel();
 
@@ -59,9 +57,9 @@ namespace Apalinea::Operator::PipeOperator {
 
             outputTuple.clear();
             outputTuple.moveItems(std::move(inputTuple));
-            outputTuple.addItem(std::string("Image"),Core::Types::Datatype::DtImage(outImg));
+            outputTuple.addItem(std::string("Image"),Core::Type::Datatype::DtImage(outImg));
         }
     };
-}
+} // Apalinea::Operator::PipeOperator
 
-#endif //STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_CROPPIPEOPERATOR_HPP
+#endif //APALINEA_OPERATOR_PIPEOPERATOR_CROPPIPEOPERATOR_HPP

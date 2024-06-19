@@ -1,12 +1,7 @@
-//
-// Created by SlepiK on 28.01.24.
-//
-
-#ifndef STREAM_V1_LINK_ABSTRACTLINK_HPP
-#define STREAM_V1_LINK_ABSTRACTLINK_HPP
+#ifndef APALINEA_CORE_LINK_ABSTRACTLINK_HPP
+#define APALINEA_CORE_LINK_ABSTRACTLINK_HPP
 
 #include <utility>
-
 #include "Core/Link/ILink.hpp"
 #include "Core/Link/Trait/LinkTrait.hpp"
 #include "Core/Tuple/Tuple.hpp"
@@ -14,7 +9,6 @@
 #include "Core/Log/LogManager.hpp"
 
 namespace Apalinea::Core::Link {
-
     class AbstractLink : public ILink {
     public:
         explicit AbstractLink(std::shared_ptr<Core::Executor::IExecutor> executor) :
@@ -34,7 +28,6 @@ namespace Apalinea::Core::Link {
             return this->vProcessed;
         }
 
-    private:
     protected:
         bool vProcessing;
         bool vProcessed;
@@ -42,7 +35,6 @@ namespace Apalinea::Core::Link {
         Core::Operator::OperatorProcessState vState;
         std::shared_ptr<Core::Executor::IExecutor> executor;
     };
+} // Apalinea::Core::Link
 
-} // Stream::V1::Link
-
-#endif //STREAM_V1_LINK_ABSTRACTLINK_HPP
+#endif //APALINEA_CORE_LINK_ABSTRACTLINK_HPP

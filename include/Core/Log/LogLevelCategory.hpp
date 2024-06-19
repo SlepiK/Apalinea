@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 18.06.2024.
-//
-
-#ifndef STREAM_V1_CORE_LOG_LOGLEVELCATEGORY_HPP
-#define STREAM_V1_CORE_LOG_LOGLEVELCATEGORY_HPP
+#ifndef APALINEA_CORE_LOG_LOGLEVELCATEGORY_HPP
+#define APALINEA_CORE_LOG_LOGLEVELCATEGORY_HPP
 
 #include <map>
 #include <ostream>
@@ -34,6 +30,6 @@ namespace Apalinea::Core::Log {
     inline std::string_view toString(const LogLevelCategory& obj) {
         return LogLevelCategoryMap.at(obj);
     }
-}
+} // Apalinea::Core::Log
 
-#endif //STREAM_V1_CORE_LOG_LOGLEVELCATEGORY_HPP
+#endif //APALINEA_CORE_LOG_LOGLEVELCATEGORY_HPP

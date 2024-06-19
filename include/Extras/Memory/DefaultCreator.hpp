@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
-#define ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
+#ifndef APALINEA_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
+#define APALINEA_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
 
 #include <new>
 #include "Extras/Memory/ICreator.hpp"
@@ -35,6 +31,6 @@ namespace Apalinea::Extras::Memory {
             }
         }
     };
-}
+} // Apalinea::Extras::Memory
 
-#endif // ENERGYLEAF_STREAM_V1_EXTRAS_MEMORY_DEFAULTCREATOR_HPP
+#endif //APALINEA_EXTRAS_MEMORY_DEFAULTCREATOR_HPP

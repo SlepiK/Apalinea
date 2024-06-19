@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 28.01.24.
-//
-
-#ifndef STREAM_V1_LINK_ILINK_HPP
-#define STREAM_V1_LINK_ILINK_HPP
+#ifndef APALINEA_CORE_LINK_ILINK_HPP
+#define APALINEA_CORE_LINK_ILINK_HPP
 
 #include <vector>
 #include <optional>
@@ -23,6 +19,6 @@ namespace Apalinea::Core::Link {
 
         virtual std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<LinkWrapper>>>> getLinks() = 0;
     };
-} // Stream::V1::Link
+} // Apalinea::Core::Link
 
-#endif //STREAM_V1_LINK_ILINK_HPP
+#endif //APALINEA_CORE_LINK_ILINK_HPP

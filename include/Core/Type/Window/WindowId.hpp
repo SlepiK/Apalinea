@@ -1,14 +1,10 @@
-//
-// Created by SlepiK on 29.01.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_TYPES_WINDOWID_HPP
-#define ENERGYLEAF_STREAM_V1_TYPES_WINDOWID_HPP
+#ifndef APALINEA_CORE_TYPE_WINDOWID_HPP
+#define APALINEA_CORE_TYPE_WINDOWID_HPP
 
 #include <utility>
 #include <cstddef>
 
-namespace Apalinea::Core::Types {
+namespace Apalinea::Core::Type {
     class WindowId {
     public:
 
@@ -67,9 +63,10 @@ namespace Apalinea::Core::Types {
         [[nodiscard]] std::size_t getWindowId() const {
             return this->id;
         }
+
     private:
         std::size_t id;
     };
-}
+} // Apalinea::Core::Type
 
-#endif //ENERGYLEAF_STREAM_V1_TYPES_WINDOWID_HPP
+#endif //APALINEA_CORE_TYPE_WINDOWID_HPP

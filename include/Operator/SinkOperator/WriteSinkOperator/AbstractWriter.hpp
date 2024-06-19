@@ -1,9 +1,5 @@
-//
-// Created by Simon Stahmer on 13.02.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_SINKOPERATOR_ABSTRACTWRITER_HPP
-#define STREAM_V1_CORE_OPERATOR_SINKOPERATOR_ABSTRACTWRITER_HPP
+#ifndef APALINEA_OPERATOR_SINKOPERATOR_ABSTRACTWRITER_HPP
+#define APALINEA_OPERATOR_SINKOPERATOR_ABSTRACTWRITER_HPP
 
 #include <sstream>
 #include <string>
@@ -38,6 +34,7 @@ namespace Apalinea::Operator::SinkOperator {
         void printf(const std::string& format, const Args&... args) {
             formatString(format, args...);
         }
+
     private:
         template<typename... Args>
         void formatString(const std::string& format, const Args&... args) {
@@ -63,10 +60,12 @@ namespace Apalinea::Operator::SinkOperator {
             }
             write(oss.str());
         }
+
     protected:
         virtual void write(const std::string& message) = 0;
+
         virtual void breakAndFlush() = 0;
     };
-} // STREAM_V1_CORE_OPERATOR_SINKOPERATOR_ABSTRACTWRITER_HPP
+} // Apalinea::Operator::SinkOperator
 
-#endif
+#endif //APALINEA_OPERATOR_SINKOPERATOR_ABSTRACTWRITER_HPP

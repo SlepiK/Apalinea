@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 01.02.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
-#define ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
+#ifndef APALINEA_EXTRAS_VISION_ABSTRACTCAMERA_HPP
+#define APALINEA_EXTRAS_VISION_ABSTRACTCAMERA_HPP
 
 #include <stdexcept>
 #include "Core/Type/Image/Image.hpp"
@@ -41,7 +37,7 @@ namespace Apalinea::Extras::Vision {
             return this->vStarted;
         }
 
-        [[nodiscard]] virtual Core::Types::Image getImage() const final{
+        [[nodiscard]] virtual Core::Type::Image getImage() const final{
             if (!this->vStarted) {
                 throw std::runtime_error("AbstractCamera is not started!");
             }
@@ -55,13 +51,15 @@ namespace Apalinea::Extras::Vision {
 
         virtual void setConfig(Config& config) = 0;
 
-    private:
     protected:
         bool vStarted;
-        virtual void internalStart() = 0;
-        virtual void internalStop() = 0;
-        [[nodiscard]] virtual Core::Types::Image getInternalImage() const = 0;
-    };
-}
 
-#endif //ENERGYLEAF_STREAM_V1_EXPTRAS_VISION_ABSTRACTCAMERA_HPP
+        virtual void internalStart() = 0;
+
+        virtual void internalStop() = 0;
+
+        [[nodiscard]] virtual Core::Type::Image getInternalImage() const = 0;
+    };
+} // Apalinea::Extras::Vision
+
+#endif //APALINEA_EXTRAS_VISION_ABSTRACTCAMERA_HPP

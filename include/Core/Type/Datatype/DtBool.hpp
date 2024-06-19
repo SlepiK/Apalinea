@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 20.03.24.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_DTBOOL_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_DTBOOL_HPP
 
 #include <string_view>
 #include <cmath>
@@ -22,7 +18,7 @@
 #include "Core/Type/Datatype/DtFloat.hpp"
 #include "Core/Type/Datatype/DtDouble.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     class DtBool : public IDt {
     public:
         static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtBool"};
@@ -44,7 +40,7 @@ namespace Apalinea::Core::Types::Datatype {
             return *this;
         }
 
-        [[nodiscard]] std::unique_ptr<Core::Types::Datatype::IDt> copy() const override {
+        [[nodiscard]] std::unique_ptr<Core::Type::Datatype::IDt> copy() const override {
             return std::make_unique<DtBool>(*this);
         }
 
@@ -100,9 +96,10 @@ namespace Apalinea::Core::Types::Datatype {
         IDt* operator/(const IDt& other) const override;
         IDt* operator^(const IDt& other) const override;
         IDt* operator%(const IDt& other) const override;
+
     protected:
         bool data{};
     };
-}
+} // Apalinea::Core::Type:Datatype
 
-#endif //STREAM_V1_TYPES_DATATYPE_DTBOOL_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_DTBOOL_HPP

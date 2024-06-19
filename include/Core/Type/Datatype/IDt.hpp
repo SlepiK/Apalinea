@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_IDT_HPP
-#define STREAM_V1_TYPES_DATATYPE_IDT_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_IDT_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_IDT_HPP
 
 #include <unordered_set>
 #include <string_view>
@@ -11,7 +7,7 @@
 #include <memory>
 #include "Core/Type/Datatype/DtRegistry.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
 
     class IDt {
     public:
@@ -43,9 +39,10 @@ namespace Apalinea::Core::Types::Datatype {
         virtual IDt* operator/(const IDt& other) const = 0;
         virtual IDt* operator^(const IDt& other) const = 0;
         virtual IDt* operator%(const IDt& other) const = 0;
+
     private:
         const std::unordered_set<DtRegistry::DtRegistryIdentifier> datatypes;
     };
-}
+} // Apalinea::Core::Type::Datatype
 
-#endif //STREAM_V1_TYPES_DATATYPE_IDT_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_IDT_HPP

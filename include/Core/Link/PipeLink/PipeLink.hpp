@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 28.01.24.
-//
-
-#ifndef STREAM_V1_LINK_PIPELINK_HPP
-#define STREAM_V1_LINK_PIPELINK_HPP
+#ifndef APALINEA_CORE_LINK_PIPELINK_HPP
+#define APALINEA_CORE_LINK_PIPELINK_HPP
 
 #include <utility>
 #include <vector>
@@ -13,7 +9,6 @@
 #include "Core/Link/Wrapper/LinkWrapper.hpp"
 
 namespace Apalinea::Core::Link {
-
     template<typename PipeOperator>
     class PipeLink
             : public AbstractLink,
@@ -21,7 +16,6 @@ namespace Apalinea::Core::Link {
         static_assert(IsBasedOnAbstractPipeOperator<PipeOperator>::value,
                       "PipeOperator must be based on AbstractPipeOperator!");
     public:
-
         explicit PipeLink(PipeOperator &&pipeOperator, std::shared_ptr<Core::Executor::IExecutor> executor) :
                 AbstractLink(executor),
                 vOperator(std::forward<PipeOperator>(pipeOperator)), inputTuple() {
@@ -78,7 +72,6 @@ namespace Apalinea::Core::Link {
             }
         }
 
-
         template<typename PipeOperatorNext>
         void connect(const std::shared_ptr<PipeLink<PipeOperatorNext>> &nextLink) {
             this->vLinks.push_back(nextLink);
@@ -109,6 +102,7 @@ namespace Apalinea::Core::Link {
         Core::Tuple::Tuple inputTuple;
         std::vector<std::shared_ptr<LinkWrapper>> vLinks;
         using LinkIterator = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
+
     protected:
         void exec() {
             if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing!");
@@ -128,11 +122,11 @@ namespace Apalinea::Core::Link {
                         (*iterator)->setOperatorProcessState(this->vState);
                     }
                 }
+
                 outputTuple.clear();
             } else {
                 this->inputTuple.clear();
             }
-
             this->vProcessing = false;
             this->vProcessed = true;
         }
@@ -142,13 +136,7 @@ namespace Apalinea::Core::Link {
     using PipeLinkPtr = std::shared_ptr<PipeLink<PipeOperator>>;
     template<typename PipeOperator>
     using PipeLinkUPtr = std::unique_ptr<PipeLink<PipeOperator>>;
-    template <typename PipeOperator>
-    [[deprecated("Use Plan::createPipe() instead. Look for usage in the demo.")]]
-    PipeLinkUPtr<PipeOperator> make_PipeLinkUPtr() {
-        return std::make_unique<PipeLink<PipeOperator>>(std::forward<PipeOperator>(PipeOperator()),nullptr);
-    }
+} // Apalinea::Core::Link
 
-} // Stream::V1::Link
-
-#endif //STREAM_V1_LINK_PIPELINK_HPP
+#endif //APALINEA_CORE_LINK_PIPELINK_HPP
 

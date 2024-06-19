@@ -1,10 +1,6 @@
-//
-// Created by SlepiK on 24.03.24.
-//
-
 #include "Core/Type/Datatype/DtInt32.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     IDt *DtInt32::operator+(const IDt &other) const {
         int32_t tmpData = this->toInt32();
 
@@ -208,4 +204,4 @@ namespace Apalinea::Core::Types::Datatype {
             throw std::invalid_argument("Cant calculate with the given two arguments!");
         }
     }
-}
+} // Apalinea::Core::Type::Datatype

@@ -1,18 +1,12 @@
-//
-// Created by SlepiK on 09.06.24.
-//
-
-#ifndef STREAM_V1_OPERATOR_OPERATORMODE_HPP
-#define STREAM_V1_OPERATOR_OPERATORMODE_HPP
+#ifndef APALINEA_CORE_OPERATOR_OPERATORMODE_HPP
+#define APALINEA_CORE_OPERATOR_OPERATORMODE_HPP
 
 namespace Apalinea::Core::Operator {
-
     enum class OperatorMode : int {
         TASK = 0,
         DIRECT = 1,
         MAIN = 2
     };
+} // Apalinea::Core::Operator
 
-} // Stream::V1::Operator
-
-#endif //STREAM_V1_OPERATOR_OPERATORMODE_HPP
+#endif //APALINEA_CORE_OPERATOR_OPERATORMODE_HPP

@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 28.01.2024.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_SINKOPERATOR_COUTSINKOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_SINKOPERATOR_COUTSINKOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_SINKOPERATOR_COUTSINKOPERATOR_HPP
+#define APALINEA_OPERATOR_SINKOPERATOR_COUTSINKOPERATOR_HPP
 
 #include <iostream>
 #include "Core/Tuple/Tuple.hpp"
@@ -12,6 +8,6 @@
 
 namespace Apalinea::Operator::SinkOperator {
     using CoutSinkOperator = WriteSinkOperator<ConsoleWriter>;
-} // Energyleaf::Stream::V1::Core::Operator::SinkOperator
+} // Apalinea::Operator::SinkOperator
 
-#endif //STREAM_V1_CORE_OPERATOR_SINKOPERATOR_COUTSINKOPERATOR_HPP
+#endif //APALINEA_OPERATOR_SINKOPERATOR_COUTSINKOPERATOR_HPP

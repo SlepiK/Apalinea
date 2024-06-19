@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 22.03.24.
-//
-
-#ifndef STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
+#define APALINEA_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
 
 #include "Core/Type/Datatype/DtRegistry.hpp"
 #include "Core/Type/Datatype/DtInt.hpp"
@@ -32,21 +28,16 @@ namespace Apalinea::Expression::Calculation {
 
     class CalculationExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::UNDEFINED;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::UNDEFINED;
 
-        CalculationExpression() : AbstractExpression({Core::Types::Datatype::DtInt8::IDENTIFIER, Core::Types::Datatype::DtInt16::IDENTIFIER, Core::Types::Datatype::DtInt32::IDENTIFIER,
-                                                      Core::Types::Datatype::DtInt64::IDENTIFIER, Core::Types::Datatype::DtUInt8::IDENTIFIER,
-                                                      Core::Types::Datatype::DtUInt16::IDENTIFIER, Core::Types::Datatype::DtUInt32::IDENTIFIER,
-                                                      Core::Types::Datatype::DtUInt64::IDENTIFIER, Core::Types::Datatype::DtInt::IDENTIFIER,
-                                                      Core::Types::Datatype::DtSizeT::IDENTIFIER}) {
+        CalculationExpression() : AbstractExpression({Core::Type::Datatype::DtInt8::IDENTIFIER, Core::Type::Datatype::DtInt16::IDENTIFIER, Core::Type::Datatype::DtInt32::IDENTIFIER,
+                                                      Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
+                                                      Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
+                                                      Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
+                                                      Core::Type::Datatype::DtSizeT::IDENTIFIER}) {
         }
 
         void execute() override {
-            //Strings are not allowed.
-            //We can use normal calculation forms, but we need to respect the used types.
-            //If same type, then no problem, if different types, it will be funny.
-            //different types mean checking if possible and use the greatest type of them to return the data,
-            //or if one of them is float or double force to use one of them as return.
             if(first == nullptr && second == nullptr) {
                 if(vSubExpressions.size() != 2) {
                     throw std::runtime_error("A expression for a single sub expression, cant be executed on less or more then two sub-expression!");
@@ -105,7 +96,7 @@ namespace Apalinea::Expression::Calculation {
             }
         }
 
-        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return *this->data;
         }
 
@@ -122,10 +113,10 @@ namespace Apalinea::Expression::Calculation {
         }
 
     private:
-        Core::Types::Datatype::IDt* data;
+        Core::Type::Datatype::IDt* data;
         CalculationTypes calculationType;
         IExpression *first, *second;
     };
-}
+} // Apalinea::Expression::Calculation
 
-#endif //STREAM_V1_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_CALULCATION_CALCULATIONEXPRESSION_HPP

@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 18.06.2024.
-//
-
-#ifndef STREAM_V1_CORE_LOG_LOGMANAGER_HPP
-#define STREAM_V1_CORE_LOG_LOGMANAGER_HPP
+#ifndef APALINEA_CORE_LOG_LOGMANAGER_HPP
+#define APALINEA_CORE_LOG_LOGMANAGER_HPP
 
 #include <string_view>
 #include <vector>
@@ -13,7 +9,6 @@
 #include "Core/Log/LogLevel.hpp"
 
 namespace Apalinea::Core::Log {
-
     inline std::string getFilename(const std::string& file) {
         size_t seperator = file.find_last_of("/\\");
         return seperator != std::string::npos ? file.substr(seperator + 1) : file;
@@ -61,12 +56,10 @@ namespace Apalinea::Core::Log {
             }
         }
 
-
     private:
         using LogVector = typename std::vector<std::unique_ptr<ILog>>;
         static LogVector logs;
-    protected:
     };
-}
+} // Apalinea::Core::Log
 
-#endif //STREAM_V1_CORE_LOG_LOGMANAGER_HPP
+#endif //APALINEA_CORE_LOG_LOGMANAGER_HPP

@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 12.03.2024.
-//
-
-#ifndef STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
+#define APALINEA_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
 
 #include "Core/Tuple/Tuple.hpp"
 #include "Core/Type/Datatype/DtString.hpp"
@@ -12,14 +8,14 @@
 namespace Apalinea::Expression::DataType {
     class DtStringExpression : public IExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::DtString::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtString::IDENTIFIER;
 
         explicit DtStringExpression(std::string&& entry, bool load = true) :
         IExpression({IDENTIFIER}), load(load) {
             if(load) {
                 this->entry = std::move(entry);
             } else {
-                this->data = Core::Types::Datatype::DtString(std::move(entry));
+                this->data = Core::Type::Datatype::DtString(std::move(entry));
             }
         }
 
@@ -35,7 +31,7 @@ namespace Apalinea::Expression::DataType {
             }
         }
 
-        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -46,7 +42,7 @@ namespace Apalinea::Expression::DataType {
                 }
 
                 if (this->tuple.containsItem(this->entry)) {
-                    this->data = this->tuple.getEntry(this->entry).get<Core::Types::Datatype::DtString>();
+                    this->data = this->tuple.getEntry(this->entry).get<Core::Type::Datatype::DtString>();
                 } else {
                     throw std::runtime_error("Entry was not found in the given tuple!");
                 }
@@ -56,12 +52,13 @@ namespace Apalinea::Expression::DataType {
         [[nodiscard]] std::string_view getIdentifier() const override {
             return IDENTIFIER;
         }
+
     private:
         Core::Tuple::Tuple tuple;
         std::string entry;
-        Core::Types::Datatype::DtString data;
+        Core::Type::Datatype::DtString data;
         bool load;
     };
-}
+} // Apalinea::Expression::DataType
 
-#endif //STREAM_V1_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_DATATYPE_DTSTRINGEXPRESSION_HPP

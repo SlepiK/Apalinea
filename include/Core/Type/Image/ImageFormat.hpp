@@ -1,12 +1,7 @@
-//
-// Created by SlepiK on 29.01.24.
-//
+#ifndef APALINEA_CORE_TYPE_IMAGEFORMAT_HPP
+#define APALINEA_CORE_TYPE_IMAGEFORMAT_HPP
 
-#ifndef ENERGYLEAF_STREAM_V1_TYPES_IMAGEFORMAT_HPP
-#define ENERGYLEAF_STREAM_V1_TYPES_IMAGEFORMAT_HPP
-
-namespace Apalinea::Core::Types {
-
+namespace Apalinea::Core::Type {
     enum class ImageFormat : int {
         FB_RGB888 = 0,
         FB_BGR888 = 1,
@@ -14,6 +9,6 @@ namespace Apalinea::Core::Types {
         FB_BGR565 = 3,
         FB_GRAY = 4
     };
-} // Energyleaf::Stream::V1::Type
+} // Apalinea::Core::Type
 
-#endif //ENERGYLEAF_STREAM_V1_TYPES_IMAGEFORMAT_HPP
+#endif //APALINEA_CORE_TYPE_IMAGEFORMAT_HPP

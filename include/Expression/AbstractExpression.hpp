@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 19.02.24.
-//
-
-#ifndef STREAM_V1_EXPRESSION_EXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_EXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_EXPRESSION_HPP
+#define APALINEA_EXPRESSION_EXPRESSION_HPP
 
 #include <list>
 #include <utility>
@@ -49,8 +45,10 @@ namespace Apalinea::Expression {
                 exp->setTuple(tuple);
             }
         }
+
     private:
         unsigned int vMax = 1;
+
     protected:
         std::list<IExpression*> vSubExpressions;
 
@@ -59,6 +57,6 @@ namespace Apalinea::Expression {
             else throw std::runtime_error("Cant set max below 1!");
         }
     };
-}
+} // Apalinea::Expression
 
-#endif //STREAM_V1_EXPRESSION_EXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_EXPRESSION_HPP

@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_SINKOPERAOTR_WRITESINKOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_SINKOPERAOTR_WRITESINKOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_SINKOPERAOTR_WRITESINKOPERATOR_HPP
+#define APALINEA_OPERATOR_SINKOPERAOTR_WRITESINKOPERATOR_HPP
 
 #include <ostream>
 #include "Core/Operator/SinkOperator/AbstractSinkOperator.hpp"
@@ -41,18 +37,20 @@ namespace Apalinea::Operator::SinkOperator {
         Writer& getWriter() {
             return this->vWriter;
         }
+
     private:
         Writer vWriter;
+
     protected:
         void work(Core::Tuple::Tuple &inputTuple) override {
             try {
                 if (this->expression) {
                     this->expression->setTuple(inputTuple);
                     this->expression->execute();
-                    if (Core::Types::Datatype::DtRegistry::get(this->expression->getIdentifier()) ==
-                            Core::Types::Datatype::DtRegistry::get(Core::Types::Datatype::DtString::IDENTIFIER)) {
+                    if (Core::Type::Datatype::DtRegistry::get(this->expression->getIdentifier()) ==
+                        Core::Type::Datatype::DtRegistry::get(Core::Type::Datatype::DtString::IDENTIFIER)) {
                         vWriter
-                                << static_cast<const Core::Types::Datatype::DtString &>(this->expression->getData()).toString()
+                                << static_cast<const Core::Type::Datatype::DtString &>(this->expression->getData()).toString()
                                 << std::endl;
                     }
                     vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
@@ -65,6 +63,6 @@ namespace Apalinea::Operator::SinkOperator {
             inputTuple.clear();
         }
     };
-}
+} // Apalinea::Operator::SinkOperator
 
-#endif
+#endif //APALINEA_OPERATOR_SINKOPERAOTR_WRITESINKOPERATOR_HPP

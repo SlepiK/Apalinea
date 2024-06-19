@@ -1,16 +1,11 @@
-//
-// Created by SlepiK on 27.01.2024.
-//
-
-#ifndef STREAM_V1_OPERATOR_IOPERATOR_HPP
-#define STREAM_V1_OPERATOR_IOPERATOR_HPP
+#ifndef APALINEA_CORE_OPERATOR_IOPERATOR_HPP
+#define APALINEA_CORE_OPERATOR_IOPERATOR_HPP
 
 #include "Core/Operator/Type/OperatorMode.hpp"
 #include "Core/Operator/Type/OperatorType.hpp"
 #include "Core/Operator/ProcessState/OperatorProcessState.hpp"
 
 namespace Apalinea::Core::Operator {
-
     class IOperator {
     public:
         virtual ~IOperator() = default;
@@ -25,7 +20,6 @@ namespace Apalinea::Core::Operator {
 
         [[nodiscard]] virtual Core::Operator::OperatorMode getOperatorMode() const = 0;
     };
+} // Apalinea::Core::Operator
 
-} // Stream::V1::Operator
-
-#endif //STREAM_V1_OPERATOR_IOPERATOR_HPP
+#endif //APALINEA_CORE_OPERATOR_IOPERATOR_HPP

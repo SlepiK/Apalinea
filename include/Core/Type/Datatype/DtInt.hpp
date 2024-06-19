@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 11.03.2024.
-//
-
-#ifndef STREAM_V1_TYPES_DATATYPE_DTINT_HPP
-#define STREAM_V1_TYPES_DATATYPE_DTINT_HPP
+#ifndef APALINEA_CORE_TYPE_DATATYPE_DTINT_HPP
+#define APALINEA_CORE_TYPE_DATATYPE_DTINT_HPP
 
 #include <string_view>
 #include <cmath>
@@ -21,7 +17,7 @@
 #include "Core/Type/Datatype/DtDouble.hpp"
 #include "Core/Type/Datatype/DtBool.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     class DtInt : public IDt {
     public:
         static constexpr DtRegistry::DtRegistryIdentifier IDENTIFIER{"DtInt"};
@@ -43,7 +39,7 @@ namespace Apalinea::Core::Types::Datatype {
             return *this;
         }
 
-        [[nodiscard]] std::unique_ptr<Core::Types::Datatype::IDt> copy() const override {
+        [[nodiscard]] std::unique_ptr<Core::Type::Datatype::IDt> copy() const override {
             return std::make_unique<DtInt>(*this);
         }
 
@@ -99,9 +95,10 @@ namespace Apalinea::Core::Types::Datatype {
         IDt* operator/(const IDt& other) const override;
         IDt* operator^(const IDt& other) const override;
         IDt* operator%(const IDt& other) const override;
+
     protected:
         int data{};
     };
-}
+} // Apalinea::Core::Type::Datatype
 
-#endif //STREAM_V1_TYPES_DATATYPE_DTINT_HPP
+#endif //APALINEA_CORE_TYPE_DATATYPE_DTINT_HPP

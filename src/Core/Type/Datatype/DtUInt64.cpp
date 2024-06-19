@@ -1,10 +1,6 @@
-//
-// Created by Slepik on 24.03.24.
-//
-
 #include "Core/Type/Datatype/DtUInt64.hpp"
 
-namespace Apalinea::Core::Types::Datatype {
+namespace Apalinea::Core::Type::Datatype {
     IDt *DtUInt64::operator+(const IDt &other) const {
         uint64_t tmpData = this->toUInt64();
 
@@ -208,4 +204,4 @@ namespace Apalinea::Core::Types::Datatype {
             throw std::invalid_argument("Cant calculate with the given two arguments!");
         }
     }
-}
+} // Apalinea::Core::Type::Datatype

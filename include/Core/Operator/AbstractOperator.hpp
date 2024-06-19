@@ -1,16 +1,11 @@
-//
-// Created by SlepiK on 27.01.2024.
-//
-
-#ifndef STREAM_V1_OPERATOR_ABSTRACTOPERATOR_HPP
-#define STREAM_V1_OPERATOR_ABSTRACTOPERATOR_HPP
+#ifndef APALINEA_CORE_OPERATOR_ABSTRACTOPERATOR_HPP
+#define APALINEA_CORE_OPERATOR_ABSTRACTOPERATOR_HPP
 
 #include <stdexcept>
 #include "Core/Tuple/Tuple.hpp"
 #include "Core/Operator/IOperator.hpp"
 
 namespace Apalinea::Core::Operator {
-
     class AbstractOperator : public IOperator {
     public:
         AbstractOperator() : vProcessed(false), vProcessing(false), vProcessState(Core::Operator::OperatorProcessState::CONTINUE) {
@@ -35,7 +30,6 @@ namespace Apalinea::Core::Operator {
         bool vProcessing;
         bool vProcessed;
     };
+} // Apalinea::Core::Operator
 
-} // Stream::V1::Operator
-
-#endif //STREAM_V1_OPERATOR_ABSTRACTOPERATOR_HPP
+#endif //APALINEA_CORE_OPERATOR_ABSTRACTOPERATOR_HPP

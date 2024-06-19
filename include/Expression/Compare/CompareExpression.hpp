@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 19.03.24.
-//
-
-#ifndef STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
-#define STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
+#ifndef APALINEA_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
+#define APALINEA_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
 
 #include "Core/Type/Datatype/DtBool.hpp"
 #include "Core/Type/Datatype/DtString.hpp"
@@ -37,13 +33,13 @@ namespace Apalinea::Expression::Compare {
 
     class CompareExpression : public AbstractExpression {
     public:
-        static constexpr std::string_view IDENTIFIER = Core::Types::Datatype::DtBool::IDENTIFIER;
+        static constexpr std::string_view IDENTIFIER = Core::Type::Datatype::DtBool::IDENTIFIER;
 
-        CompareExpression() : AbstractExpression({Core::Types::Datatype::DtInt8::IDENTIFIER, Core::Types::Datatype::DtInt16::IDENTIFIER, Core::Types::Datatype::DtInt32::IDENTIFIER,
-                                                  Core::Types::Datatype::DtInt64::IDENTIFIER, Core::Types::Datatype::DtString::IDENTIFIER, Core::Types::Datatype::DtUInt8::IDENTIFIER,
-                                                  Core::Types::Datatype::DtUInt16::IDENTIFIER, Core::Types::Datatype::DtUInt32::IDENTIFIER,
-                                                  Core::Types::Datatype::DtUInt64::IDENTIFIER, Core::Types::Datatype::DtInt::IDENTIFIER,
-                                                  Core::Types::Datatype::DtSizeT::IDENTIFIER, Core::Types::Datatype::DtBool::IDENTIFIER}), compareTypes(CompareTypes::EQUAL),
+        CompareExpression() : AbstractExpression({Core::Type::Datatype::DtInt8::IDENTIFIER, Core::Type::Datatype::DtInt16::IDENTIFIER, Core::Type::Datatype::DtInt32::IDENTIFIER,
+                                                  Core::Type::Datatype::DtInt64::IDENTIFIER, Core::Type::Datatype::DtString::IDENTIFIER, Core::Type::Datatype::DtUInt8::IDENTIFIER,
+                                                  Core::Type::Datatype::DtUInt16::IDENTIFIER, Core::Type::Datatype::DtUInt32::IDENTIFIER,
+                                                  Core::Type::Datatype::DtUInt64::IDENTIFIER, Core::Type::Datatype::DtInt::IDENTIFIER,
+                                                  Core::Type::Datatype::DtSizeT::IDENTIFIER, Core::Type::Datatype::DtBool::IDENTIFIER}), compareTypes(CompareTypes::EQUAL),
                               first(nullptr), second(nullptr){
         }
 
@@ -77,22 +73,22 @@ namespace Apalinea::Expression::Compare {
             switch (this->compareTypes) {
                 default:
                 case CompareTypes::EQUAL:
-                    this->data = Core::Types::Datatype::DtBool(first->getData() == second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() == second->getData());
                     break;
                 case CompareTypes::NOT_EQUAL:
-                    this->data = Core::Types::Datatype::DtBool(first->getData() != second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() != second->getData());
                     break;
                 case CompareTypes::LESS_THAN:
-                    this->data = Core::Types::Datatype::DtBool(first->getData() < second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() < second->getData());
                     break;
                 case CompareTypes::GREATER_THAN:
-                    this->data = Core::Types::Datatype::DtBool(first->getData() > second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() > second->getData());
                     break;
                 case CompareTypes::LESS_THAN_OR_EQUAL:
-                    this->data = Core::Types::Datatype::DtBool(first->getData() <= second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() <= second->getData());
                     break;
                 case CompareTypes::GREATER_THAN_OR_EQUAL:
-                    this->data = Core::Types::Datatype::DtBool(first->getData() >= second->getData());
+                    this->data = Core::Type::Datatype::DtBool(first->getData() >= second->getData());
                     break;
             }
         }
@@ -108,7 +104,7 @@ namespace Apalinea::Expression::Compare {
             }
         }
 
-        [[nodiscard]] const Core::Types::Datatype::IDt& getData() const override {
+        [[nodiscard]] const Core::Type::Datatype::IDt& getData() const override {
             return this->data;
         }
 
@@ -125,10 +121,10 @@ namespace Apalinea::Expression::Compare {
         }
 
     private:
-        Core::Types::Datatype::DtBool data;
+        Core::Type::Datatype::DtBool data;
         CompareTypes compareTypes;
         IExpression *first, *second;
     };
-}
+} // Apalinea::Expression::Compare
 
-#endif //STREAM_V1_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP
+#endif //APALINEA_EXPRESSION_COMPARE_COMPAREEXPRESSION_HPP

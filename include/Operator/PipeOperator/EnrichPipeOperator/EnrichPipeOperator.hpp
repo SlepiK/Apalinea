@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_ENRICHPIPEOPERATOR_HPP
-#define STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_ENRICHPIPEOPERATOR_HPP
+#ifndef APALINEA_OPERATOR_PIPEOPERATOR_ENRICHPIPEOPERATOR_HPP
+#define APALINEA_OPERATOR_PIPEOPERATOR_ENRICHPIPEOPERATOR_HPP
 
 #include "Core/Operator/PipeOperator/AbstractPipeOperator.hpp"
 
@@ -31,6 +27,7 @@ namespace Apalinea::Operator::PipeOperator {
 
     private:
         Enricher vEnricher;
+
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple& outputTuple) override {
@@ -45,6 +42,6 @@ namespace Apalinea::Operator::PipeOperator {
             }
         }
     };
-}
+} // Apalinea::Operator::PipeOperator
 
-#endif // STREAM_V1_CORE_OPERATOR_PIPEOPERATOR_ENRICHPIPEOPERATOR_HPP
+#endif //APALINEA_OPERATOR_PIPEOPERATOR_ENRICHPIPEOPERATOR_HPP

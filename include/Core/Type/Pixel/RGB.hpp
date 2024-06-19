@@ -1,13 +1,9 @@
-//
-// Created by SlepiK on 30.01.24.
-//
-
-#ifndef ENERGYLEAF_STREAM_V1_TYPES_PIXEL_RGB_HPP
-#define ENERGYLEAF_STREAM_V1_TYPES_PIXEL_RGB_HPP
+#ifndef APALINEA_CORE_TYPE_PIXEL_RGB_HPP
+#define APALINEA_CORE_TYPE_PIXEL_RGB_HPP
 
 #include <utility>
 
-namespace Apalinea::Core::Types::Pixel {
+namespace Apalinea::Core::Type::Pixel {
     class RGB {
     public:
         RGB() : vR(0), vG(0), vB(0){
@@ -98,11 +94,12 @@ namespace Apalinea::Core::Types::Pixel {
         [[nodiscard]] int getB() const {
             return this->vB;
         }
+
     private:
         int vR;
         int vG;
         int vB;
     };
-}
+} // Apalinea::Core::Type::Pixel
 
-#endif //ENERGYLEAF_STREAM_V1_TYPES_PIXEL_RGB_HPP
+#endif //APALINEA_CORE_TYPE_PIXEL_RGB_HPP

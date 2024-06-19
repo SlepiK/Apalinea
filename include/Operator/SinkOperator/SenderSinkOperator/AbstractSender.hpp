@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 13.02.24.
-//
-
-#ifndef STREAM_V1_CORE_OPERATOR_SINKOPERATOR_ABSTRACTSENDER_HPP
-#define STREAM_V1_CORE_OPERATOR_SINKOPERATOR_ABSTRACTSENDER_HPP
+#ifndef APALINEA_OPERATOR_SINKOPERATOR_ABSTRACTSENDER_HPP
+#define APALINEA_OPERATOR_SINKOPERATOR_ABSTRACTSENDER_HPP
 
 #include "Core/Operator/SinkOperator/AbstractSinkOperator.hpp"
 
@@ -16,6 +12,6 @@ namespace Apalinea::Operator::SinkOperator {
     private:
     protected:
     };
-} // STREAM_V1_CORE_OPERATOR_SINKOPERATOR_ABSTRACTSENDER_HPP
+} // Apalinea::Operator::SinkOperator
 
-#endif
+#endif //APALINEA_OPERATOR_SINKOPERATOR_ABSTRACTSENDER_HPP

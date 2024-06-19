@@ -1,9 +1,5 @@
-//
-// Created by SlepiK on 09.06.24.
-//
-
-#ifndef STREAM_V1_CORE_EXECUTOR_STLEXECUTOR_HPP
-#define STREAM_V1_CORE_EXECUTOR_STLEXECUTOR_HPP
+#ifndef APALINEA_CORE_EXECUTOR_STLEXECUTOR_HPP
+#define APALINEA_CORE_EXECUTOR_STLEXECUTOR_HPP
 
 #include <vector>
 #include <thread>
@@ -56,6 +52,7 @@ namespace Apalinea::Core::Executor {
             cv.notify_all();
             for(auto& worker : workers) worker.join();
         }
+
     private:
         std::vector<std::thread> workers;
         std::queue<std::function<void()>> tasks;
@@ -82,6 +79,6 @@ namespace Apalinea::Core::Executor {
             }
         }
     };
-}
+} // Apalinea::Core::Executor
 
-#endif //STREAM_V1_CORE_EXECUTOR_STLEXECUTOR_HPP
+#endif //APALINEA_CORE_EXECUTOR_STLEXECUTOR_HPP

@@ -7,7 +7,7 @@ This Library is work in progress.
 Most of the functionalities and the architecture were inspired by the DSMS framework Odysseus.
 
 ## Usage
-To use Apalinea you need to include <code>Core/Plan/Plan.hpp</code>, <code>Core/Log/LogManager.hpp</code>,<code>Core/Executor/STLExecutor.hpp</code>,<code>Core/Log/ConsoleLog.hpp</code>.
+To use Apalinea you need to include <code>Core/Plan/Plan.hpp</code>, <code>Core/Log/LogManager.hpp</code>, <code>Core/Executor/STLExecutor.hpp</code>, <code>Core/Log/ConsoleLog.hpp</code>.
 You can also create your own Executor and Logger (STLExecutor and ConsoleLog are only pre defined ones). A Executor based on boost
 is also part of the library.
 
@@ -31,8 +31,8 @@ After that you can add your operators to the plan by using:
 	<li><code>plan.processOrdered();</code> - Process one iteration through the stream (ordered) </li>
 </ol>
 
-For an working example look into <code>example/example.cpp</code>.
+For a working example look into <code>example/example.cpp</code>.
 
 ## Version and Changes
-Currently is Apalinea after a breaking change in the version v1.0.0.Orez available. At that change the full library
+Currently, Apalinea is after a breaking change in the version v1.0.0.Orez available. At that change the full library
 has moved into its own namespace and a name change was fulfilled.
