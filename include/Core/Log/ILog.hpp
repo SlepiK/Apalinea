@@ -6,6 +6,7 @@
 #define STREAM_V1_CORE_LOG_ILOG_HPP
 
 #include <string_view>
+#include <ctime>
 #include "Core/Log/LogLevel.hpp"
 
 namespace Apalinea::Core::Log {
@@ -18,7 +19,7 @@ namespace Apalinea::Core::Log {
         virtual void close() = 0;
         virtual void flush() = 0;
 
-        virtual void log(LogLevel level, const struct tm* time, std::string_view file, int line, std::string_view message) = 0;
+        virtual void log(LogLevel level, std::tm* time, std::string_view file, int line, std::string_view message) = 0;
     private:
     protected:
     };

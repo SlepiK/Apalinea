@@ -8,6 +8,7 @@
 #include <string_view>
 #include <vector>
 #include <memory>
+#include <ctime>
 #include "Core/Log/ILog.hpp"
 #include "Core/Log/LogLevel.hpp"
 
@@ -21,9 +22,8 @@ namespace Apalinea::Core::Log {
     class LogManager {
     public:
         static void log(LogLevel level, std::string_view file, int line, std::string_view message) {
-            time_t tTime;
-            time(&tTime);
-            struct tm* logTime = localtime(&tTime);
+            std::time_t tTime = std::time(0);
+            std::tm* logTime = std::localtime(&tTime);
 
             for(LogVector::iterator iterator = logs.begin(); iterator != logs.end(); ++iterator) {
                 iterator->get()->log(level,logTime,file,line,message);
