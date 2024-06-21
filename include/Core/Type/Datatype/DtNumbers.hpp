@@ -32,7 +32,7 @@ namespace Apalinea::Core::Type::Datatype {
         }
 
         [[maybe_unused]] static bool isFloatNumber(DtRegistry::DtRegistryIdentifier dt) {
-            return floatnumbers.contains(dt);
+            return floatnumbers.find(dt) != floatnumbers.end();
         }
 
     private:
