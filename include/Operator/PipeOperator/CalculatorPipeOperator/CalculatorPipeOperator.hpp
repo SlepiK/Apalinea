@@ -12,45 +12,17 @@ namespace Apalinea::Operator::PipeOperator {
     class [[maybe_unused]] CalculatorPipeOperator
             : public Core::Operator::AbstractPipeOperator {
     public:
-        static constexpr float WATT_PER_MILLISECOND = 3600000.0f;
-        static constexpr float WATT_PER_SECOND = 3600.0f;
-        static constexpr float WATT_PER_MINUTE = 60.0f;
-        static constexpr float WATT_PER_HOUR = 1.0f;
 
-        enum class CalculationFormat : int {
-            MILLISECOND = 0,
-            SECOND = 1,
-            MINUTE = 2,
-            HOUR = 3
-        };
-
-        [[maybe_unused]] void setCalculationFormat(CalculationFormat format) {
-            if(this->vRun) {
-                throw std::runtime_error("Operator was already used! Config before first use!");
-            }
-            switch (format) {
-                case CalculationFormat::MILLISECOND:
-                    wattPer = WATT_PER_MILLISECOND;
-                    break;
-                case CalculationFormat::SECOND:
-                    wattPer = WATT_PER_SECOND;
-                    break;
-                case CalculationFormat::MINUTE:
-                    wattPer = WATT_PER_MINUTE;
-                    break;
-                case CalculationFormat::HOUR:
-                    wattPer = WATT_PER_HOUR;
-                    break;
-            }
+        [[maybe_unused]] void setThreshold(int threshold) {
+            this->vThreshold = std::chrono::duration_cast<std::chrono::hours>(std::chrono::milliseconds(threshold));
         }
 
     private:
         std::optional<std::chrono::steady_clock::time_point> vLast;
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
-        float wattPer = WATT_PER_SECOND;
-        Core::Type::Datatype::DtFloat power;
-        bool vRun = false;
+        Core::Type::Datatype::DtFloat energy;
+        std::chrono::hours vThreshold = std::chrono::duration_cast<std::chrono::hours>(std::chrono::milliseconds(30));
 
         static std::chrono::steady_clock::time_point getCurrentTimePoint() {
             return std::chrono::steady_clock::now();
@@ -74,23 +46,23 @@ namespace Apalinea::Operator::PipeOperator {
             if(!this->vRotationPerKWhSet) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
-            this->vRun = true;
 
             if(this->vLast.has_value()) {
                 std::chrono::steady_clock::time_point current = getCurrentTimePoint();
-                std::chrono::milliseconds  rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
-                if(rotationTime.count() > 30) {
-                    power = Core::Type::Datatype::DtFloat((this->wattPer / static_cast<float>(rotationTime.count()) / (float)this->vRotationPerKWh) * 1000.0f);
+                std::chrono::hours rotationTime = std::chrono::duration_cast<std::chrono::hours>(current - this->vLast.value());
+
+                if(rotationTime.count() > vThreshold) {
+                    energy = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
                     this->vLast = current;
                 } else {
-                    power = Core::Type::Datatype::DtFloat(0.0f);
+                    energy = Core::Type::Datatype::DtFloat(0.0f);
                 }
             } else {
                 //initial process, no red mark was detected before this event.
                 this->vLast = getCurrentTimePoint();
             }
             outputTuple.clear();
-            outputTuple.addItem(std::string("Power"),Core::Type::Datatype::DtFloat(power));
+            outputTuple.addItem(std::string("Power"),Core::Type::Datatype::DtFloat(energy));
         }
     };
 } // Apalinea::Operator::PipeOperator
