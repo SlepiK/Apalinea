@@ -32,6 +32,7 @@ namespace Apalinea::Operator::PipeOperator {
                 case CalculationFormat::MILLISECOND:
                     wattPer = WATT_PER_MILLISECOND;
                     break;
+                default:
                 case CalculationFormat::SECOND:
                     wattPer = WATT_PER_SECOND;
                     break;
@@ -44,13 +45,19 @@ namespace Apalinea::Operator::PipeOperator {
             }
         }
 
+        [[maybe_unused]] void setThreshold(int threshold) {
+            this->vThreshold = threshold;
+        }
+
     private:
         std::optional<std::chrono::steady_clock::time_point> vLast;
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
         float wattPer = WATT_PER_SECOND;
+        CalculationFormat vCF = CalculationFormat::SECOND;
         Core::Type::Datatype::DtFloat power;
         bool vRun = false;
+        int vThreshold = 30;
 
         static std::chrono::steady_clock::time_point getCurrentTimePoint() {
             return std::chrono::steady_clock::now();
@@ -78,9 +85,26 @@ namespace Apalinea::Operator::PipeOperator {
 
             if(this->vLast.has_value()) {
                 std::chrono::steady_clock::time_point current = getCurrentTimePoint();
-                std::chrono::milliseconds  rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
-                if(rotationTime.count() > 30) {
-                    power = Core::Type::Datatype::DtFloat((this->wattPer / static_cast<float>(rotationTime.count()) / (float)this->vRotationPerKWh) * 1000.0f);
+                std::chrono::milliseconds rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
+
+                if(rotationTime.count() > vThreshold) {
+                    float tmpCalc;
+                    switch (this->vCF) {
+                        case CalculationFormat::MILLISECOND:
+                            tmpCalc = this->wattPer / static_cast<float>(rotationTime.count());
+                            break;
+                        default:
+                        case CalculationFormat::SECOND:
+                            tmpCalc = this->wattPer / static_cast<float>(duration_cast<std::chrono::seconds>(rotationTime).count());
+                            break;
+                        case CalculationFormat::MINUTE:
+                            tmpCalc = this->wattPer / static_cast<float>(duration_cast<std::chrono::minutes>(rotationTime).count());
+                            break;
+                        case CalculationFormat::HOUR:
+                            tmpCalc = this->wattPer / static_cast<float>(duration_cast<std::chrono::hours>(rotationTime).count());
+                            break;
+                    }
+                    power = Core::Type::Datatype::DtFloat((tmpCalc / (float)this->vRotationPerKWh) * 1000.0f);
                     this->vLast = current;
                 } else {
                     power = Core::Type::Datatype::DtFloat(0.0f);
