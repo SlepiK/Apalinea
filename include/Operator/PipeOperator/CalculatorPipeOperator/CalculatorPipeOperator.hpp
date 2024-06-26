@@ -88,23 +88,24 @@ namespace Apalinea::Operator::PipeOperator {
                 std::chrono::milliseconds rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
 
                 if(rotationTime.count() > vThreshold) {
-                    float tmpCalc;
+                    float tmpEnergy;
                     switch (this->vCF) {
                         case CalculationFormat::MILLISECOND:
-                            tmpCalc = this->wattPer / static_cast<float>(rotationTime.count());
+                            tmpEnergy = (this->wattPer/1000.0f) * (static_cast<float>(rotationTime.count()) / (1000.0f * 60.0f * 60.0f));
                             break;
                         default:
                         case CalculationFormat::SECOND:
-                            tmpCalc = this->wattPer / static_cast<float>(duration_cast<std::chrono::seconds>(rotationTime).count());
+                            tmpEnergy = (this->wattPer/1000.0f) * (static_cast<float>(std::chrono::duration_cast<std::chrono::seconds>(rotationTime).count()) / (60.0f * 60.0f));
                             break;
                         case CalculationFormat::MINUTE:
-                            tmpCalc = this->wattPer / static_cast<float>(duration_cast<std::chrono::minutes>(rotationTime).count());
+                            tmpEnergy = (this->wattPer/1000.0f) * (static_cast<float>(std::chrono::duration_cast<std::chrono::minutes>(rotationTime).count()) / 60.0f);
                             break;
                         case CalculationFormat::HOUR:
-                            tmpCalc = this->wattPer / static_cast<float>(duration_cast<std::chrono::hours>(rotationTime).count());
+                            tmpEnergy = (this->wattPer/1000.0f) * static_cast<float>(std::chrono::duration_cast<std::chrono::hours>(rotationTime).count());
                             break;
                     }
-                    power = Core::Type::Datatype::DtFloat((tmpCalc / (float)this->vRotationPerKWh) * 1000.0f);
+                    //energy should be in kWh now
+                    power = Core::Type::Datatype::DtFloat(tmpEnergy);
                     this->vLast = current;
                 } else {
                     power = Core::Type::Datatype::DtFloat(0.0f);
