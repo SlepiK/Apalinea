@@ -52,8 +52,7 @@ namespace Apalinea::Operator::PipeOperator {
                 std::chrono::hours rotationTime = std::chrono::duration_cast<std::chrono::hours>(current - this->vLast.value());
 
                 if(rotationTime.count() > vThreshold) {
-                    auto tmpEnergy = static_cast<float>(rotationTime.count());
-                    energy = Core::Type::Datatype::DtFloat(tmpEnergy / static_cast<float>(this->vRotationPerKWh));
+                    energy = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
                     this->vLast = current;
                 } else {
                     energy = Core::Type::Datatype::DtFloat(0.0f);
