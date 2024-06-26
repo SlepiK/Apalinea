@@ -14,7 +14,7 @@ namespace Apalinea::Operator::PipeOperator {
     public:
 
         [[maybe_unused]] void setThreshold(int threshold) {
-            this->vThreshold = threshold;
+            this->vThreshold = std::chrono::duration_cast<std::chrono::hours>(std::chrono::milliseconds(threshold));
         }
 
     private:
@@ -22,7 +22,7 @@ namespace Apalinea::Operator::PipeOperator {
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
         Core::Type::Datatype::DtFloat energy;
-        int vThreshold = 30;
+        std::chrono::hours vThreshold = std::chrono::duration_cast<std::chrono::hours>(std::chrono::milliseconds(30));
 
         static std::chrono::steady_clock::time_point getCurrentTimePoint() {
             return std::chrono::steady_clock::now();
