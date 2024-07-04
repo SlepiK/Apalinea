@@ -14,7 +14,7 @@ namespace Apalinea::Operator::PipeOperator {
     public:
 
         [[maybe_unused]] void setThreshold(int threshold) {
-            this->vThreshold = std::chrono::duration_cast<std::chrono::hours>(std::chrono::milliseconds(threshold));
+            this->vThreshold = std::chrono::milliseconds(threshold);
         }
 
     private:
@@ -22,7 +22,7 @@ namespace Apalinea::Operator::PipeOperator {
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
         Core::Type::Datatype::DtFloat energy;
-        std::chrono::hours vThreshold = std::chrono::duration_cast<std::chrono::hours>(std::chrono::milliseconds(30));
+        std::chrono::milliseconds vThreshold = std::chrono::milliseconds(30);
 
         static std::chrono::steady_clock::time_point getCurrentTimePoint() {
             return std::chrono::steady_clock::now();
@@ -49,20 +49,23 @@ namespace Apalinea::Operator::PipeOperator {
 
             if(this->vLast.has_value()) {
                 std::chrono::steady_clock::time_point current = getCurrentTimePoint();
-                std::chrono::hours rotationTime = std::chrono::duration_cast<std::chrono::hours>(current - this->vLast.value());
+                std::chrono::milliseconds rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
 
-                if(rotationTime.count() > vThreshold.count()) {
+                if(rotationTime > vThreshold) {
                     energy = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
                     this->vLast = current;
+                    vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
                 } else {
                     energy = Core::Type::Datatype::DtFloat(0.0f);
+                    vProcessState = Core::Operator::OperatorProcessState::BREAK;
                 }
             } else {
                 //initial process, no red mark was detected before this event.
                 this->vLast = getCurrentTimePoint();
+                vProcessState = Core::Operator::OperatorProcessState::BREAK;
             }
             outputTuple.clear();
-            outputTuple.addItem(std::string("Power"),Core::Type::Datatype::DtFloat(energy));
+            outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energy));
         }
     };
 } // Apalinea::Operator::PipeOperator
