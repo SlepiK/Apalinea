@@ -23,11 +23,11 @@ namespace Apalinea::Core::Log {
 
         void log(LogLevel level, std::tm* time, std::string_view file, int line, std::string_view message) final {
             if(line >= 0) {
-                std::cout << "APALINEA_LOG][" << time->tm_mday << "." << time->tm_mon + 1 << "." << time->tm_year + + 1900
+                std::cout << "APALINEA_LOG][" << time->tm_mday << "." << time->tm_mon + 1 << "." << time->tm_year + 1900
                 << "-" << time->tm_hour << ":" << time->tm_min << ":" << time->tm_sec << "][" << level << "]["
                 << file << ":" << line << "]:" << message << std::endl;
             } else {
-                std::cout << "APALINEA_LOG][" << time->tm_mday << "." << time->tm_mon + 1 << "." << time->tm_year + + 1900
+                std::cout << "APALINEA_LOG][" << time->tm_mday << "." << time->tm_mon + 1 << "." << time->tm_year + 1900
                 << "-" << time->tm_hour << ":" << time->tm_min << ":" << time->tm_sec << "][" << level << "]["
                 << file << "]:" << message << std::endl;
             }
