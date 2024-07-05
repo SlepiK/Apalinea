@@ -13,8 +13,20 @@ namespace Apalinea::Operator::PipeOperator {
             : public Core::Operator::AbstractPipeOperator {
     public:
 
-        [[maybe_unused]] void setThreshold(int threshold) {
+        [[maybe_unused]] void setThreshold(unsigned int threshold) {
             this->vThreshold = std::chrono::milliseconds(threshold);
+        }
+
+        [[maybe_unused]] void setTimeWindow(unsigned int timeWindow) {
+            this->vTimeWindow = std::chrono::milliseconds(timeWindow);
+        }
+
+        [[maybe_unused]] unsigned int getThreshold() {
+            return this->vThreshold.count();
+        }
+
+        [[maybe_unused]] unsigned int getTimeWindow() {
+            return this->vTimeWindow.count();
         }
 
     private:
@@ -23,6 +35,7 @@ namespace Apalinea::Operator::PipeOperator {
         bool vRotationPerKWhSet = false;
         Core::Type::Datatype::DtFloat energy;
         std::chrono::milliseconds vThreshold = std::chrono::milliseconds(30);
+        std::chrono::milliseconds vTimeWindow = std::chrono::milliseconds(1000); //Default is 1 second
 
         static std::chrono::steady_clock::time_point getCurrentTimePoint() {
             return std::chrono::steady_clock::now();
