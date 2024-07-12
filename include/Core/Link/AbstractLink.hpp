@@ -15,6 +15,7 @@ namespace Apalinea::Core::Link {
             vProcessed(false),
             vProcessing(false),
             vNewDataAvailable(false),
+            vTimeBasedExecuted(false),
             vState(Operator::OperatorProcessState::CONTINUE),
             executor(std::move(executor)) {
         }
@@ -29,10 +30,17 @@ namespace Apalinea::Core::Link {
             return this->vProcessed;
         }
 
+
+        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
+            //normally an operator did not need to be executed outside the stream pipeline.
+            return false;
+        }
+
     protected:
         bool vProcessing;
         bool vProcessed;
         bool vNewDataAvailable;
+        bool vTimeBasedExecuted;
         Core::Operator::OperatorProcessState vState;
         std::shared_ptr<Core::Executor::IExecutor> executor;
     };
