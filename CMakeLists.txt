@@ -46,7 +46,7 @@ set(PROJECT_HEADERS
         include/Core/Plan/Plan.hpp
         include/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
         include/Core/Constants/Version.hpp
-        include/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
+        include/Operator/PipeOperator/EnergyCalculatorPipeOperator/EnergyCalculatorPipeOperator.hpp
         include/Core/Type/Power/Power.hpp
         include/Core/Type/Image/Image.hpp
         include/Core/Type/Image/ImageFormat.hpp

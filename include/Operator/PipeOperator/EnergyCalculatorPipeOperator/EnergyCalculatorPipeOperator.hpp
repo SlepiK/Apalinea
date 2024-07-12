@@ -9,7 +9,7 @@
 #include "Core/Type/Datatype/DtFloat.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
-    class [[maybe_unused]] CalculatorPipeOperator
+    class [[maybe_unused]] EnergyCalculatorPipeOperator
             : public Core::Operator::AbstractPipeOperator {
     public:
 
@@ -33,7 +33,8 @@ namespace Apalinea::Operator::PipeOperator {
         std::optional<std::chrono::steady_clock::time_point> vLast;
         int vRotationPerKWh = 0;
         bool vRotationPerKWhSet = false;
-        Core::Type::Datatype::DtFloat energy;
+        Core::Type::Datatype::DtFloat energyCol = Core::Type::Datatype::DtFloat(0.0f);
+        Core::Type::Datatype::DtFloat energyOut = Core::Type::Datatype::DtFloat(0.0f);
         std::chrono::milliseconds vThreshold = std::chrono::milliseconds(30);
         std::chrono::milliseconds vTimeWindow = std::chrono::milliseconds(1000); //Default is 1 second
 
@@ -60,25 +61,37 @@ namespace Apalinea::Operator::PipeOperator {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
 
+            std::chrono::steady_clock::time_point current = getCurrentTimePoint();
+
             if(this->vLast.has_value()) {
-                std::chrono::steady_clock::time_point current = getCurrentTimePoint();
+                //n+1 mark was detected
                 std::chrono::milliseconds rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
 
-                if(rotationTime > vThreshold) {
-                    energy = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
-                    this->vLast = current;
-                    vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
+                if(rotationTime > this->vThreshold) {
+                    if((this->vLast.value() + this->vTimeWindow) > current) {
+                        //time window during
+                        energyCol = Core::Type::Datatype::DtFloat(energyCol.toFloat() + (1.0f / static_cast<float>(this->vRotationPerKWh)));
+                        vProcessState = Core::Operator::OperatorProcessState::BREAK;
+                    } else {
+                        //time window exit
+                        energyOut = energyCol;
+                        this->vLast = current;
+                        energyCol = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
+                        vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
+                    }
                 } else {
-                    energy = Core::Type::Datatype::DtFloat(0.0f);
+                    //ignore value, because of the threshold, that was not passed
                     vProcessState = Core::Operator::OperatorProcessState::BREAK;
                 }
             } else {
-                //initial process, no red mark was detected before this event.
-                this->vLast = getCurrentTimePoint();
+                //first time a mark was detected; time window entry
+                this->vLast = current;
+                energyCol = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
                 vProcessState = Core::Operator::OperatorProcessState::BREAK;
             }
+
             outputTuple.clear();
-            outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energy));
+            outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyCol));
         }
     };
 } // Apalinea::Operator::PipeOperator
