@@ -63,7 +63,7 @@ namespace Apalinea::Core::Link {
         }
 
         void process() override {
-            if (!this->vNewDataAvailable) return;
+            if (!this->vNewDataAvailable && !this->isTimeBasedExecutionNeeded()) return;
             else this->vNewDataAvailable = false;
             if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
                 this->executor.get()->addTask([this] { this->exec(); });
