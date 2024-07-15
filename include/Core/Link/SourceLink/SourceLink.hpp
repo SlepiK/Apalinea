@@ -66,29 +66,43 @@ namespace Apalinea::Core::Link {
 
     protected:
         void exec() {
-            if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
-            if (this->vProcessed) this->vProcessed = false;
-            if (!this->vProcessing) this->vProcessing = true;
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
+                if (this->isTimeBasedExecutionNeeded() && this->vTimeBasedExecuted) this->vTimeBasedExecuted = false;
+                if (this->vProcessed) this->vProcessed = false;
+                if (!this->vProcessing) this->vProcessing = true;
 
-            if(this->vState == Core::Operator::OperatorProcessState::CONTINUE || this->vState == Core::Operator::OperatorProcessState::BREAK) {
-                Tuple::Tuple outputTuple;
-                this->vOperator.process(outputTuple);
-                this->vState = this->vOperator.getOperatorProcessState();
+                if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
+                    this->vState == Core::Operator::OperatorProcessState::BREAK
+                    || this->isTimeBasedExecutionNeeded()) {
+                    if (this->isTimeBasedExecutionNeeded()) this->vOperator.setTimeBasedExecuted(true);
+                    Tuple::Tuple outputTuple;
+                    this->vOperator.process(outputTuple);
+                    if (this->isTimeBasedExecutionNeeded()) this->vOperator.setTimeBasedExecuted(false);
+                    this->vState = this->vOperator.getOperatorProcessState();
 
-                for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                    if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
-                        (*iterator)->setInputTuple(outputTuple);
-                        (*iterator)->setOperatorProcessState(this->vState);
-                    } else {
-                        (*iterator)->setOperatorProcessState(this->vState);
+                    for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                        if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+                            (*iterator)->setInputTuple(outputTuple);
+                            (*iterator)->setOperatorProcessState(this->vState);
+                        } else {
+                            (*iterator)->setOperatorProcessState(this->vState);
+                        }
                     }
+
+                    outputTuple.clear();
                 }
 
-                outputTuple.clear();
+                this->vProcessing = false;
+                this->vProcessed = true;
+                if (this->isTimeBasedExecutionNeeded() && !this->vTimeBasedExecuted) this->vTimeBasedExecuted = true;
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
+        }
 
-            this->vProcessing = false;
-            this->vProcessed = true;
+        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
+            return this->vOperator.isTimeBasedExecutionNeeded();
         }
     };
 

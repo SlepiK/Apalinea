@@ -30,12 +30,6 @@ namespace Apalinea::Core::Link {
             return this->vProcessed;
         }
 
-
-        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            //normally an operator did not need to be executed outside the stream pipeline.
-            return false;
-        }
-
     protected:
         bool vProcessing;
         bool vProcessed;
@@ -43,6 +37,8 @@ namespace Apalinea::Core::Link {
         bool vTimeBasedExecuted;
         Core::Operator::OperatorProcessState vState;
         std::shared_ptr<Core::Executor::IExecutor> executor;
+
+        [[maybe_unused]] [[nodiscard]] virtual bool isTimeBasedExecutionNeeded() const = 0;
     };
 } // Apalinea::Core::Link
 
