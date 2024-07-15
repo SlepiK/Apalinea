@@ -18,8 +18,6 @@ namespace Apalinea::Core::Link {
         [[nodiscard]] virtual bool isProcessed() const = 0;
 
         virtual std::optional<std::reference_wrapper<const std::vector<std::shared_ptr<LinkWrapper>>>> getLinks() = 0;
-
-        [[maybe_unused]] [[nodiscard]] virtual bool isTimeBasedExecutionNeeded() const = 0;
     };
 } // Apalinea::Core::Link
 
