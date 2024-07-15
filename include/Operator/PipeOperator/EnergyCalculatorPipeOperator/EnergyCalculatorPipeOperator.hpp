@@ -29,6 +29,11 @@ namespace Apalinea::Operator::PipeOperator {
             return this->vTimeWindow.count();
         }
 
+        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
+            //we want that this operator can also be executed outside the pipeline
+            return true;
+        }
+
     private:
         std::optional<std::chrono::steady_clock::time_point> vLast;
         int vRotationPerKWh = 0;
@@ -45,7 +50,7 @@ namespace Apalinea::Operator::PipeOperator {
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple &outputTuple) override {
-            if(!inputTuple.containsItem("State")){
+            if(!inputTuple.containsItem("State") && !vTimeBasedExecuted){
                 vProcessState = Core::Operator::OperatorProcessState::BREAK;
                 return;
             } else {
@@ -57,18 +62,28 @@ namespace Apalinea::Operator::PipeOperator {
                 this->vRotationPerKWhSet = true;
             }
             inputTuple.clear();
-            if(!this->vRotationPerKWhSet) {
+            if(!this->vRotationPerKWhSet && !vTimeBasedExecuted) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
 
             std::chrono::steady_clock::time_point current = getCurrentTimePoint();
 
             if(this->vLast.has_value()) {
+                if(vTimeBasedExecuted && (this->vLast.value() + this->vTimeWindow) < current) {
+                    //the operator is executed outside the pipeline
+                    energyOut = energyCol;
+                    this->vLast = current;
+                    energyCol = Core::Type::Datatype::DtFloat(0.0f);
+                    vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
+                    outputTuple.clear();
+                    outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyOut));
+                    return;
+                }
                 //n+1 mark was detected
                 std::chrono::milliseconds rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
 
                 if(rotationTime > this->vThreshold) {
-                    if((this->vLast.value() + this->vTimeWindow) > current) {
+                    if((this->vLast.value() + this->vTimeWindow) >= current) {
                         //time window during
                         energyCol = Core::Type::Datatype::DtFloat(energyCol.toFloat() + (1.0f / static_cast<float>(this->vRotationPerKWh)));
                         vProcessState = Core::Operator::OperatorProcessState::BREAK;
@@ -91,7 +106,7 @@ namespace Apalinea::Operator::PipeOperator {
             }
 
             outputTuple.clear();
-            outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyCol));
+            outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyOut));
         }
     };
 } // Apalinea::Operator::PipeOperator

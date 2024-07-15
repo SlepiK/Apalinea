@@ -47,6 +47,10 @@ namespace Apalinea::Core::Operator {
         Expression::IExpression* expression{nullptr};
 
         virtual void work(Core::Tuple::Tuple& inputTuple) = 0;
+
+        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
+            return false;
+        }
     };
 } // Apalinea::Core::Operator
 

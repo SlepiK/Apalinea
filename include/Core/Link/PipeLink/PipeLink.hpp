@@ -123,10 +123,10 @@ namespace Apalinea::Core::Link {
 
                 if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
                     this->isTimeBasedExecutionNeeded()) {
-                    if (this->isTimeBasedExecutionNeeded()) this->vOperator.setTimeBasedExecuted(true);
+                    if (this->isTimeBasedExecutionNeeded()) this->setTimeBasedExecuted(this->vOperator,true);
                     Tuple::Tuple outputTuple;
                     this->vOperator.process(this->inputTuple, outputTuple);
-                    if (this->isTimeBasedExecutionNeeded()) this->vOperator.setTimeBasedExecuted(false);
+                    if (this->isTimeBasedExecutionNeeded()) this->setTimeBasedExecuted(this->vOperator,false);
                     this->inputTuple.clear();
                     this->vState = this->vOperator.getOperatorProcessState();
 
@@ -151,7 +151,7 @@ namespace Apalinea::Core::Link {
         }
 
         [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            return this->vOperator.isTimeBasedExecutionNeeded();
+            return this->isOperatorTimeBasedExecutionNeeded(this->vOperator);
         }
     };
 
