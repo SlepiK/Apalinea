@@ -5,6 +5,7 @@
 #include <memory>
 #include "Core/Link/AbstractLink.hpp"
 #include "Core/Link/Wrapper/LinkWrapper.hpp"
+#include "Core/Operator/TimeBased/TimeBasedTrait.hpp"
 
 namespace Apalinea::Core::Link {
     template<typename SinkOperator>
@@ -102,9 +103,19 @@ namespace Apalinea::Core::Link {
                 if (!this->vProcessing) this->vProcessing = true;
 
                 if(this->vState == Core::Operator::OperatorProcessState::CONTINUE || this->isTimeBasedExecutionNeeded()) {
-                    if(this->isTimeBasedExecutionNeeded()) this->setTimeBasedExecuted(this->vOperator,true);
+                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SinkOperator>::value) {
+                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
+                            this->vOperator.setTimeBasedExecuted(true);
+                        }
+                    }
+
                     this->vOperator.process(this->inputTuple);
-                    if(this->isTimeBasedExecutionNeeded()) this->setTimeBasedExecuted(this->vOperator,false);
+
+                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SinkOperator>::value) {
+                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
+                            this->vOperator.setTimeBasedExecuted(false);
+                        }
+                    }
                 }
 
                 this->inputTuple.clear();
@@ -118,7 +129,10 @@ namespace Apalinea::Core::Link {
         }
 
         [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            return this->isOperatorTimeBasedExecutionNeeded(this->vOperator);
+            if constexpr (Apalinea::Core::Operator::is_time_based_executable<SinkOperator>::value) {
+                return this->vOperator.isTimeBasedExecutionNeeded();
+            }
+            return false;
         }
     };
 

@@ -4,13 +4,14 @@
 #include <chrono>
 #include <optional>
 #include "Core/Operator/PipeOperator/AbstractPipeOperator.hpp"
+#include "Core/Operator/TimeBased/AbstractTimeBased.hpp"
 #include "Core/Tuple/Tuple.hpp"
 #include "Core/Type/Power/Power.hpp"
 #include "Core/Type/Datatype/DtFloat.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
     class [[maybe_unused]] EnergyCalculatorPipeOperator
-            : public Core::Operator::AbstractPipeOperator {
+: public Core::Operator::AbstractPipeOperator, public Core::Operator::AbstractTimeBased {
     public:
 
         [[maybe_unused]] void setThreshold(unsigned int threshold) {
@@ -30,7 +31,6 @@ namespace Apalinea::Operator::PipeOperator {
         }
 
         [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            //we want that this operator can also be executed outside the pipeline
             return true;
         }
 
@@ -41,11 +41,7 @@ namespace Apalinea::Operator::PipeOperator {
         Core::Type::Datatype::DtFloat energyCol = Core::Type::Datatype::DtFloat(0.0f);
         Core::Type::Datatype::DtFloat energyOut = Core::Type::Datatype::DtFloat(0.0f);
         std::chrono::milliseconds vThreshold = std::chrono::milliseconds(30);
-        std::chrono::milliseconds vTimeWindow = std::chrono::milliseconds(1000); //Default is 1 second
-
-        static std::chrono::steady_clock::time_point getCurrentTimePoint() {
-            return std::chrono::steady_clock::now();
-        }
+        std::chrono::milliseconds vTimeWindow = std::chrono::milliseconds(1000); //default is 1 second
 
     protected:
         void work(Core::Tuple::Tuple &inputTuple,

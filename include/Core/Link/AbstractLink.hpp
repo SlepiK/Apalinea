@@ -7,10 +7,7 @@
 #include "Core/Tuple/Tuple.hpp"
 #include "Core/Executor/IExecutor.hpp"
 #include "Core/Log/LogManager.hpp"
-
-namespace Apalinea::Core::Operator {
-    class AbstractOperator;
-}
+#include "Core/Operator/TimeBased/AbstractTimeBased.hpp"
 
 namespace Apalinea::Core::Link {
     class AbstractLink : public ILink {
@@ -41,14 +38,6 @@ namespace Apalinea::Core::Link {
         bool vTimeBasedExecuted;
         Core::Operator::OperatorProcessState vState;
         std::shared_ptr<Core::Executor::IExecutor> executor;
-
-        [[maybe_unused]] [[nodiscard]] static bool isOperatorTimeBasedExecutionNeeded(const Apalinea::Core::Operator::AbstractOperator& op) {
-            return op.isTimeBasedExecutionNeeded();
-        }
-
-        [[maybe_unused]] static void setTimeBasedExecuted(Apalinea::Core::Operator::AbstractOperator& op,bool pTimeBasedExecuted) {
-            op.setTimeBasedExecuted(pTimeBasedExecuted);
-        }
 
         [[maybe_unused]] [[nodiscard]] virtual bool isTimeBasedExecutionNeeded() const = 0;
     };

@@ -10,7 +10,7 @@
 namespace Apalinea::Operator::SinkOperator {
     template<typename Writer>
     class WriteSinkOperator
-            : public Core::Operator::AbstractSinkOperator{
+: public Core::Operator::AbstractSinkOperator {
     public:
         explicit WriteSinkOperator() : vWriter() {
         }

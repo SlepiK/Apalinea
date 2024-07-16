@@ -6,7 +6,7 @@
 #include "Core/Link/AbstractLink.hpp"
 #include "Core/Link/PipeLink/PipeLink.hpp"
 #include "Core/Link/SinkLink/SinkLink.hpp"
-#include "Core/Link/SourceLink/SourceLink.hpp"
+#include "Core/Operator/TimeBased/TimeBasedTrait.hpp"
 
 namespace Apalinea::Core::Link {
     template<typename SourceOperator>
@@ -75,10 +75,21 @@ namespace Apalinea::Core::Link {
                 if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
                     this->vState == Core::Operator::OperatorProcessState::BREAK
                     || this->isTimeBasedExecutionNeeded()) {
-                    if (this->isTimeBasedExecutionNeeded()) this->setTimeBasedExecuted(this->vOperator,true);
+                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SourceOperator>::value) {
+                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
+                            this->vOperator.setTimeBasedExecuted(true);
+                        }
+                    }
+
                     Tuple::Tuple outputTuple;
                     this->vOperator.process(outputTuple);
-                    if (this->isTimeBasedExecutionNeeded()) this->setTimeBasedExecuted(this->vOperator,false);
+
+                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SourceOperator>::value) {
+                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
+                            this->vOperator.setTimeBasedExecuted(false);
+                        }
+                    }
+
                     this->vState = this->vOperator.getOperatorProcessState();
 
                     for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
@@ -102,7 +113,10 @@ namespace Apalinea::Core::Link {
         }
 
         [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            return this->isOperatorTimeBasedExecutionNeeded(this->vOperator);
+            if constexpr (Apalinea::Core::Operator::is_time_based_executable<SourceOperator>::value) {
+                return this->vOperator.isTimeBasedExecutionNeeded();
+            }
+            return false;
         }
     };
 
