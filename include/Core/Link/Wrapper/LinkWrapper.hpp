@@ -6,8 +6,22 @@
 #include "Core/Operator/ProcessState/OperatorProcessState.hpp"
 
 namespace Apalinea::Core::Link {
+    template<typename SourceOperator>
+    class SourceLink;
+    template<typename PipeOperator>
+    class PipeLink;
+    template<typename SinkOperator>
+    class SinkLink;
+
     class LinkWrapper : virtual public IBaseLink {
     public:
+        template<typename SourceOperator>
+        friend class SourceLink;
+        template<typename PipeOperator>
+        friend class PipeLink;
+        template<typename SinkOperator>
+        friend class SinkLink;
+
         ~LinkWrapper() override = default;
 
         virtual void setInputTuple(Core::Tuple::Tuple tuple) = 0;

@@ -116,8 +116,12 @@ set(PROJECT_HEADERS
         include/Core/Log/LogLevelCategory.hpp
         include/Core/Log/ConsoleLog.hpp
         include/Core/Log/LogManager.hpp
-        include/Core/Operator/TimeBased/AbstractTimeBased.hpp
-        include/Core/Operator/TimeBased/TimeBasedTrait.hpp
+        include/Core/Heartbeat/IHeartbeat.hpp
+        include/Core/Heartbeat/HeartbeatTrait.hpp
+        include/Extras/Time/Time.hpp
+        include/Core/Heartbeat/AbstractHeartbeat.hpp
+        include/Core/Heartbeat/IHeartbeatProcess.hpp
+        include/Core/Heartbeat/HeartbeatState.hpp
 )
 
 set(PROJECT_SOURCES

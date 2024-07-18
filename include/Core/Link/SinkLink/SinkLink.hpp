@@ -5,7 +5,6 @@
 #include <memory>
 #include "Core/Link/AbstractLink.hpp"
 #include "Core/Link/Wrapper/LinkWrapper.hpp"
-#include "Core/Operator/TimeBased/TimeBasedTrait.hpp"
 
 namespace Apalinea::Core::Link {
     template<typename SinkOperator>
@@ -40,10 +39,8 @@ namespace Apalinea::Core::Link {
                     this->exec();
                 }
             } else {
-                if(!this->isTimeBasedExecutionNeeded()) {
-                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
                                                __LINE__, "Link is already processing!");
-                }
                 return;
             }
         }
@@ -56,19 +53,14 @@ namespace Apalinea::Core::Link {
                     this->exec();
                 }
             } else {
-                if(!this->isTimeBasedExecutionNeeded()) {
-                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
                                                __LINE__, "Link is already processing!");
-                }
                 return;
             }
         }
 
         void process() override {
             if (!this->vNewDataAvailable) {
-                if(this->isTimeBasedExecutionNeeded()) {
-                    this->exec();
-                }
                 return;
             } else this->vNewDataAvailable = false;
             if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
@@ -95,44 +87,58 @@ namespace Apalinea::Core::Link {
         Core::Tuple::Tuple inputTuple;
 
     protected:
-        void exec() {
+
+        void sendHeartbeat() override {
+            (void(0));
+        }
+
+        void handleHeartbeat() override {
             try {
-                if (this->vProcessing) throw std::runtime_error("(Sink-)Link is already processing!");
-                if (this->isTimeBasedExecutionNeeded() && this->vTimeBasedExecuted) this->vTimeBasedExecuted = false;
-                if (this->vProcessed) this->vProcessed = false;
-                if (!this->vProcessing) this->vProcessing = true;
-
-                if(this->vState == Core::Operator::OperatorProcessState::CONTINUE || this->isTimeBasedExecutionNeeded()) {
-                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SinkOperator>::value) {
-                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
-                            this->vOperator.setTimeBasedExecuted(true);
-                        }
-                    }
-
-                    this->vOperator.process(this->inputTuple);
-
-                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SinkOperator>::value) {
-                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
-                            this->vOperator.setTimeBasedExecuted(false);
-                        }
-                    }
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing! (Heartbeat)");
+                if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
+                    this->executor.get()->addTask([this] { this->execHeartbeat(); });
+                } else if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::DIRECT) {
+                    this->execHeartbeat();
                 }
-
-                this->inputTuple.clear();
-
-                this->vProcessing = false;
-                this->vProcessed = true;
-                if (this->isTimeBasedExecutionNeeded() && !this->vTimeBasedExecuted) this->vTimeBasedExecuted = true;
             } catch (std::exception& exc) {
                 Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
         }
 
-        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            if constexpr (Apalinea::Core::Operator::is_time_based_executable<SinkOperator>::value) {
-                return this->vOperator.isTimeBasedExecutionNeeded();
+        void execHeartbeat() {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing! (Heartbeat)");
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                this->vOperator.handleHeartbeat();
+                this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
-            return false;
+        }
+
+        void exec() {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Sink-)Link is already processing!");
+                if (this->vProcessed) this->vProcessed = false;
+                if (!this->vProcessing) this->vProcessing = true;
+
+                if(this->vHeartbeatState == Apalinea::Core::Heartbeat::HeartbeatState::HEARTBEAT) {
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                    this->vOperator.handleHeartbeat();
+                    this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                } else {
+                    if(this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+                        this->vOperator.process(this->inputTuple);
+                    }
+
+                    this->inputTuple.clear();
+                }
+
+                this->vProcessing = false;
+                this->vProcessed = true;
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
+            }
         }
     };
 

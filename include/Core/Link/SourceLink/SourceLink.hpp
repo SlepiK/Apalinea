@@ -6,7 +6,6 @@
 #include "Core/Link/AbstractLink.hpp"
 #include "Core/Link/PipeLink/PipeLink.hpp"
 #include "Core/Link/SinkLink/SinkLink.hpp"
-#include "Core/Operator/TimeBased/TimeBasedTrait.hpp"
 
 namespace Apalinea::Core::Link {
     template<typename SourceOperator>
@@ -65,58 +64,64 @@ namespace Apalinea::Core::Link {
         using LinkIterator [[maybe_unused]] = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
 
     protected:
+
+        void sendHeartbeat() override {
+            for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
+                    (*iterator)->vHeartbeatState = Apalinea::Core::Heartbeat::HeartbeatState::HEARTBEAT;
+                    (*iterator)->handleHeartbeat();
+                }
+            }
+        }
+
+        //Currently no heartbeat generator is implemented, so its no-op, but in the future it could be implemented and used here.
+        void handleHeartbeat() override {
+            (void(0));
+            this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+        }
+
         void exec() {
             try {
                 if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
-                if (this->isTimeBasedExecutionNeeded() && this->vTimeBasedExecuted) this->vTimeBasedExecuted = false;
                 if (this->vProcessed) this->vProcessed = false;
                 if (!this->vProcessing) this->vProcessing = true;
 
-                if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
-                    this->vState == Core::Operator::OperatorProcessState::BREAK
-                    || this->isTimeBasedExecutionNeeded()) {
-                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SourceOperator>::value) {
-                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
-                            this->vOperator.setTimeBasedExecuted(true);
+                if(this->vHeartbeatState == Core::Heartbeat::HeartbeatState::HEARTBEAT) {
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                    this->vOperator.handleHeartbeat();
+                    this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                    this->sendHeartbeat();
+                } else {
+                    if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
+                        this->vState == Core::Operator::OperatorProcessState::BREAK) {
+
+                        Tuple::Tuple outputTuple;
+                        this->vOperator.process(outputTuple);
+
+                        this->vState = this->vOperator.getOperatorProcessState();
+
+                        for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                            if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+                                (*iterator)->setInputTuple(outputTuple);
+                                (*iterator)->setOperatorProcessState(this->vState);
+                            } else {
+                                (*iterator)->setOperatorProcessState(this->vState);
+                            }
+                        }
+
+                        outputTuple.clear();
+
+                        if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
+                            this->sendHeartbeat();
                         }
                     }
-
-                    Tuple::Tuple outputTuple;
-                    this->vOperator.process(outputTuple);
-
-                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<SourceOperator>::value) {
-                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
-                            this->vOperator.setTimeBasedExecuted(false);
-                        }
-                    }
-
-                    this->vState = this->vOperator.getOperatorProcessState();
-
-                    for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                        if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
-                            (*iterator)->setInputTuple(outputTuple);
-                            (*iterator)->setOperatorProcessState(this->vState);
-                        } else {
-                            (*iterator)->setOperatorProcessState(this->vState);
-                        }
-                    }
-
-                    outputTuple.clear();
                 }
 
                 this->vProcessing = false;
                 this->vProcessed = true;
-                if (this->isTimeBasedExecutionNeeded() && !this->vTimeBasedExecuted) this->vTimeBasedExecuted = true;
             } catch (std::exception& exc) {
                 Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
-        }
-
-        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            if constexpr (Apalinea::Core::Operator::is_time_based_executable<SourceOperator>::value) {
-                return this->vOperator.isTimeBasedExecutionNeeded();
-            }
-            return false;
         }
     };
 

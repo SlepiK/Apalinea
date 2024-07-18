@@ -7,7 +7,6 @@
 #include "Core/Link/AbstractLink.hpp"
 #include "Core/Link/SinkLink/SinkLink.hpp"
 #include "Core/Link/Wrapper/LinkWrapper.hpp"
-#include "Core/Operator/TimeBased/TimeBasedTrait.hpp"
 
 namespace Apalinea::Core::Link {
     template<typename PipeOperator>
@@ -71,9 +70,6 @@ namespace Apalinea::Core::Link {
 
         void process() override {
             if (!this->vNewDataAvailable) {
-                if(this->isTimeBasedExecutionNeeded()) {
-                    this->exec();
-                }
                 return;
             } else this->vNewDataAvailable = false;
             if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
@@ -115,55 +111,85 @@ namespace Apalinea::Core::Link {
         using LinkIterator [[maybe_unused]] = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
 
     protected:
-        void exec() {
-            try {
-                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing!");
-                if (this->isTimeBasedExecutionNeeded() && this->vTimeBasedExecuted) this->vTimeBasedExecuted = false;
-                if (this->vProcessed) this->vProcessed = false;
-                if (!this->vProcessing) this->vProcessing = true;
 
-                if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
-                    this->isTimeBasedExecutionNeeded()) {
-                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<PipeOperator>::value) {
-                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
-                            this->vOperator.setTimeBasedExecuted(true);
-                        }
-                    }
-
-                    Tuple::Tuple outputTuple;
-                    this->vOperator.process(this->inputTuple, outputTuple);
-
-                    if constexpr (Apalinea::Core::Operator::is_time_based_executable<PipeOperator>::value) {
-                        if (this->vOperator.isTimeBasedExecutionNeeded()) {
-                            this->vOperator.setTimeBasedExecuted(false);
-                        }
-                    }
-
-                    this->inputTuple.clear();
-                    this->vState = this->vOperator.getOperatorProcessState();
-
-                    for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                        if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
-                            (*iterator)->setInputTuple(outputTuple);
-                        } else {
-                            (*iterator)->setOperatorProcessState(this->vState);
-                        }
-                    }
-
-                    outputTuple.clear();
-                } else {
-                    this->inputTuple.clear();
+        void sendHeartbeat() override {
+            for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
+                    (*iterator)->vHeartbeatState = Apalinea::Core::Heartbeat::HeartbeatState::HEARTBEAT;
+                    (*iterator)->handleHeartbeat();
                 }
-                this->vProcessing = false;
-                this->vProcessed = true;
-                if (this->isTimeBasedExecutionNeeded() && !this->vTimeBasedExecuted) this->vTimeBasedExecuted = true;
+            }
+        }
+
+        void handleHeartbeat() override {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing! (Heartbeat)");
+                if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
+                    this->executor.get()->addTask([this] { this->execHeartbeat(); });
+                } else if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::DIRECT) {
+                    this->execHeartbeat();
+                }
             } catch (std::exception& exc) {
                 Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
         }
 
-        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            return this->vOperator.isTimeBasedExecuted();
+        void execHeartbeat() {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing! (Heartbeat)");
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                this->vOperator.handleHeartbeat();
+                this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                this->sendHeartbeat();
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
+            }
+        }
+
+        void exec() {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing!");
+                if (this->vProcessed) this->vProcessed = false;
+                if (!this->vProcessing) this->vProcessing = true;
+
+
+                if(this->vHeartbeatState == Apalinea::Core::Heartbeat::HeartbeatState::HEARTBEAT) {
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                    this->vOperator.handleHeartbeat();
+                    this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                    this->sendHeartbeat();
+                } else {
+                    if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+
+                        Tuple::Tuple outputTuple;
+                        this->vOperator.process(this->inputTuple, outputTuple);
+
+                        this->inputTuple.clear();
+                        this->vState = this->vOperator.getOperatorProcessState();
+
+                        for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                            if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+                                (*iterator)->setInputTuple(outputTuple);
+                            } else {
+                                (*iterator)->setOperatorProcessState(this->vState);
+                            }
+                        }
+
+                        outputTuple.clear();
+                    }
+
+                    this->inputTuple.clear();
+
+                    if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
+                        this->sendHeartbeat();
+                    }
+                }
+
+                this->vProcessing = false;
+                this->vProcessed = true;
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
+            }
         }
     };
 
