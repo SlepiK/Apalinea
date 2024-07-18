@@ -88,11 +88,20 @@ namespace Apalinea::Core::Link {
                 if (!this->vProcessing) this->vProcessing = true;
 
                 if(this->vHeartbeatState == Core::Heartbeat::HeartbeatState::HEARTBEAT) {
-                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
-                    this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint());
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,
+                                               Core::Log::getFilename(__FILE__), __LINE__, "Heartbeat");
+                    Tuple::Tuple tuple;
+                    this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint(), tuple);
                     this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
                     this->updateHeartbeatTimePoint();
-                    this->sendHeartbeat();
+                    if (this->vOperator.getOperatorProcessState() == Core::Operator::OperatorProcessState::CONTINUE) {
+                        for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                            (*iterator)->setInputTuple(tuple);
+                            (*iterator)->setOperatorProcessState(this->vOperator.getOperatorProcessState());
+                        }
+                    } else {
+                        this->sendHeartbeat();
+                    }
                 } else {
                     if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
                         this->vState == Core::Operator::OperatorProcessState::BREAK) {

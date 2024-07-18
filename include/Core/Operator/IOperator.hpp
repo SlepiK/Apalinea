@@ -21,7 +21,7 @@ namespace Apalinea::Core::Operator {
 
         [[nodiscard]] virtual Core::Operator::OperatorMode getOperatorMode() const = 0;
 
-        void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP) override {
+        void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &outputTuple) override {
             (void(0));
         }
     };

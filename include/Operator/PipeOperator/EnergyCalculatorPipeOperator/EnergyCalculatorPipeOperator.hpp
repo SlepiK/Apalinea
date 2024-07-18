@@ -30,8 +30,18 @@ namespace Apalinea::Operator::PipeOperator {
             return this->vTimeWindow.count();
         }
 
-        void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP) override {
-            (void(0));
+        void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &tuple) override {
+            std::chrono::steady_clock::time_point current = Apalinea::Extras::Time::Time::getCurrentTimePoint();
+            if((this->vLast.value() + this->vTimeWindow) < current) {
+                //the operator is executed outside the pipeline
+                energyOut = energyCol;
+                this->vLast = current;
+                energyCol = Core::Type::Datatype::DtFloat(0.0f);
+                vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
+                tuple.clear();
+                tuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyOut));
+                return;
+            }
         }
 
     private:
@@ -41,7 +51,7 @@ namespace Apalinea::Operator::PipeOperator {
         Core::Type::Datatype::DtFloat energyCol = Core::Type::Datatype::DtFloat(0.0f);
         Core::Type::Datatype::DtFloat energyOut = Core::Type::Datatype::DtFloat(0.0f);
         std::chrono::milliseconds vThreshold = std::chrono::milliseconds(30);
-        std::chrono::milliseconds vTimeWindow = std::chrono::milliseconds(1000); //default is 1 second
+        std::chrono::milliseconds vTimeWindow = std::chrono::milliseconds(15000); //default is 15 second
 
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
@@ -67,16 +77,6 @@ namespace Apalinea::Operator::PipeOperator {
             std::chrono::steady_clock::time_point current = Apalinea::Extras::Time::Time::getCurrentTimePoint();
 
             if(this->vLast.has_value()) {
-                if(vTimeBasedExecuted && (this->vLast.value() + this->vTimeWindow) < current) {
-                    //the operator is executed outside the pipeline
-                    energyOut = energyCol;
-                    this->vLast = current;
-                    energyCol = Core::Type::Datatype::DtFloat(0.0f);
-                    vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
-                    outputTuple.clear();
-                    outputTuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyOut));
-                    return;
-                }
                 //n+1 mark was detected
                 std::chrono::milliseconds rotationTime = std::chrono::duration_cast<std::chrono::milliseconds>(current - this->vLast.value());
 
