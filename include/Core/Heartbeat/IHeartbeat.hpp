@@ -11,6 +11,7 @@ namespace Apalinea::Core::Heartbeat {
          [[maybe_unused]] virtual void updateHeartbeatTimePoint() = 0;
          [[maybe_unused]] virtual void sendHeartbeat() = 0;
          [[maybe_unused]] virtual bool verifyHeartbeat() = 0;
+         [[maybe_unused]] virtual void handleHeartbeat() = 0;
      };
 } // Apalinea::Core::Heartbeat
 

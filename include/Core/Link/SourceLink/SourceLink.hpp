@@ -78,6 +78,7 @@ namespace Apalinea::Core::Link {
         void handleHeartbeat() override {
             (void(0));
             this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+            this->updateHeartbeatTimePoint();
         }
 
         void exec() {
@@ -88,8 +89,9 @@ namespace Apalinea::Core::Link {
 
                 if(this->vHeartbeatState == Core::Heartbeat::HeartbeatState::HEARTBEAT) {
                     Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
-                    this->vOperator.handleHeartbeat();
+                    this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint());
                     this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                    this->updateHeartbeatTimePoint();
                     this->sendHeartbeat();
                 } else {
                     if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
@@ -110,6 +112,7 @@ namespace Apalinea::Core::Link {
                         }
 
                         outputTuple.clear();
+                        this->updateHeartbeatTimePoint();
 
                         if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
                             this->sendHeartbeat();

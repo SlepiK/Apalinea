@@ -7,13 +7,13 @@
 #include "Extras/Time/Time.hpp"
 
 namespace Apalinea::Core::Heartbeat {
-    class AbstractHeartbeat : public IHeartbeat, public IHeartbeatProcess {
+    class AbstractHeartbeat : public IHeartbeat {
     public:
-        [[maybe_unused]] [[nodiscard]] std::optional<std::chrono::steady_clock::time_point> getHeartbeatTimePoint() override {
+        [[maybe_unused]] [[nodiscard]] std::optional<std::chrono::steady_clock::time_point> getHeartbeatTimePoint() final {
             return this->vHeartbeatTimePoint;
         }
 
-        [[maybe_unused]] void updateHeartbeatTimePoint() override {
+        [[maybe_unused]] void updateHeartbeatTimePoint() final {
             this->vHeartbeatTimePoint = Apalinea::Extras::Time::Time::getCurrentTimePoint();
         }
 

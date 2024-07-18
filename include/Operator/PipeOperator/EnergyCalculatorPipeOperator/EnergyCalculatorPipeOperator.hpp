@@ -4,14 +4,14 @@
 #include <chrono>
 #include <optional>
 #include "Core/Operator/PipeOperator/AbstractPipeOperator.hpp"
-#include "Core/Operator/TimeBased/AbstractTimeBased.hpp"
 #include "Core/Tuple/Tuple.hpp"
 #include "Core/Type/Power/Power.hpp"
 #include "Core/Type/Datatype/DtFloat.hpp"
+#include "Extras/Time/Time.hpp"
 
 namespace Apalinea::Operator::PipeOperator {
     class [[maybe_unused]] EnergyCalculatorPipeOperator
-: public Core::Operator::AbstractPipeOperator, public Core::Operator::AbstractTimeBased {
+: public Core::Operator::AbstractPipeOperator {
     public:
 
         [[maybe_unused]] void setThreshold(unsigned int threshold) {
@@ -30,8 +30,8 @@ namespace Apalinea::Operator::PipeOperator {
             return this->vTimeWindow.count();
         }
 
-        [[maybe_unused]] [[nodiscard]] bool isTimeBasedExecutionNeeded() const override {
-            return true;
+        void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP) override {
+            (void(0));
         }
 
     private:
@@ -46,7 +46,7 @@ namespace Apalinea::Operator::PipeOperator {
     protected:
         void work(Core::Tuple::Tuple &inputTuple,
                   Core::Tuple::Tuple &outputTuple) override {
-            if(!inputTuple.containsItem("State") && !vTimeBasedExecuted){
+            if(!inputTuple.containsItem("State")){
                 vProcessState = Core::Operator::OperatorProcessState::BREAK;
                 return;
             } else {
@@ -57,12 +57,14 @@ namespace Apalinea::Operator::PipeOperator {
                 vRotationPerKWh = inputTuple.getItem<Core::Type::Datatype::DtInt>("RotationKWH").toInt();
                 this->vRotationPerKWhSet = true;
             }
+
             inputTuple.clear();
-            if(!this->vRotationPerKWhSet && !vTimeBasedExecuted) {
+
+            if(!this->vRotationPerKWhSet) {
                 throw std::runtime_error("Operator was not configured before use! Config before first use!");
             }
 
-            std::chrono::steady_clock::time_point current = getCurrentTimePoint();
+            std::chrono::steady_clock::time_point current = Apalinea::Extras::Time::Time::getCurrentTimePoint();
 
             if(this->vLast.has_value()) {
                 if(vTimeBasedExecuted && (this->vLast.value() + this->vTimeWindow) < current) {
