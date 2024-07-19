@@ -2,6 +2,7 @@
 #define APALINEA_CORE_HEARTBEAT_IHEARTBEATPROCESS_HPP
 
 #include <optional>
+#include <chrono>
 #include "Core/Tuple/Tuple.hpp"
 
 namespace Apalinea::Core::Heartbeat {
