@@ -44,10 +44,8 @@ namespace Apalinea::Core::Link {
                     this->exec();
                 }
             } else {
-                if(!this->isTimeBasedExecutionNeeded()) {
-                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
                                                __LINE__, "Link is already processing!");
-                }
                 return;
             }
         }
@@ -60,10 +58,8 @@ namespace Apalinea::Core::Link {
                     this->exec();
                 }
             } else {
-                if(!this->isTimeBasedExecutionNeeded()) {
-                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
                                                __LINE__, "Link is already processing!");
-                }
                 return;
             }
         }
