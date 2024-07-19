@@ -1,6 +1,7 @@
 #ifndef APALINEA_CORE_HEARTBEAT_IHEARTBEATPROCESS_HPP
 #define APALINEA_CORE_HEARTBEAT_IHEARTBEATPROCESS_HPP
 
+#include <optional>
 #include "Core/Tuple/Tuple.hpp"
 
 namespace Apalinea::Core::Heartbeat {
