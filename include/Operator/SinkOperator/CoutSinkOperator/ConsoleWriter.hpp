@@ -3,17 +3,16 @@
 
 #include <iostream>
 #include "Operator/SinkOperator/WriteSinkOperator/AbstractWriter.hpp"
+#include "Core/Log/LogManager.hpp"
 
 namespace Apalinea::Operator::SinkOperator {
     class ConsoleWriter : public AbstractWriter {
     protected:
         void write(const std::string& message) override {
-            std::cout << message;
+            Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,message);
         }
 
-        void breakAndFlush() override {
-            std::cout << std::endl;
-        }
+        void breakAndFlush() override {}
     };
 } // Apalinea::Operator::SinkOperator
 

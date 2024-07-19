@@ -39,7 +39,8 @@ namespace Apalinea::Core::Link {
                     this->exec();
                 }
             } else {
-                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,"Link is already processing!");
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
+                                               __LINE__, "Link is already processing!");
                 return;
             }
         }
@@ -52,14 +53,16 @@ namespace Apalinea::Core::Link {
                     this->exec();
                 }
             } else {
-                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,"Link is already processing!");
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR, Core::Log::getFilename(__FILE__),
+                                               __LINE__, "Link is already processing!");
                 return;
             }
         }
 
         void process() override {
-            if (!this->vNewDataAvailable) return;
-            else this->vNewDataAvailable = false;
+            if (!this->vNewDataAvailable) {
+                return;
+            } else this->vNewDataAvailable = false;
             if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
                 this->executor.get()->addTask([this] { this->exec(); });
             } else if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::MAIN) {
@@ -84,19 +87,63 @@ namespace Apalinea::Core::Link {
         Core::Tuple::Tuple inputTuple;
 
     protected:
-        void exec() {
-            if (this->vProcessing) throw std::runtime_error("(Sink-)Link is already processing!");
-            if (this->vProcessed) this->vProcessed = false;
-            if (!this->vProcessing) this->vProcessing = true;
 
-            if(this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
-                this->vOperator.process(this->inputTuple);
+        void sendHeartbeat() override {
+            (void(0));
+        }
+
+        void handleHeartbeat() override {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing! (Heartbeat)");
+                if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::TASK) {
+                    this->executor.get()->addTask([this] { this->execHeartbeat(); });
+                } else if(this->vOperator.getOperatorMode() == Core::Operator::OperatorMode::DIRECT) {
+                    this->execHeartbeat();
+                }
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
+        }
 
-            this->inputTuple.clear();
+        void execHeartbeat() {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Pipe-)Link is already processing! (Heartbeat)");
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                Tuple::Tuple tuple = this->inputTuple;
+                this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint(),tuple);
+                this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                this->updateHeartbeatTimePoint();
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
+            }
+        }
 
-            this->vProcessing = false;
-            this->vProcessed = true;
+        void exec() {
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Sink-)Link is already processing!");
+                if (this->vProcessed) this->vProcessed = false;
+                if (!this->vProcessing) this->vProcessing = true;
+
+                if(this->vHeartbeatState == Apalinea::Core::Heartbeat::HeartbeatState::HEARTBEAT) {
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,Core::Log::getFilename(__FILE__),__LINE__,"Heartbeat");
+                    Tuple::Tuple tuple = this->inputTuple;
+                    this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint(),tuple);
+                    this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                    this->updateHeartbeatTimePoint();
+                } else {
+                    if(this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+                        this->vOperator.process(this->inputTuple);
+                        this->updateHeartbeatTimePoint();
+                    }
+
+                    this->inputTuple.clear();
+                }
+
+                this->vProcessing = false;
+                this->vProcessed = true;
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
+            }
         }
     };
 

@@ -4,9 +4,10 @@
 #include "Core/Operator/Type/OperatorMode.hpp"
 #include "Core/Operator/Type/OperatorType.hpp"
 #include "Core/Operator/ProcessState/OperatorProcessState.hpp"
+#include "Core/Heartbeat/IHeartbeatProcess.hpp"
 
 namespace Apalinea::Core::Operator {
-    class IOperator {
+    class IOperator : public Apalinea::Core::Heartbeat::IHeartbeatProcess {
     public:
         virtual ~IOperator() = default;
 
@@ -19,6 +20,10 @@ namespace Apalinea::Core::Operator {
         [[maybe_unused]] [[nodiscard]] virtual bool isProcessed() const = 0;
 
         [[nodiscard]] virtual Core::Operator::OperatorMode getOperatorMode() const = 0;
+
+        [[maybe_unused]] void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &outputTuple) override {
+            (void(0));
+        }
     };
 } // Apalinea::Core::Operator
 

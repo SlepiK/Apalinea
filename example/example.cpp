@@ -42,4 +42,12 @@ int main()
     plan.join();
     plan.processOrdered();
     plan.join();
+    plan.processOrdered();
+    plan.join();
+    plan.processOrdered();
+    plan.join();
+    plan.processOrdered();
+    plan.join();
+    plan.processOrdered();
+    plan.join();
 }

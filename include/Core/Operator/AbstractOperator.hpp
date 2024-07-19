@@ -8,7 +8,10 @@
 namespace Apalinea::Core::Operator {
     class AbstractOperator : public IOperator {
     public:
-        AbstractOperator() : vProcessed(false), vProcessing(false), vProcessState(Core::Operator::OperatorProcessState::CONTINUE) {
+        AbstractOperator() :
+            vProcessed(false),
+            vProcessing(false),
+            vProcessState(Core::Operator::OperatorProcessState::CONTINUE) {
         }
 
         ~AbstractOperator() override = default;
@@ -23,6 +26,10 @@ namespace Apalinea::Core::Operator {
 
         [[nodiscard]] bool isProcessed() const override {
             return this->vProcessed;
+        }
+
+        [[maybe_unused]] void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &outputTuple) override {
+            this->vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
         }
 
     protected:
