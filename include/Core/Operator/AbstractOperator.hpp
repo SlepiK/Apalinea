@@ -28,7 +28,7 @@ namespace Apalinea::Core::Operator {
             return this->vProcessed;
         }
 
-        void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &outputTuple) override {
+        [[maybe_unused]] void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &outputTuple) override {
             this->vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
         }
 
