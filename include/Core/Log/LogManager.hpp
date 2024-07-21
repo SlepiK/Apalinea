@@ -10,8 +10,8 @@
 
 namespace Apalinea::Core::Log {
     inline std::string getFilename(const std::string& file) {
-        size_t seperator = file.find_last_of("/\\");
-        return seperator != std::string::npos ? file.substr(seperator + 1) : file;
+        size_t separator = file.find_last_of("/\\");
+        return separator != std::string::npos ? file.substr(separator + 1) : file;
     }
 
     class LogManager {
