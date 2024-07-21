@@ -46,7 +46,7 @@ set(PROJECT_HEADERS
         include/Core/Plan/Plan.hpp
         include/Operator/SourceOperator/StringDemoSourceOperator/StringDemoSourceOperator.hpp
         include/Core/Constants/Version.hpp
-        include/Operator/PipeOperator/CalculatorPipeOperator/CalculatorPipeOperator.hpp
+        include/Operator/PipeOperator/EnergyCalculatorPipeOperator/EnergyCalculatorPipeOperator.hpp
         include/Core/Type/Power/Power.hpp
         include/Core/Type/Image/Image.hpp
         include/Core/Type/Image/ImageFormat.hpp
@@ -116,6 +116,12 @@ set(PROJECT_HEADERS
         include/Core/Log/LogLevelCategory.hpp
         include/Core/Log/ConsoleLog.hpp
         include/Core/Log/LogManager.hpp
+        include/Core/Heartbeat/IHeartbeat.hpp
+        include/Core/Heartbeat/HeartbeatTrait.hpp
+        include/Extras/Time/Time.hpp
+        include/Core/Heartbeat/AbstractHeartbeat.hpp
+        include/Core/Heartbeat/IHeartbeatProcess.hpp
+        include/Core/Heartbeat/HeartbeatState.hpp
 )
 
 set(PROJECT_SOURCES
