@@ -32,7 +32,7 @@ namespace Apalinea::Operator::PipeOperator {
 
         void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &tuple) override {
             std::chrono::steady_clock::time_point current = Apalinea::Extras::Time::Time::getCurrentTimePoint();
-            if((this->vLast.value() + this->vTimeWindow) < current) {
+            if(this->vLast.has_value() && energyCol.toFloat() > 0.0f  && (this->vLast.value() + this->vTimeWindow) < current) {
                 //the operator is executed outside the pipeline
                 energyOut = energyCol;
                 this->vLast = current;
