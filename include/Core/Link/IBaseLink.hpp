@@ -2,9 +2,10 @@
 #define APALINEA_CORE_LINK_IBASELINK_HPP
 
 #include "Core/Link/Type/LinkType.hpp"
+#include "Core/Heartbeat/AbstractHeartbeat.hpp"
 
 namespace Apalinea::Core::Link {
-    class IBaseLink {
+    class IBaseLink : protected Apalinea::Core::Heartbeat::AbstractHeartbeat {
     public:
         virtual ~IBaseLink() = default;
 

@@ -6,7 +6,6 @@
 #include "Core/Link/AbstractLink.hpp"
 #include "Core/Link/PipeLink/PipeLink.hpp"
 #include "Core/Link/SinkLink/SinkLink.hpp"
-#include "Core/Link/SourceLink/SourceLink.hpp"
 
 namespace Apalinea::Core::Link {
     template<typename SourceOperator>
@@ -65,30 +64,76 @@ namespace Apalinea::Core::Link {
         using LinkIterator [[maybe_unused]] = typename std::vector<std::shared_ptr<LinkWrapper>>::iterator;
 
     protected:
+
+        void sendHeartbeat() override {
+            for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
+                    (*iterator)->vHeartbeatState = Apalinea::Core::Heartbeat::HeartbeatState::HEARTBEAT;
+                    (*iterator)->handleHeartbeat();
+                }
+            }
+        }
+
+        //Currently no heartbeat generator is implemented, so its no-op, but in the future it could be implemented and used here.
+        void handleHeartbeat() override {
+            (void(0));
+            this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+            this->updateHeartbeatTimePoint();
+        }
+
         void exec() {
-            if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
-            if (this->vProcessed) this->vProcessed = false;
-            if (!this->vProcessing) this->vProcessing = true;
+            try {
+                if (this->vProcessing) throw std::runtime_error("(Source-)Link is already processing!");
+                if (this->vProcessed) this->vProcessed = false;
+                if (!this->vProcessing) this->vProcessing = true;
 
-            if(this->vState == Core::Operator::OperatorProcessState::CONTINUE || this->vState == Core::Operator::OperatorProcessState::BREAK) {
-                Tuple::Tuple outputTuple;
-                this->vOperator.process(outputTuple);
-                this->vState = this->vOperator.getOperatorProcessState();
-
-                for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
-                    if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
-                        (*iterator)->setInputTuple(outputTuple);
-                        (*iterator)->setOperatorProcessState(this->vState);
+                if(this->vHeartbeatState == Core::Heartbeat::HeartbeatState::HEARTBEAT) {
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::HEARTBEAT,
+                                               Core::Log::getFilename(__FILE__), __LINE__, "Heartbeat");
+                    Tuple::Tuple tuple;
+                    this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint(), tuple);
+                    this->vHeartbeatState = Core::Heartbeat::HeartbeatState::NO_HEARTBEAT;
+                    this->updateHeartbeatTimePoint();
+                    if (this->vOperator.getOperatorProcessState() == Core::Operator::OperatorProcessState::CONTINUE) {
+                        for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                            (*iterator)->setInputTuple(tuple);
+                            (*iterator)->setOperatorProcessState(this->vOperator.getOperatorProcessState());
+                        }
                     } else {
-                        (*iterator)->setOperatorProcessState(this->vState);
+                        this->sendHeartbeat();
+                    }
+                } else {
+                    if (this->vState == Core::Operator::OperatorProcessState::CONTINUE ||
+                        this->vState == Core::Operator::OperatorProcessState::BREAK) {
+
+                        Tuple::Tuple outputTuple;
+                        this->vOperator.process(outputTuple);
+
+                        this->vState = this->vOperator.getOperatorProcessState();
+
+                        for (auto iterator = this->vLinks.begin(); iterator != this->vLinks.end(); ++iterator) {
+                            if (this->vState == Core::Operator::OperatorProcessState::CONTINUE) {
+                                (*iterator)->setInputTuple(outputTuple);
+                                (*iterator)->setOperatorProcessState(this->vState);
+                            } else {
+                                (*iterator)->setOperatorProcessState(this->vState);
+                            }
+                        }
+
+                        outputTuple.clear();
+                        this->updateHeartbeatTimePoint();
+
+                        if(this->vState == Core::Operator::OperatorProcessState::BREAK) {
+                            this->sendHeartbeat();
+                        }
                     }
                 }
 
-                outputTuple.clear();
+                this->vProcessing = false;
+                this->vProcessed = true;
+            } catch (std::exception& exc) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,exc.what());
             }
-
-            this->vProcessing = false;
-            this->vProcessed = true;
         }
     };
 
