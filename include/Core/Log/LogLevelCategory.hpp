@@ -11,7 +11,8 @@ namespace Apalinea::Core::Log {
         WARNING,
         ERROR,
         CRITICAL,
-        MAX
+        MAX,
+        HEARTBEAT = 99
     };
 
     const std::map<LogLevelCategory,std::string_view> LogLevelCategoryMap{
@@ -19,7 +20,8 @@ namespace Apalinea::Core::Log {
         {LogLevelCategory::WARNING, "Warning"},
         {LogLevelCategory::ERROR, "Error"},
         {LogLevelCategory::CRITICAL, "Critical"},
-        {LogLevelCategory::MAX, "Max"}
+        {LogLevelCategory::MAX, "Max"},
+        {LogLevelCategory::HEARTBEAT, "Heartbeat"}
     };
 
     inline std::ostream& operator<< (std::ostream& os, const LogLevelCategory& obj) {

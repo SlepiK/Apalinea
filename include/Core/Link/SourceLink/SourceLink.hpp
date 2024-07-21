@@ -88,7 +88,7 @@ namespace Apalinea::Core::Link {
                 if (!this->vProcessing) this->vProcessing = true;
 
                 if(this->vHeartbeatState == Core::Heartbeat::HeartbeatState::HEARTBEAT) {
-                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::INFORMATION,
+                    Core::Log::LogManager::log(Core::Log::LogLevelCategory::HEARTBEAT,
                                                Core::Log::getFilename(__FILE__), __LINE__, "Heartbeat");
                     Tuple::Tuple tuple;
                     this->vOperator.handleHeartbeat(this->getHeartbeatTimePoint(), tuple);
