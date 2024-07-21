@@ -17,6 +17,8 @@ namespace Apalinea::Core::Log {
     class LogManager {
     public:
         static void log(LogLevel level, std::string_view file, int line, std::string_view message) {
+            if(level.getLogLevelCategory() == Apalinea::Core::Log::LogLevelCategory::HEARTBEAT &&
+                !Apalinea::Core::Log::LogManager::printHeartbeat) return;
             std::time_t tTime = std::time(nullptr);
             std::tm* logTime = std::localtime(&tTime);
 
@@ -30,6 +32,8 @@ namespace Apalinea::Core::Log {
         }
 
         static void log(LogLevelCategory level, std::string_view file, int line, std::string_view message) {
+            if(level == Apalinea::Core::Log::LogLevelCategory::HEARTBEAT &&
+               !Apalinea::Core::Log::LogManager::printHeartbeat) return;
             time_t tTime;
             time(&tTime);
             struct tm* logTime = localtime(&tTime);
@@ -37,6 +41,14 @@ namespace Apalinea::Core::Log {
             for(auto & log : logs) {
                 log->log(LogLevel(level),logTime,file,line,message);
             }
+        }
+
+        static void setPrintHeartbeat(bool print) {
+            Apalinea::Core::Log::LogManager::printHeartbeat = print;
+        }
+
+        static bool getPrintHeartbeat() {
+            return Apalinea::Core::Log::LogManager::printHeartbeat;
         }
 
         static void addLog(std::unique_ptr<ILog>&& log) {
@@ -59,6 +71,7 @@ namespace Apalinea::Core::Log {
     private:
         using LogVector = typename std::vector<std::unique_ptr<ILog>>;
         static LogVector logs;
+        static bool printHeartbeat;
     };
 } // Apalinea::Core::Log
 
