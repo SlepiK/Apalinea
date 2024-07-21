@@ -51,6 +51,7 @@ namespace Apalinea::Operator::SourceOperator {
                 outputTuple.addItem(std::string("Image"),Core::Type::Datatype::DtImage(img));
                 vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
             } else {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,"No image-data available!");
                 vProcessState = Core::Operator::OperatorProcessState::BREAK;
             }
         }
