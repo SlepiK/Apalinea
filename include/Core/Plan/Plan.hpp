@@ -104,6 +104,7 @@ namespace Apalinea::Core::Plan {
                 std::vector<std::shared_ptr<Link::ILink>> last = vSourceLinks;
                 batchOrdering(last);
             } else {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,"Links already ordered");
                 throw std::runtime_error("Links already ordered!");
             }
         }

@@ -58,6 +58,7 @@ namespace Apalinea::Operator::SinkOperator {
                     throw std::runtime_error("No expression was used!");
                 }
             } catch (const std::exception& e) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,e.what());
                 vProcessState = Core::Operator::OperatorProcessState::STOP;
             }
             inputTuple.clear();

@@ -5,6 +5,7 @@
 #include "Core/Operator/Type/OperatorType.hpp"
 #include "Core/Operator/ProcessState/OperatorProcessState.hpp"
 #include "Core/Heartbeat/IHeartbeatProcess.hpp"
+#include "Core/Log/LogManager.hpp"
 
 namespace Apalinea::Core::Operator {
     class IOperator : public Apalinea::Core::Heartbeat::IHeartbeatProcess {

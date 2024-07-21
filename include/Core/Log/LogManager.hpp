@@ -27,7 +27,7 @@ namespace Apalinea::Core::Log {
             }
         }
 
-        static bool haveLog() {
+        [[nodiscard]] static bool haveLog() {
             return !logs.empty();
         }
 
@@ -43,11 +43,11 @@ namespace Apalinea::Core::Log {
             }
         }
 
-        static void setPrintHeartbeat(bool print) {
+        [[maybe_unused]] static void setPrintHeartbeat(bool print) {
             Apalinea::Core::Log::LogManager::printHeartbeat = print;
         }
 
-        static bool getPrintHeartbeat() {
+        [[maybe_unused]] [[nodiscard]] static bool getPrintHeartbeat() {
             return Apalinea::Core::Log::LogManager::printHeartbeat;
         }
 
