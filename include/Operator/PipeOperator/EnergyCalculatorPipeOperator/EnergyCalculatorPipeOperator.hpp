@@ -32,7 +32,7 @@ namespace Apalinea::Operator::PipeOperator {
 
         void handleHeartbeat(std::optional<std::chrono::steady_clock::time_point> hbTP, Core::Tuple::Tuple &tuple) override {
             std::chrono::steady_clock::time_point current = Apalinea::Extras::Time::Time::getCurrentTimePoint();
-            if((this->vLast.value() + this->vTimeWindow) < current) {
+            if(this->vLast.has_value() && energyCol.toFloat() > 0.0f  && (this->vLast.value() + this->vTimeWindow) < current) {
                 //the operator is executed outside the pipeline
                 energyOut = energyCol;
                 this->vLast = current;
@@ -40,6 +40,9 @@ namespace Apalinea::Operator::PipeOperator {
                 vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
                 tuple.clear();
                 tuple.addItem(std::string("energy"),Core::Type::Datatype::DtFloat(energyOut));
+                return;
+            } else {
+                vProcessState = Core::Operator::OperatorProcessState::BREAK;
                 return;
             }
         }
@@ -87,10 +90,14 @@ namespace Apalinea::Operator::PipeOperator {
                         vProcessState = Core::Operator::OperatorProcessState::BREAK;
                     } else {
                         //time window exit
-                        energyOut = energyCol;
+                        if(energyCol.toFloat() > 0.0f) {
+                            energyOut = energyCol;
+                            energyCol = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
+                            vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
+                        } else {
+                            vProcessState = Core::Operator::OperatorProcessState::BREAK;
+                        }
                         this->vLast = current;
-                        energyCol = Core::Type::Datatype::DtFloat(1.0f / static_cast<float>(this->vRotationPerKWh));
-                        vProcessState = Core::Operator::OperatorProcessState::CONTINUE;
                     }
                 } else {
                     //ignore value, because of the threshold, that was not passed
