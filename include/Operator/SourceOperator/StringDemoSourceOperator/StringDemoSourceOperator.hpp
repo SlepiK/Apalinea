@@ -12,7 +12,6 @@ namespace Apalinea::Operator::SourceOperator {
     protected:
         void work(Core::Tuple::Tuple &outputTuple) override {
             outputTuple.clear();
-            //outputTuple.addItem(std::string("DemoString"),Type::Datatype::DtString("Hello World"));
             outputTuple.addItem(std::string("DemoString"),Core::Type::Datatype::DtInt8(2));
         }
     };

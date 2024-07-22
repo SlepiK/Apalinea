@@ -37,6 +37,7 @@ namespace Apalinea::Operator::SinkOperator {
                     vProcessState = Core::Operator::OperatorProcessState::BREAK;
                 }
             } catch (std::exception& e) {
+                Core::Log::LogManager::log(Core::Log::LogLevelCategory::ERROR,Core::Log::getFilename(__FILE__),__LINE__,e.what());
                 vProcessState = Core::Operator::OperatorProcessState::STOP;
             }
             inputTuple.clear();
